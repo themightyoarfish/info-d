@@ -1,0 +1,482 @@
+\documentclass{article}
+\title{Informatik \rotatebox[origin=c]{180}{D}\raisebox{2pt}{:} -- Blatt 6}
+\author{Rasmus Diederichsen}
+\date{\today}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[table,svgnames]{xcolor}
+\usepackage{wasysym}
+\let\iiint\relax % wasysym-amsmath interference
+\let\iint\relax
+\usepackage{microtype,
+   booktabs,
+   multirow,
+   listings,
+   cwpuzzle,
+   tikz,
+   multicol,
+   IEEEtrantools,
+   array,
+   amsmath,
+   amssymb,
+   graphicx, 
+lmodern}
+\usepackage[pdftitle={Informatik D -- Blatt 6}, 
+   pdfauthor={Rasmus Diederichsen}, 
+   hyperfootnotes=true,
+   colorlinks,
+   bookmarksnumbered = true,
+   linkcolor = blue,
+   plainpages = false,
+citecolor = blue]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[all]{hypcap}
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{Aufgabe \arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{}
+\setcounter{section}{5}
+
+\begin{document}
+
+\maketitle
+
+\section{} 
+\subsection{} 
+
+\usetikzlibrary{arrows,automata,positioning}
+\tikzset{every node/.append style={font=\sf}}
+
+Es sei $\Gamma^\prime = \Gamma\cup\{\$\}$.
+
+\hspace{-1cm}
+   \begin{tikzpicture}[auto,thick,>=stealth',
+         initial text={\sffamily start},node distance=1cm and 2cm]
+      \node[state,initial] (Zs) {$Z_s$};
+      \node[state] (Z1) [right=1.2cm of Zs]  {$Z_1$}; 
+      \node[state] (Z2) [right=of Z1]  {$Z_2$};
+      \node[state] (Z3) [right=of Z2]  {$Z_3$};
+      \node[state] (Z4) [above=2.5cm of Z2] {$Z_4$};
+      \node[state] (Z5) [above right=.6cm and .6cm of Z3] {$Z_5$};
+      \node[state] (Z6) [right=of Z5] {$Z_6$};
+      \node[state] (Z8) [below right=.6cm and .6cm of Z3] {$Z_8$};
+      \node[state] (Z7) [right=of Z8] {$Z_7$};
+      \node[state] (Z9) [below left=1.2cm and .6cm of Z3,draw=none] {};
+      \node[state] (Z10) [below left=.1cm and 1.5cm of Z9] {$Z_{10}$};
+      \node[state] (Z11) [below=of Z1] {$Z_{11}$};
+
+      \path[->]
+      (Zs) edge node {$\varepsilon,\$/\#\$$} (Z1)
+      (Z1) edge node {$a,\star\in\Gamma/b\star$} (Z2)
+      (Z1) edge[bend left=60,looseness=1] node {$c,a/ba$} (Z3)
+      (Z2) edge[bend left] node {$a,b/\varepsilon$} (Z3)
+      (Z2) edge[bend left=50] node[rotate=70,pos=.9,xshift=.3cm,yshift=.2cm] {$\varepsilon,\star\in\Gamma^\prime/\varepsilon$} (Z4)
+      (Z2) edge[bend right] node {$c,b/cc$} (Z3)
+      (Z3) edge[bend left,pos=.8] node {$c,a/cc$} (Z5)
+      (Z4) edge[loop above] node {$\varepsilon,\star\in\Gamma^\prime/\varepsilon$} ()
+      (Z5) edge[bend left] node {$\varepsilon,c/cc$} (Z6)
+      (Z6) edge[bend left] node {$\varepsilon,c/ac$} (Z7)
+      (Z7) edge[bend left] node {$\varepsilon,a/ba$} (Z8)
+      (Z8) edge[bend left] node[right,outer sep=8pt,pos=1] {$\varepsilon,b/ab$} (Z3)
+      (Z3) edge[bend left=60,looseness=.7] node[above] {$a,\star\in\Gamma/\varepsilon$} (Z1)
+      (Z3) edge[bend left] node {$\circ\in\Sigma,\circ/\circ\circ$} (Z10)
+      % (Z9) edge[bend left] node {$\varepsilon,\circ/\circ\circ$} (Z10)
+      (Z10) edge[bend left] node {$\varepsilon,\circ/\circ\circ$} (Z11)
+      (Z11) edge[bend left] node {$\varepsilon,\circ/\circ\circ$} (Z1);
+\end{tikzpicture}
+
+\subsection{} 
+
+\subsubsection{Schritt 1}
+
+\newcommand{\R}[1]{R_{(#1)}}
+\renewcommand{\r}{\rightarrow}
+\renewcommand{\arraystretch}{1.5}
+
+\begin{center}
+   \textcolor{teal}{$\forall Z \in \mathcal{Z} : S \rightarrow R_{(Z_{start},\#,Z)}$}
+\end{center}
+
+Es resultieren die Regeln
+\begin{center}
+   \fbox{
+\begin{tabular}{>{$}l<{$}>{$}l<{$}}
+   S \rightarrow R_{(Z_1,\#,Z_1)} & S \rightarrow R_{(Z_1,\#,Z_2)}
+\end{tabular}}
+\end{center}
+
+\subsubsection{Schritt 2}
+
+\begin{center}
+\tikzset{auto,thick,>=stealth',initial text={\sffamily start},node distance=1cm and 2cm}
+\textcolor{teal}{$\forall Z_0$, \raisebox{-1em}{\tikz{\node[state] (Z1)
+      {$Z_1$};\node[state] (Z2) [right=of Z1] {$Z_2$};
+\path[->] (Z1) edge node {$a,b/c$} (Z2);}} : $R_{(Z_1,b,Z_0)} \rightarrow aR_{(Z_2,c,Z_0)}$}
+\end{center}
+
+Es resultieren die Regeln
+\begin{center}
+   \fbox{
+      \begin{tabular}{>{$}l<{$}>{$}l<{$}}
+         \R{Z_1,b,Z_1} \r b\R{Z_1,b,Z_1} & \R{Z_1,b,Z_2} \r b\R{Z_1,b,Z_2} \\
+         \R{Z_2,b,Z_1} \r c\R{Z_2,b,Z_1} & \R{Z_2,b,Z_2} \r c\R{Z_2,b,Z_2} \\
+         \R{Z_2,b,Z_1} \r b\R{Z_1,c,Z_1} & \R{Z_2,b,Z_2} \r b\R{Z_1,c,Z_2}
+   \end{tabular}}
+\end{center}
+
+\subsubsection{Schritt 3}
+
+\tikzset{node distance=2cm} % dafuq do I have to adjust this again?
+\begin{center}
+   \textcolor{teal}{$\forall$ Übergänge \raisebox{-1em}{\tikz{\node[state] (Z1)
+      {$Z_1$};\node[state] (Z2) [right=of Z1] {$Z_2$};
+\path[->] (Z1) edge node[above] {$a,b/\varepsilon$} (Z2);}} : $\R{Z_1,b,Z_2} \r a$}
+\end{center}
+
+Es resultieren die Regeln
+
+\begin{center}
+   \fbox{
+      \begin{tabular}{>{$}l<{$}>{$}l<{$}}
+         \R{Z_1,b,Z_1} \r b & \R{Z_1,\#,Z_1} \r b \\
+         \R{Z_1,c,Z_1} \r c
+   \end{tabular}}
+\end{center}
+
+\subsubsection{} 
+
+\begin{center}
+   \textcolor{teal}{$\forall Z,Z^\prime$, Übergänge \raisebox{-1em}{\tikz{\node[state] (Z1)
+      {$Z_1$};\node[state] (Z2) [right=of Z1] {$Z_2$};
+\path[->] (Z1) edge node[above] {$a,b/cd$} (Z2);}} : $\R{Z_1,b,Z} \r
+a\R{Z_2,c,Z^\prime}\R{Z^\prime,d,Z}$}
+\end{center}
+
+Gemäß $\forall X,Y: \R{Z_1,\#,X} \r a\R{Z_2,b,Y}\R{Y,\#,X}$ (es gibt im Graphen
+nur einen solchen Übergang) resultieren die Regeln
+
+\begin{center}
+   \fbox{
+      \begin{tabular}{>{$}l<{$}}
+         \R{Z_1,\#,Z_1} \r a\R{Z_2,b,Z_1}\R{Z_1,\#,Z_1}\\
+         \R{Z_1,\#,Z_1} \r a\R{Z_2,b,Z_2}\R{Z_2,\#,Z_1} \\
+         \R{Z_1,\#,Z_2} \r a\R{Z_2,b,Z_1}\R{Z_1,\#,Z_2} \\
+         \R{Z_1,\#,Z_2} \r a\R{Z_2,b,Z_2}\R{Z_2,\#,Z_2} 
+   \end{tabular}}
+\end{center}
+
+Der gesamte Regelsatz ist also 
+
+\newcommand{\productive}{\cellcolor{teal!10}}
+\begin{center}
+   \fbox{
+      \begin{tabular}{>{$}l<{$}>{$}l<{$}}
+         \productive S \rightarrow R_{(Z_1,\#,Z_1)} & S \rightarrow R_{(Z_1,\#,Z_2)}\\
+         \cellcolor{lightgray!30} \R{Z_1,b,Z_1} \r b\R{Z_1,b,Z_1} & \R{Z_1,b,Z_2} \r b\R{Z_1,b,Z_2} \\
+         \productive \R{Z_2,b,Z_1} \r c\R{Z_2,b,Z_1} & \R{Z_2,b,Z_2} \r c\R{Z_2,b,Z_2} \\
+         \productive \R{Z_2,b,Z_1} \r b\R{Z_1,c,Z_1} & \R{Z_2,b,Z_2} \r b\R{Z_1,c,Z_2}\\
+         \cellcolor{lightgray!30} \R{Z_1,b,Z_1} \r b & \productive \R{Z_1,\#,Z_1} \r b \\
+         \productive \R{Z_1,c,Z_1} \r c \\
+         \productive \R{Z_1,\#,Z_1} \r a\R{Z_2,b,Z_1}\R{Z_1,\#,Z_1}\\
+         \R{Z_1,\#,Z_1} \r a\R{Z_2,b,Z_2}\R{Z_2,\#,Z_1} \\
+         \R{Z_1,\#,Z_2} \r a\R{Z_2,b,Z_1}\R{Z_1,\#,Z_2} \\
+         \R{Z_1,\#,Z_2} \r a\R{Z_2,b,Z_2}\R{Z_2,\#,Z_2} \\
+   \end{tabular}}
+\end{center}
+
+Regeln, die tatsächlich etwas produzieren, sind aquamarin markiert. Regeln, die
+etwas produzieren könnten, von der Startvariable aus aber nicht erreichbar sind,
+sind grau hinterlegt. Wir kürzen ab
+
+\begin{center}
+   \fbox{
+      \begin{tabular}{>{$}l<{$}}
+         R_1 := \R{Z_1,\#,Z_1} \\
+         R_2 := \R{Z_1,c,Z_1} \\
+         R_3 := \R{Z_1,b,Z_1} \\
+         R_4 := \R{Z_2,b,Z_1}
+   \end{tabular}}
+\end{center}
+
+und destillieren hieraus
+
+\begin{center}
+   \fbox{
+      \begin{tabular}{>{$}l<{$}}
+         S \r R_1 \\
+         R_1 \r b \mid aR_4R_1 \\
+         R_2 \r c \\
+         R_4 \r cR_4 \mid bR_2
+   \end{tabular}}
+\end{center}
+
+und notieren, dass $R_3$ nicht erreichbar ist.
+
+\subsection{} 
+
+\lstset{
+   basicstyle=\footnotesize\ttfamily,
+   breaklines=true,
+   commentstyle=\color{blue},
+   keywordstyle=\color{purple}\textbf,
+   numberstyle=\tiny\color{gray},
+   numbers=left,
+   stringstyle=\color{olive},
+   frame=single
+}
+
+Der (vermutlich falsche) Algorithmus l\"auft in $\mathcal{O}\left(|V|^2\right)$
+da f\"ur jeden Knoten die Suche gestartet wird und in deren Verlauf alle anderen
+Knoten maximal zweimal besucht werden.
+\begin{lstlisting}[language=Java]
+class DeCycle {
+   Graph g;
+   DeCycle(Graph g) 
+   { 
+      this.g = g;
+   }
+   void deCycle()
+   {
+      for(Vertex v : g.getVertices()) v.visited = false;
+      for(Vertex v : g.getVertices()) traverse(v, new ArrayList<Vertex>());
+   }
+   List<Vertex> getTargets(List<Arc>)
+   {
+      /* ... map Arcs to their targets */
+   }
+   void print()
+   {
+      /* output graph */
+   }
+   void traverse(Vertex v, List<Vertex> path)
+   {
+      path.add(v);
+      if(v.visited) 
+      contractCycle(path.sublist(path.indexOf(v), path.length()));
+      else
+      {
+         v.visited = true;
+         for (Vertex neighbour : getTargets(g.getOutgoingArcs(v)))
+         traverse(neighbour, new ArrayList<Vertex>(path));
+      }
+      v.visited = false; // reset for next search
+   }
+   static void main(String[] argv)
+   {
+      Graph g = new RandomGraph(Integer.parseInt(argv[0]));
+      DeCycle d = new DeCycle(g);
+      d.deCycle();
+      d.print();
+   }
+}
+\end{lstlisting}
+
+\subsection{} 
+
+Die Ausgangsgrammatik ist
+
+\subsubsection{$G$}
+\begin{align*}
+\begin{array}{lll}
+   S \r D & C \r eEd & E \r C \\
+   S \r dA & C \r B \\
+   A \r aS & D \r CdDeB \\
+   A \r S & D \r A \\
+   A \r E & D \r d \\
+   B \r db & E \r B \\
+   B \r C & E \r BB
+\end{array}
+\end{align*}
+
+\textbf{Schritt 1}: Erzeuge Regeln $A_x \r x$, ersetze $a,\ldots,e$ in $G$ durch
+$A_a,\ldots,A_e$.
+
+\subsubsection{$G^\prime$}
+
+\begin{align*}
+\begin{array}{lll}
+   S \r D & C \r A_eEA_d & E \r C \\
+   S \r A_dA & C \r B & A_a \r a \\
+   A \r A_aS & D \r CA_dDA_eB & A_b \r b \\
+   A \r S & D \r A & A_d \r d \\
+   A \r E & D \r d & A_e \r e \\
+   B \r A_dA_b & E \r B \\
+   B \r C & E \r BB
+\end{array}
+\end{align*}
+
+\textbf{Schritt 2}: Entferne Regeln der Form $V \r V$. Folgende Regeln sind zu
+eliminieren:
+
+\begin{align*}
+\begin{array}{lll}
+   \cellcolor{teal!10} S \r D & C \r A_eEA_d & \cellcolor{teal!10} E \r C \\
+   S \r A_dA & \cellcolor{teal!10} C \r B & A_a \r a \\
+   A \r A_aS & D \r CA_dDA_eB & A_b \r b \\
+   \cellcolor{teal!10} A \r S & \cellcolor{teal!10} D \r A & A_d \r d \\
+   \cellcolor{teal!10} A \r E & D \r d & A_e \r e \\
+   B \r A_dA_b & \cellcolor{teal!10} E \r B \\
+   \cellcolor{teal!10} B \r C & E \r BB
+\end{array}
+\end{align*}
+
+Wir erstellen den zugeh\"origen Graphen.
+
+\begin{center}
+   \begin{tikzpicture}[auto,thick,>=stealth',
+         initial text={\sffamily start},node distance=.5cm and 1cm]
+      \node[state,initial] (S) {$S$};
+      \node[state] (D) [above right=of S]  {$D$};
+      \node[state] (A) [below right=of S]  {$A$};
+      \node[state] (E) [right=of D]  {$E$};
+      \node[state] (B) [right=of A]  {$B$};
+      \node[state] (C) [above right=of B]  {$C$};
+
+      \path[->]
+      (S) edge[color=red] (D)
+      (D) edge[color=red] (A)
+      (A) edge[color=red] (S)
+      (A) edge (E)
+      (E) edge (C)
+      (E) edge (B)
+      (B) edge[bend left,color=red] (C)
+      (C) edge[bend left,color=red] (B);
+\end{tikzpicture}
+\end{center}
+ Es existieren Zyklen $S \r D \r A \r S$ und $B \r C \r B$ bzw. $C \r B \r C$.
+ Der kontrahierte Graph ist
+
+\begin{center}
+   \begin{tikzpicture}[auto,thick,>=stealth',
+         initial text={\sffamily start},node distance=.5cm and 1cm]
+      \node[state,initial] (S) {$S$};
+      \node[state] (E) [right=of S]  {$E$};
+      \node[state] (B) [right=of E]  {$B$};
+
+      \path[->]
+      (S) edge (E)
+      (E) edge (B);
+\end{tikzpicture}
+\end{center}
+ 
+Wir eliminieren die Senken beginnend mit $B$ und transformieren so die
+Regelmenge $\{S \r E, E \r B\}$.
+
+\textcolor{teal}{$E \r B$} wird zu 
+\begin{align*}
+   \begin{array}{l}
+      E \r A_dA_b \\
+      E \r A_eEA_d
+\end{array}
+\end{align*}
+
+\textcolor{teal}{$S \r E$} wird zu 
+\begin{align*}
+   \begin{array}{lr}
+      S \r BB \\
+   S \r A_dA_b &
+   \multirow{2}{5cm}{$\left.\raisebox{0pt}[\baselineskip]{}\right\}$ vorherige
+Elimination}\\
+      S \r A_eEA_d
+\end{array}
+\end{align*}
+
+Die neue Grammatik ist
+
+\subsubsection{$G^{\prime\prime}$}
+
+\begin{align*}
+\begin{array}{l}
+   S \r A_dS \mid A_aS \mid BB \mid A_dA_b \mid A_eEA_d \mid BA_dSA_eB \mid d \\
+   B \r A_dA_b \mid A_eEA_d \\
+   E \r A_dA_b \mid A_eEA_d \mid BB \\
+   A_a \r a  \\
+   A_b \r b \\
+   A_d \r d \\
+   A_e \r e
+\end{array}
+\end{align*}
+
+\textbf{Schritt 3}: K\"urzung zu langer Regeln. Wir f\"uhren f\"ur Regeln $V \r
+V_1,\ldots,V_k$ mit $k > 2$ Regeln $V \r V_1U_1, U_1 \r V_2U_2,\ldots,U_k \r
+V_{k-1}V_k$ ein und erhalten so
+
+\subsubsection{$G^{\prime\prime\prime}$}
+
+\begin{align*}
+\begin{array}{l}
+   S \r A_dS \mid A_aS \mid BB \mid A_dA_b \mid A_eU_1 \mid BU_2 \\
+   U_1 \r EA_d \\
+   U_2 \r A_dU_3 \\
+   U_3 \r SU_4 \\
+   U_4 \r A_eB \\
+   B \r A_dA_b \mid A_eU_1 \\
+   E \r A_dA_b \mid A_eU_1 \mid BB \\
+   A_a \r a  \\
+   A_b \r b \\
+   A_d \r d \\
+   A_e \r e
+\end{array}
+\end{align*}
+
+Diese Grammatik ist nun in Chomsky Normal Form.
+
+\subsection{} 
+
+Man nehme an, das Pumping Lemma gilt, $n$ bezeichne die zugehörige
+Wortmindestlänge. Sei $z = 1^n21^n21^n$. Es existiert nach Vorraussetzung eine
+Zerlegung $uvwxy$ von $z$, sodass $|vx|\ge1,|vwx|\le n$ und $uv^iwx^iy \in L \forall i$
+
+Die Fälle, in denen $v,x$ verschiedene Symbole beinhalten (also sowohl 1en als
+auch 2en), braucht man gar nicht zu betrachten, da auf diese Weise Teilwörter der
+Form $(1^k2)^i$ o.Ä. entstehen können, was natürlich nicht für alle $i$ in $L$
+enthalten ist.
+
+Es gibt vier Möglichkeiten, aus welchen Zeichen $vwx$ bestehen kann.
+\begin{enumerate}
+   \item $vwx = 1^k, k\le n$. In diesem Fall kann durch Pumpen eine beliebige
+      Anzahl 1en erzeugt werden, $uv^iwx^iy = 1^l21^n21^n \text{ für } l \neq n\not\in L$.
+   \item $vwx = 1^k2, k\le n-1$. In diesem Fall können durch Pumpen beliebig
+   viele 1en erzeugt werden falls $|v| > 0$ und eventuell 2en, falls $|x|>0$. Daher
+      $uv^iwx^iy \not\in L$.
+   \item $vwx = 1^k21^l, 1\le k+l\le n-1$. In diesem Fall können durch Pumpen beliebig
+      viele 1en erzeugt werden, eventuell auch beliebig viele 2en, falls $|v|>1$
+      oder $|x|>1$. Daher $uv^iwx^iy \not\in L$, da der letzte Teil $1^n$ nicht
+      mitgepumpt wird.
+   \item $vwx = 21^k, k\le n-1$. In diesem Fall können durch Pumpen beliebig
+      viele 1en erzeugt werden, eventuell 2en, falls $|v|\ge 1$. Mithin
+      $uv^iwx^iy \not\in L$.
+\end{enumerate}
+
+In keinem Fall ist $uv^iwx^iy \in L$, was einen Widerspruch zur Annahme
+darstellt.
+
+\subsection{} 
+
+Bei der Umwandlung eines NDKA-AdLK in eine kontextfreie Grammatik können Regeln der folgenden Arten generiert werden
+\begin{enumerate}
+	\item $V \rightarrow \Sigma$
+  \item $V \rightarrow V$
+  \item $V \rightarrow \Sigma \times V$
+  \item $V \rightarrow \Sigma \times V \times V$
+  \item ($V \rightarrow \varepsilon$)
+\end{enumerate}
+
+Dieses Problem ist nur dann lösbar, wenn die Grammatik nicht linksrekursiv ist
+(also kein Regeln der Form $A\rightarrow AB$ enthält).
+
+Um die Grammatik in GNF zu überführen, geht man wie folgt vor:
+\begin{lstlisting}[mathescape]
+entferne Kreise in Regeln V$_i$ -> V$_j$
+while exists Regel A -> V$_i$
+   forall Regeln V$_i$ -> * 
+      kreiere Regel A -> rhs(V$_i$)
+   end
+   entferne A -> V$_i$
+   entferne Regel V$_i$ -> * falls !exists Regel R := V -> V$^*$ mit V$_i$ in rhs(R)
+end
+while exist Regel A -> V$_1$V$_2$
+   forall Regeln V$_1$ -> * kreiere Regel A -> rhs(V$_1$)V$_2$
+   entferne Regel A-> V$_1$V$_2$
+end
+\end{lstlisting}
+\end{document}

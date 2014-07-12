@@ -1,0 +1,339 @@
+\documentclass{article}
+\title{Informatik \rotatebox[origin=c]{180}{D}\raisebox{2pt}{:} -- Blatt 5}
+\author{Rasmus Diederichsen}
+\date{\today}
+\usepackage[ngerman]{babel}
+\usepackage[svgnames]{xcolor}
+\usepackage{wasysym}
+\let\iiint\relax % wasysym-amsmath interference
+\let\iint\relax
+\usepackage{microtype,
+   booktabs,
+   cwpuzzle,
+   tikz,
+   multicol,
+   IEEEtrantools,
+   array,
+   amsmath,
+   amssymb,
+   graphicx, 
+lmodern}
+\usepackage[pdftitle={Informatik D -- Blatt 5}, 
+   pdfauthor={Rasmus Diederichsen}, 
+   hyperfootnotes=true,
+   colorlinks,
+   bookmarksnumbered = true,
+   linkcolor = blue,
+   plainpages = false,
+citecolor = blue]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[all]{hypcap}
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{Aufgabe \arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+\setcounter{section}{4}
+
+\begin{document}
+
+\maketitle
+
+\section{} 
+\subsection{} 
+
+Ein NDEA mit Schleifen kann gem\"a\ss{} der folgenden Vorgehensweise in einen
+schleifenfreien NDEA verwandelt werden.
+
+\renewcommand{\labelenumi}{\textcolor{teal}{\arabic{enumi}.}}
+
+\begin{enumerate}
+   \item $\forall Z_i\in\mathcal{Z}$ mit $\exists\sigma\in\Sigma:
+      \delta(Z_i,\sigma)=Z_i$ ersetze $Z_i$ durch $Z_i^\prime$, $Z_i^{\prime\prime}$.
+   \item Definiere neuen \"Ubergang 
+      $\delta(Z_i^{\prime\prime},\varepsilon)=Z_i^\prime$. 
+   \item Definiere $\forall\sigma\in\Sigma:\delta(Z_i,\sigma)=Z_k\neq Z_i$ neue
+      \"Uberg\"ange $\delta(Z_i^{\prime\prime},\sigma)=Z_k$.
+\end{enumerate}
+
+Grafisch lie\ss{}e sich dies folgenderma\ss{}en veranschaulichen.
+
+\usetikzlibrary{arrows,automata,positioning,calc}
+\tikzset{every state/.append style={fill=teal!20, line width=1pt, font=\sf}}
+\tikzset{every node/.append style={font=\sf}}
+% \tikzset{every node not state/.append style={text width=2em}}
+\tikzset{accepting/.append style={fill=blue!10}}
+
+\begin{center}
+   \begin{tikzpicture}[auto,thick,>=stealth',initial text={\sffamily start},node
+      distance=.5cm and 3cm]
+      \node[state] (Z)  {$Z_i$};
+      \node[state,dashed] (A) [above left=of Z] {};
+      \node (B) [left=of Z] {$\vdots$};
+      \node[state,dashed] (C) [below left=of Z] {};
+      \node[state,dashed] (D) [above right=of Z] {};
+      \node (E) [right=of Z] {$\vdots$};
+      \node[state,dashed] (F) [below right=of Z] {};
+
+      \pgfdeclarelayer{bg}    % declare background layer
+      \pgfsetlayers{bg,main} % order of layers
+      \begin{pgfonlayer}{bg}
+         \fill[orange!40] ($(Z)-(1cm,1cm)$) rectangle  ++(2cm,2.5cm);
+      \end{pgfonlayer}
+
+      \path[->]
+      (A) edge[dashed] node {$i_1$} (Z)
+      (C) edge[dashed] node {$i_n$} (Z)
+      (Z) edge[loop above] node {$\sigma_1,\ldots,\sigma_k$}
+      (Z) edge[dashed] node {$o_1$} (D)
+      (Z) edge[dashed] node {$o_l$} (F);
+   \end{tikzpicture}
+
+   \usetikzlibrary{shapes.arrows}
+   \begin{tikzpicture}
+      \node[single arrow,shape border rotate=270,minimum height=1cm,fill=teal] {};
+   \end{tikzpicture}
+
+   \begin{tikzpicture}[auto,align=center,
+      thick,>=stealth',initial text={\sffamily start},node distance=.5cm and 3cm]
+      \node[state] (Z)  {$Z_i^\prime$};
+      \node[state] (Z2) [right=of Z]  {$Z_i^{\prime\prime}$};
+      \node[state,dashed] (A) [above left=of Z] {};
+      \node (B) [left=of Z] {$\vdots$};
+      \node[state,dashed] (C) [below left=of Z] {};
+      \node[state,dashed] (D) [above right=of Z2] {};
+      \node (E) [right=of Z2] {$\vdots$};
+      \node[state,dashed] (F) [below right=of Z2] {};
+
+      \pgfdeclarelayer{bg} 
+      \pgfsetlayers{bg,main}
+      \begin{pgfonlayer}{bg}
+         \fill[orange!40] ($(Z)-(1cm,1.2cm)$) rectangle  ++(6cm,2.5cm);
+      \end{pgfonlayer}
+
+      \path[->]
+      (A) edge[dashed] node {$i_1$} (Z)
+      (C) edge[dashed] node {$i_n$} (Z)
+      (Z) edge[bend left] node {$\sigma_1,\ldots,\sigma_k$} (Z2)
+      (Z2) edge[bend left] node {$\varepsilon$} (Z)
+      % (Z) edge[dashed,bend left,out=90,looseness=.5] node {$o_1$} (D)
+      % (Z) edge[dashed,bend right,out=270,looseness=.5] node {$o_l$} (F)
+      (Z2) edge[dashed] node {$o_1$} (D)
+      (Z2) edge[dashed] node {$o_l$} (F);
+   \end{tikzpicture}
+\end{center}
+
+\subsection{} 
+
+Trivialerweise ist $w = 11 \in \mathcal{L}(r)$.
+Falls $w\in L$ ist offensichtlich auch $w0^*\in L$, da aus $w^{10} \mod 3 = 0$ auch
+$2\cdot w^{10} \mod 3 = 0$ folgt. Wir beweisen nun $\bigcup_{k\ge0}L_k =
+\{10\}\{1,00\}^k\{01\} \subseteq L$.
+\subsubsection{Induktionsanfang}
+
+Offensichtlich stimmt die Aussage f\"ur $k=0,1$. F\"ur $k=0$ ist $w^{10}=9$,
+f\"ur $k=1$ $w^{10}=21$ oder $w^{10}=33$.
+
+\subsubsection{Induktionsschritt}
+
+Sei bis $k$ bewiesen. Wir betrachten zun\"achst den Fall, dass eine 1 an dritter
+Stelle angef\"ugt wird. In dem Fall gilt f\"ur $w=a_n,\ldots,a_0$
+\begin{eqnarray*}
+   w_{neu}^{10} & = & \left(\frac{(w^{10} - (a_1a_0)^{10})}{2} + 1\right) \cdot 4 + 1 \\
+   & = & 2w^{10} + 3
+\end{eqnarray*}
+Dies macht man sich folgenderma\ss{}en klar, wir betrachten als Beispiel die
+Zahl $w = \texttt{1001}$.
+
+\begin{center}
+\begin{tabular}{>{\ttfamily}rrr}
+   Bin\"ar & Operation & Dezimal \\\toprule
+   1001 & -1 & 9 \\
+   1000 & $\div 2$ \\
+   100 & +1 \\
+   101 & $\cdot 4$ \\
+   10100 & +1 \\
+   10101 & & 21
+\end{tabular}
+\end{center}
+
+Nach Voraussetzung ist $w$ bereits durch 3 teilbar, mithin auch $2w$ und daher
+auch $2w + 3$.
+
+Falls an dritter und vierter stelle 00 eingeh\"angt wird, so ergibt sich
+\begin{eqnarray*}
+   w_{neu}^{10} & = & (w^{10} - (a_1a_0)^{10}) \cdot 4 + (a_1a_0)^{10} \\
+                & = & 4w^{10} - 4 + 1 \\
+                & = & 4w^{10} - 3
+\end{eqnarray*}
+Mit derselben Argumentation gilt auch hier $w_{neu} \in L$.
+
+\subsection{} 
+
+\subsubsection{a)}
+
+Ein NDKA mit Akzeptanz durch leeren Keller kann so ausssehen:
+
+\begin{center}
+   \begin{tikzpicture}[auto,align=center,
+      thick,>=stealth',initial text={\sffamily start},node distance=.5cm and 3cm]
+      \node[state,initial] (A) {A};
+      \node[state] (B) [right=of A] {B};
+      \path[->]
+      (A) edge node {$a,\# / b\#$ \\ $b, \# / a\#$} (B)
+      (B) edge[loop above] node {$\varepsilon,\# / \varepsilon$} ()
+      (B) edge[loop right] node {$a,\circ / b\circ$ \\ $b,\circ / a\circ$} ()
+      (B) edge[loop below] node {$b,b / \varepsilon$ \\ $a,a / \varepsilon$} ();
+   \end{tikzpicture}
+\end{center}
+
+\subsubsection{b)}
+
+Ein NDKA mit Akzeptanz durch leeren Keller kann so ausssehen:
+
+\begin{center}
+   \begin{tikzpicture}[auto,align=center,
+      thick,>=stealth',initial text={\sffamily start},node distance=.5cm and 3cm]
+      \node[state,initial] (A) {A};
+      \node[state] (B) [right=of A] {B};
+      \path[->]
+      (A) edge node {\halfnote,\halfnote/$\varepsilon$} (B)
+      (A) edge[loop above] node {\eighthnote,$\circ$/\halfnote\halfnote$\circ$} ()
+      % (A) edge[loop below] node {\eighthnote,\eighthnote/\halfnote\halfnote} ()
+      (B) edge[loop above] node {\halfnote,\halfnote/$\varepsilon$ \\
+      $\varepsilon,\#/\varepsilon$} ();
+   \end{tikzpicture}
+\end{center}
+
+\subsubsection{c)}
+
+Ein NDKA mit Akzeptanz durch leeren Keller kann so ausssehen:
+
+\begin{center}
+   \begin{tikzpicture}[auto,align=center,
+      thick,>=stealth',initial text={\sffamily start},node distance=.5cm and 3cm]
+      \node[state,initial] (A) {A};
+      \node[state] (B) [above right=of A] {B};
+      \node[state] (C) [below right=of A] {C};
+      \node[state] (D) [right=of B] {D};
+      \node[state] (E) [right=of C] {E};
+      \node[state] (F) [right=of D] {F};
+      \path[->]
+      (A) edge node {$a,\#/\#$} (C)
+      (B) edge[loop above] node {$c,\#/\#$} ()
+      (C) edge[loop below] node {$a,\#/\#$} ()
+      (C) edge node {$b,\#/\#$} (E)
+      (E) edge[loop below] node {$b,\#/\#$ \\ $\varepsilon,\#/\varepsilon$} ()
+      (A) edge node {$c,\#/\#$} (B)
+      (B) edge node {$a,\#/a\#$} (D)
+      (D) edge[loop above] node {$a,a/aa$} ()
+      (D) edge node {$b,a/\varepsilon$} (F)
+      (F) edge[loop above] node {$b,a/\varepsilon$ \\
+      $\varepsilon,\#/\varepsilon$} ();
+   \end{tikzpicture}
+\end{center}
+
+\subsection{} 
+
+% doesn't center,wtf. Use minipage with hardcoded width. Wtf.
+Interessanterweise widersetzt sich dieses Puzzle s\"amtlichen
+\LaTeX-Positionierungsversuchen. What the fuck.
+
+\begin{minipage}{.5\textwidth}
+   \def\PuzzleSolutionContent#1{\makebox(1,1){\itshape{#1}}}
+   \renewcommand{\PuzzleLineThickness}{1pt}
+   \PuzzleSolution
+   \begin{Puzzle}{5}{12}
+      |*|*|c|*|b|c|*|*|*|*|*|*|.
+      |c|a|b|d|b|a|c|d|*|*|a|*|.
+      |c|*|a|*|b|b|*|c|*|*|c|*|.
+      |a|b|a|a|b|a|*|c|b|a|d|c|.
+      |a|a|b|a|b|b|a|b|a|a|b|b|.
+   \end{Puzzle}
+\end{minipage}
+\vspace{-3cm} % Puzzle fuckup seems to consume vertical space. The fuck.
+
+\subsection{} 
+\newcommand{\thingL}{\hspace{1pt}\raisebox{-.5ex}{\rule{.5pt}{1em}\hspace{.5pt}\rule{.2pt}{1em}\raisebox{.6ex}{:}\hspace{1pt}}}
+\newcommand{\thingR}{\hspace{1pt}\raisebox{-.5ex}{\raisebox{.6ex}{:}\rule{.2pt}{1em}\hspace{.5pt}\rule{.5pt}{1em}\hspace{1pt}}}
+% $L=\{\thingL,\thingR,\halfnote\}$
+
+\setlength{\tabcolsep}{2pt}
+\begin{center}
+   \begin{tikzpicture}[auto,thick,>=stealth',initial text={\sffamily start},node
+      distance=.5cm and 3cm]
+      \node[state,initial] (A) {};
+      \path[->]
+      (A) edge[loop above] node[text width=3cm] {
+         \begin{tabular}{ll}
+            $\varepsilon,S$/$A$ & $\varepsilon,S$/$AS$ \\ 
+            $\varepsilon,S$/\thingR $D$ & $\varepsilon,A$/$BB$ \\
+            $\varepsilon,A$/$CBC$ & $\varepsilon,B$/$CC$ \\
+            $\varepsilon,B$/\halfnote & $\varepsilon,C$/\quarternote \\
+            $\varepsilon,C$/\twonotes & $\varepsilon,D$/$S\thingR$ \\
+            $\varepsilon,D$/$S\thingR S$
+         \end{tabular}
+      } ()
+      (A) edge[loop below] node {$\circ\in\Sigma,\circ$/$\varepsilon$} ();
+   \end{tikzpicture}
+\end{center}
+\newcommand{\w}{\halfnote\quarternote\quarternote\thingL\twonotes\halfnote\quarternote\thingR}
+Wir zeigen, dass $w_1 = \w$ von diesem Automaten akzeptiert wird.
+
+\setlength{\tabcolsep}{1em}
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+   \begin{tabular}{llr}
+      \hline
+      \"Ubergang & Stack & Wort \\\hline
+                 & $S$ & \w\\
+      $\varepsilon,S$/$AS$ & $AS$ & \w \\
+      $\varepsilon,A$/$BB$ & $BBS$ & \w \\
+      $\varepsilon,B$/$CC$ & $BCCS$ & \w \\
+      $\varepsilon,B/\halfnote$ & $\halfnote CCS$ &
+      \halfnote\quarternote\quarternote\thingL\twonotes\halfnote\quarternote\thingR \\
+      $\halfnote,\halfnote$/$\varepsilon$ & $CCS$ &
+      \quarternote\quarternote\thingL\twonotes\halfnote\quarternote\thingR \\
+      $\varepsilon,C$/\quarternote & $\quarternote CS$ &
+      \quarternote\quarternote\thingL\twonotes\halfnote\quarternote\thingR  \\
+      $\quarternote,\quarternote$/$\varepsilon$ & $CS$ &
+      \quarternote\thingL\twonotes\halfnote\quarternote\thingR \\
+      $\varepsilon,C$/\quarternote & $\quarternote S$ &
+      \quarternote\thingL\twonotes\halfnote\quarternote\thingR  \\
+      $\quarternote,\quarternote$/$\varepsilon$ & $S$ &
+      \thingL\twonotes\halfnote\quarternote\thingR \\
+      $\varepsilon,S$/$\thingL D$ & $\thingL D$ & \thingL\twonotes\halfnote\quarternote\thingR \\
+      $\thingL,\thingL$/$\varepsilon$ & $D$ & \twonotes\halfnote\quarternote\thingR \\
+      $\varepsilon,D$/$S\thingR$ & $S\thingR$ & \twonotes\halfnote\quarternote\thingR \\
+      $\varepsilon,S$/$A$ & $A\thingR$ & \twonotes\halfnote\quarternote\thingR \\ 
+      $\varepsilon,A$/$CBC$ & $CBC\thingR$ & \twonotes\halfnote\quarternote\thingR \\ 
+      $\varepsilon,C$/\twonotes & $\twonotes BC\thingR$ & \twonotes\halfnote\quarternote\thingR \\ 
+      $\twonotes,\twonotes$/$\varepsilon$ & $BC\thingR$ & \halfnote\quarternote\thingR \\ 
+      $\varepsilon,B$/\halfnote & $\halfnote C\thingR$ & \halfnote\quarternote\thingR \\ 
+      $\halfnote,\halfnote$/$\varepsilon$ & $C\thingR$ & \quarternote\thingR \\ 
+      $\varepsilon,C$/\quarternote & $\quarternote\thingR$ & \quarternote\thingR \\ 
+      $\quarternote,\quarternote$/$\varepsilon$ & $\thingR$ & \thingR \\ 
+      $\thingR,\thingR$/$\varepsilon$ & $\langle leer \rangle$ & $\varepsilon$
+   \end{tabular}
+\end{center}
+
+Hingegen ist $w_2$ nicht akzeptabel, da die eizige M\"oglichkeit, es zu
+generieren, eine Satzform $BC$ w\"are. Diese ist in der Grammatik nicht
+herleitbar. 
+
+\subsection{} 
+
+Wir zeigen die detmerminstische Kontextfreiheit durch einen DKA-AdEZ.
+
+\begin{center}
+   \begin{tikzpicture}[auto,thick,>=stealth',
+      initial text={\sffamily start},node distance=2cm]
+      \node[state,initial,accepting] (Z)  {$Z_1$};
+      \node[state] (Z2)  [right=of Z]{$Z_2$};
+
+      \path[->]
+      (Z) edge[bend right] node[below,text width=3em] {$(,\#$/$(\#$} (Z2)
+      (Z2) edge[loop right] node[text width=3em] {$(,($/$(($ \\ $),($/$\varepsilon$}
+      (Z2) edge[bend right] node[above] {$\varepsilon,\#$/$\#$} (Z);
+   \end{tikzpicture}
+\end{center}
+
+\end{document}

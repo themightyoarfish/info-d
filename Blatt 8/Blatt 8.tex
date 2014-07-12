@@ -1,0 +1,327 @@
+\documentclass{article}
+\title{Informatik \rotatebox[origin=c]{180}{D}\raisebox{2pt}{:} -- Blatt 8}
+\author{Rasmus Diederichsen}
+\date{\today}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[table,svgnames]{xcolor}
+\usepackage{wasysym}
+\let\iiint\relax % wasysym-amsmath interference
+\let\iint\relax
+\usepackage{microtype,
+   booktabs,
+   enumitem,
+   multirow,
+   listings,
+   cwpuzzle,
+   tikz,
+   multicol,
+   IEEEtrantools,
+   array,
+   amsmath,
+   amssymb,
+   graphicx, 
+lmodern}
+\usepackage[pdftitle={Informatik D -- Blatt 8}, 
+   pdfauthor={Rasmus Diederichsen}, 
+   hyperfootnotes=true,
+   colorlinks,
+   bookmarksnumbered = true,
+   linkcolor = blue,
+   plainpages = false,
+citecolor = blue]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[all]{hypcap}
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{Aufgabe \arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{}
+\setcounter{section}{7}
+
+\begin{document}
+
+\maketitle
+
+\section{} 
+\subsection{} 
+
+Den abgerundeten Logarithmus zu berechnen, ist dasselbe, wie den Index
+(nullbasiert) des höchsten gesetzten Bits zu bestimmen. Da wir annehmen, dass
+$\alpha$ keine führenden Nullen hat, ist dies gleichzeitig das Bit am linken
+Ende der Eingabe. Die Anzahl an zu schreibenden $a$s ist also gleich dem Index
+des höchstwertigsten Bits. Die Turingmaschine hierzu ist (z.B.) folgende:
+
+\usetikzlibrary{automata,positioning,arrows}
+\tikzset{every node/.append style={font=\sf}}
+\tikzset{auto,thick,>=stealth',initial text={\sffamily start},node distance=2cm}
+
+\vspace{\baselineskip}
+
+\colorbox{teal!10}{Sei $\Sigma=\{0,1\}$}
+\begin{center}
+   \begin{tikzpicture}
+      \node[state,initial] (S) {$S$};
+      \node[state] (A) [right=of S] {$A$};
+      \node[state] (B) [right=of A] {$B$};
+      \node[state,accepting] (C) [right=of B] {$C$};
+      \path[->]
+      (S) edge[loop above] node {$\star\in\Sigma/\star,R$} ()
+      (S) edge node {$\Box/\Box,L$} (A)
+      (A) edge node {$\star\in\Sigma/\Box,L$} (B)
+      (B) edge[loop above] node {$\star\in\Sigma/a,L$} ()
+      (B) edge node {$\Box/\Box,R$} (C);
+   \end{tikzpicture}
+\end{center}
+
+Hierbei ist die Kante zwischen $A$ und $B$ dafür zuständig, eine Stelle der
+Eingabe abzuschneiden, da man ein $a$ weniger braucht, als die Eingabe lang ist.
+
+\subsection{} 
+\subsubsection{a)}
+
+\lstset{
+   basicstyle=\footnotesize\ttfamily,
+   language=C,
+   breaklines=true,
+   commentstyle=\color{blue},
+   keywordstyle=\color{purple}\textbf,
+   numberstyle=\tiny\color{gray},
+   numbers=left,
+   stringstyle=\color{olive},
+}
+\lstset{
+  literate={ö}{{\"o}}1
+           {ä}{{\"a}}1
+           {ü}{{\"u}}1
+           {ß}{{\ss}}1
+}
+
+Man geht wie folgt vor
+\begin{center}
+\begin{lstlisting}
+   Laufe nach ganz R
+   Ersetze Blank durch $, gehe R
+   Ersetze Blank durch a, gehe L // +1
+   Gehe nach ganz L // stehe auf Blank
+   Gehe R
+   Falls $ gelesen: // passiert nicht in 1. Iteration
+      ersetze durch Blank, gehe R
+      terminiere
+   sonst: // a gelesen
+      Ersetze a durch Blank // löschen
+      Gehe R, bis $ gelesen
+      Gehe R, solange a gelesen
+      Ersetze Blank durch a, gehe R // 3 as schreiben
+      Ersetze Blank durch a, gehe R 
+      Ersetze Blank durch a, gehe L
+      Goto Stelle 4
+\end{lstlisting}
+\end{center}
+
+Die Turingmaschine hierzu lautet:
+
+\tikzset{node distance=1.2cm}
+\vspace{\baselineskip}
+\colorbox{teal!10}{Sei $\Gamma=\{a\}$}
+\begin{center}
+   \begin{tikzpicture}
+      \node[state,initial] (A) {$A$};
+      \node[state] (B) [above=of A] {$B$};
+      \node[state] (C) [right=of B] {$C$};
+      \node[state] (D) [right=of C] {$D$};
+      \node[state] (E) [right=of D] {$E$};
+      \node[state] (F) [below=of E] {$F$};
+      \node[state] (G) [below=of F] {$G$};
+      \node[state] (H) [below=of G] {$H$};
+      \node[state] (I) [left=of H] {$I$};
+      \node[state] (J) [above=of I] {$J$};
+      \node[state,accepting] (K) [above=of J] {$K$};
+
+      \path[->]
+      (A) edge[loop below] node {$a/a,R$} ()
+      (A) edge node {$\Box/\$,R$} (B)
+      (B) edge node {$\Box/a,L$} (C)
+      (C) edge[loop above] node {$\star\in\Gamma\cup\{\$\}/\star,L$} ()
+      (C) edge node {$\Box/\Box,R$} (D)
+      (D) edge node {$a/\Box,R$} (E)
+      (E) edge[loop above] node {$a/a,R$} ()
+      (E) edge[loop right] node {$\$/\$,R$} ()
+      (E) edge node {$\Box/a,R$} (F)
+      (F) edge node {$\Box/a,R$} (G)
+      (G) edge node {$\Box/a,L$} (H)
+      (H) edge[loop right] node {$a/a,L$} ()
+      (H) edge node {$\$/\$,L$} (I)
+      (I) edge[out=180,in=-90,looseness=1] node {$a/a,L$} (C)
+      (I) edge node {$\Box/\Box,R$} (J)
+      (J) edge node {$\$/\Box,R$} (K);
+   \end{tikzpicture}
+\end{center}
+
+\subsubsection{b)}
+
+Zunächst wird mittels folgendem Automaten bestimmt, ob die Eingabe gerade oder
+ungerade Länge hat:
+
+\begin{center}
+   \begin{tikzpicture}[node distance=1.5cm]
+      \node[state,initial] (A) {$A$};
+      \node[state] (B) [below=of A] {$B$};
+      \node[state] (C) [right=of A] {$C$};
+      \node[state] (D) [above=of C] {$D$};
+      \node[state,dashed] (E) [right=of B] {$E$};
+      \node[state,dashed] (F) [above=of A] {$F$};
+
+      \path[->]
+      (A) edge node[left] {$\Box/\Box,L$} (B)
+      (B) edge[loop left] node {$a/a,L$} ()
+      (B) edge node {$\Box/\Box,R$} (E)
+      (A) edge[bend left] node {$a/a,R$} (C)
+      (C) edge[bend left] node {$a/a,R$} (A)
+      (C) edge node[right] {$\Box/\Box,L$} (D)
+      (D) edge[loop above] node {$a/a,L$} ()
+      (D) edge node {$\Box/\Box,R$} (F);
+   \end{tikzpicture}
+\end{center}
+
+Hierbei folgt an Knoten $F$ der Automat, der ungerade Eingaben verarbeitet, und
+an $E$ der für gerade Eingaben. Im Weiteren geht man dann wie folgt vor:
+
+\begin{lstlisting}
+   Bestimme, ob Eingabe gerade oder ungerade
+   Falls ungerade
+      gehe vor gemäß a)
+   sonst
+      Laufe nach ganz R // stehe auf Blank
+      Ersetze Blank durch $ // markiere Output-Buffer
+      Laufe nach ganz L // stehe auf Blank
+      Gehe R
+      Falls $ gelesen, ersetze durch Blank, gehe R
+         terminiere
+      sonst // stehe auf a
+         Ersetze a durch Blank, gehe R
+         Ersetze a durch Blank, gehe R // min 2 as, da gerade und > 0
+         Laufe ganz R bis $ gelesen // bis zum Output-Buffer
+         Laufe R solange a gelesen // zum Ende des Buffers
+         Ersetze Blank durch a, gehe L // zwei a gelöscht, eins geschrieben
+         Goto Stelle 7
+\end{lstlisting}
+
+\subsection{} 
+
+Eine Turingmaschine $\mathcal{M}$, die nur $n$ Felder des Bandes beschreibt, kann eine solche
+simulieren, die $c\cdot n$ Felder beschreibt und das Alphabet $\Sigma$ besitzt,
+wenn sie ein Alphabet $\Sigma_\mathcal{M} = \{k \mid k \in \left(\Sigma \cup
+\Box\right)^c\}$ besitzt,
+ihr Alphabet also eine Menge von $c$-Tupeln aus $\Sigma$ ist. Dies ist effektiv
+das selbe wie eine mehrbändige Turingmaschine mit jeweile endlichem Speicher, da
+in einem Übergang einzelne Einträge des Tupels geändert werden können. Der
+Automat wird dafür mehr Zustände benötigen.
+
+\subsection{} 
+
+\subsubsection{\texttt{Goto}-Programm}
+
+Das \texttt{Goto}-Programm ist relativ simpel. Man speichert sich die Werte der
+beiden Zahlen, prüft, ob die erste ungleich null ist, wenn nein, gibt man sie
+zurück. Wenn ja, prüft man, ob die zweite Zahl ungleich null ist. Wenn
+nein, gibt man die zweite Zahl zurück (kleiner als 0 kann das Minimum nicht sein).
+Wenn ja, so dekrementiert man beide
+Zahlen (bzw. ihre Kopien) und beginnt wieder oben.
+
+\begin{lstlisting}[escapeinside={b}{b}]
+    xb$_4$b := xb$_1$b
+    xb$_5$b := xb$_2$b
+Lb$_1$b: if(xb$_4 \neq $b0) goto Lb$_2$b
+    xb$_3$b := xb$_1$b
+    halt
+Lb$_2$b: if(xb$_5 \neq $b0) goto Lb$_3$b
+    xb$_3$b := xb$_2$b
+    halt
+Lb$_3$b: goto Lb$_4$b
+Lb$_4$b: xb$_4$b := xb$_4$b - 1
+    xb$_5$b := xb$_5$b - 1
+    goto Lb$_1$b
+
+\end{lstlisting}
+
+\subsubsection{\texttt{While}-Programm}
+
+Aus dem obigen Programm wird gemäß dem Vorgehen aus den Slides ein
+\texttt{While}-Programm generiert. Dies wird verkompliziert dadurch, dass
+Prüfungen der Form \texttt{if(x = $c$)} nicht erlaubt sind. Daher wird eine
+Variable immer dekrementiert, und geprüft, ob sie 0 ist. So stellt man fest,
+welchen Wert der Programmzeiger ($x_{pos}$) hat. Ärgerlicherweise kann man nur
+auf Ungleichheit prüfen, sodass die Anweisungen für den Fall, dass der Zeiger
+einen bestimmten Wert hatte, in die \texttt{else}-Klauseln am Ende wandern. Das
+Ganze muss geschatelt werden und es kommt folgender Programmsalat dabei heraus:
+
+\begin{lstlisting}[escapeinside={[}{]}]
+x[$_0$] := 1; x[$_4$] := x[$_1$]; x[$_5$] := x[$_2$]
+while(x[$_0$] [$\neq$] 0) {
+   x[$_6$] := x[$_0$] - 1 // test if pos is 1
+   if(x[$_6$] [$\neq$] 0) {
+      x[$_6$] := x[$_6$] - 1 // test if pos is 2
+      if(x[$_6$] [$\neq$] 0) {
+         x[$_6$] := x[$_6$] - 1 // test if pos is 3
+         if(x[$_6$] [$\neq$] 0) {
+            x[$_0$] := 1 // jump to L[$_1$]
+         } else { // pos is 4
+            x[$_4$] := x[$_4$] - 1
+            x[$_5$] := x[$_5$] - 1
+            x[$_0$] := 1 // start at top
+         }
+      } else { // pos was 2
+         if(x[$_5$] [$\neq$] 0) { x[$_0$] := 3 } // jump to L[$_3$]
+         else {
+            x[$_3$] := x[$_2$] // x[$_5$] is 0, so the first one is at least as large
+            x[$_0$] := 0 // terminate
+         }
+      }
+   } else { // pos was 1
+      if(x[$_4$] [$\neq$] 0) { x[$_0$] := 2 } 
+      else {
+         x[$_3$] := x[$_1$]; // if x[$_4$] is 0, the other one is at least as large
+         x[$_0$] := 0 // terminate
+      }
+   }
+}
+\end{lstlisting}
+
+Per Hand lässt sich eine einfachere Möglichkeit finden (Dank an Hendrik).
+
+\begin{lstlisting}[escapeinside={[}{]}]
+x[$_f$] := 1;
+t[$_1$] := x[$_1$];
+t[$_2$] := x[$_2$];
+while(x[$_f$] != 0) {
+   if(t[$_1$] != 0) {
+      if(t[$_2$] != 0){
+         t[$_1$] := t[$_1$] - 1;
+         t[$_2$] := t[$_2$] - 1;
+      } else {
+         x[$_3$] := x[$_2$];
+         x[$_f$] := 0;
+      }
+   } else {
+      x[$_3$] := x[$_1$];
+      x[$_f$] := 0;
+   }
+}
+\end{lstlisting}
+
+\subsection{} 
+
+\subsection{} 
+
+\begin{minipage}{.4\textwidth}
+   \def\PuzzleSolutionContent#1{\makebox(1,1){\itshape{#1}}}
+   \renewcommand{\PuzzleLineThickness}{1pt}
+   \PuzzleSolution
+   \begin{Puzzle}{4}{13}
+   |a|*|*|*|*|*|c|*|a|*|*|*|*|.
+   |c|*|*|*|*|*|b|*|c|*|*|*|*|.
+   |b|*|*|*|*|a|a|c|a|c|*|*|*|.
+   |a|c|b|c|b|c|a|a|c|a|c|a|b|.
+   \end{Puzzle}
+\end{minipage}
+
+\end{document}

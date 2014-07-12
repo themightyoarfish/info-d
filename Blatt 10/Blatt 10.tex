@@ -1,0 +1,339 @@
+\documentclass{article}
+\title{Informatik \rotatebox[origin=c]{180}{D}\raisebox{2pt}{:} -- Blatt 10}
+\author{Rasmus Diederichsen}
+\date{\today}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{microtype,
+   booktabs,
+   enumitem,
+   amssymb,
+   multirow,
+   listings,
+   cwpuzzle,
+   tikz,
+   multicol,
+   IEEEtrantools,
+   array,
+   amsmath,
+   amssymb,
+   graphicx, 
+lmodern}
+\usepackage[pdftitle={Informatik D -- Blatt 10}, 
+   pdfauthor={Rasmus Diederichsen}, 
+   hyperfootnotes=true,
+   colorlinks,
+   bookmarksnumbered = true,
+   linkcolor = blue,
+   plainpages = false,
+citecolor = blue]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[all]{hypcap}
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{Aufgabe \arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{}
+\setcounter{section}{9}
+
+\begin{document}
+
+\maketitle
+
+\section{} 
+\subsection{} 
+\subsubsection{a)}
+
+$\mathcal{A}$ berechnet die Funktion $f(x) = 3^{3^x}$, für $x > 0$.
+
+\subsubsection{b)}
+
+Das uniforme Kostenmaß ist nur sinnvoll, wenn primitive Operationen
+(Addition, Multiplikation) wirklich in $\mathcal{O}(1)$ durchgeführt werden
+können. Für reale Computer kann dies je nach Architektur nur für Zahlen $\le
+2^{32}$ oder $2^{64}$ passieren, da die Register keine größeren Zahlen fassen
+können.
+
+Die Werte, die $y$ in $\mathcal{A}$ annimmt, laufen jedoch schon für relativ
+kleine $x$ ($x \lessapprox 3.366$ bei 64 Bit Integralzahlen) über diesen Wertebereich und
+sind dann nicht mehr in 32 oder 64 Bit darstellbar. Die arithmetischen
+Operationen sind dann nicht mehr atomar und der Aufwand wächst mit der
+Eingabegröße, ist also nicht mehr konstant.
+
+\subsubsection{c)}
+
+Da der Wert von $y$ in jedem Schleifendurchlauf mit 3 potenziert wird, braucht
+Schleifendurchlauf $i$ $3(3^i\log{3})^2$ viele Schritte. Die Gesamtzahl an
+Schritten ist somit
+\begin{equation*}
+   f(x) = \sum\limits_{i=1}^x 3(\log_2 3^{3^i})^2 = \sum\limits_{i=1}^x 3(3^i\log_2 3)^2\in
+   \mathcal{O}\left(3^{2x}\right)
+\end{equation*}
+
+\subsection{} 
+
+\subsubsection{a)}
+
+Das zugehörige Entscheidungsproblem ist
+
+\begin{center}
+   \begin{tabular}{p{.6\textwidth}}
+      Gibt es ein $x\in\mathbb{R}^n$, sodass $c^Tx \ge k$ mit $Ax \le b$?
+   \end{tabular}
+\end{center}
+
+\subsubsection{b)}
+
+\lstset{
+   basicstyle=\footnotesize\ttfamily,
+   language=Python,
+   breaklines=true,
+   commentstyle=\color{blue},
+   keywordstyle=\color{purple}\textbf,
+   numberstyle=\tiny\color{gray},
+   numbers=left,
+   stringstyle=\color{olive},
+}
+\begin{lstlisting}[escapeinside={*}{*},title={Optimierungsalgorithmus}]
+def optimize(c, A, b):
+   import numpy as np
+   upperLim = np.sum(c) # groesser geht's nicht
+   lowerLim = 0
+
+   return binarySearch(0, upperLim)
+
+def *$\mathcal{A}$*(k):
+      ... # entscheide ob max >= k ist mit c, A, b
+
+   def binarySearch(lower, upper):
+      if (upper == lower) return upper
+      if (*$\mathcal{A}$*(upper)):
+         return upper # wenn es ein Element >= upper gibt, muss es == upper sein
+      if (not *$\mathcal{A}$*(lower + 1)):
+         return lower # wenn es kein Element > lower gibt, muss das maximum == lower sein
+      if(*$\mathcal{A}$*(lower + (upper + lower) / 2)): # weiter in oberer Haelfte suchen
+         return binarySearch(lower + (upper + lower) / 2, upper)
+      else: # weiter in unterer Haelfte suchen
+         return binarySearch(lower, upper - (upper + lower) / 2)
+\end{lstlisting}
+
+Im Algorithmus wird der Suchraum in jeder Iteration halbiert, es kann also
+maximal $\log_2{n}$ viele rekursive Aufrufe geben, und auch das nur, falls $c =
+\{1\}^n$. Für jeden Aufruf von \texttt{binarySearch} wird einmal $\mathcal{A}$
+aufgerufen, die Gesamtlaufzeit ist somit
+$\in\mathcal{O}\left(t_{\mathcal{A}}(n,m)\log_2{n}\right)$. Ist man auch an dem
+zu dieser Lösung führenden $x$ interessiert, so errechnet man dies aus den $n$
+Ungleichungen $Ax \le b$, mithilfe von $c^Tx = k$.
+
+% the fuck happened to the space here?
+\vspace{2\baselineskip}
+
+\subsection{} 
+
+\subsubsection{a)}
+
+Man untersucht nacheinander alle Terme $T_i$ darauf, ob sie ein Literal und
+seine Negation enthalten. Falls nein, so kann man alle Literale so belegen, dass
+sie \texttt{true} sind und man terminiert, da nur ein $T_i$ \texttt{true} sein
+muss. Falls ja, so geht man weiter zur nächsten Klausel.
+
+Ist auch der letzte Term unerfüllbar
+(der worst case), so hat man alle Literale nur einmal angeschaut, da es pro
+Literal nur eine Möglichkeit gibt, dass es \texttt{true} wird. Der Aufwand ist
+also maximal linear.
+
+\subsubsection{b)}
+
+\newcommand{\NP}{N\kern-2ptP}
+Das Theorem gälte, wenn die Überführung einer beliebigen Formel in DNF auch in
+polynomieller Zeit durchführbar wäre. Dieses Problem ist jedoch (anscheinend)
+bewiesenermaßen $\NP$-schwer, und daher nur in $P$, wenn es auch in $\NP$ ist und $P =
+\NP$ gilt. Dies ist nicht bewiesen, daher gilt der Beweis nicht.
+\subsection{} 
+
+\renewcommand{\labelenumi}{(\arabic{enumi})}
+\begin{enumerate}
+   \item $(x_{Stannis,1} \wedge x_{Sansa,1}) \vee (\neg x_{Stannis,1} \wedge
+      \neg x_{Sansa,1})$
+   \item $\bigwedge\limits_t\bigvee\limits_{v_1 \neq v_2} \neg(x_{v_1,t} \vee
+      x_{v_2,t})$ 
+      \begin{itemize}[label=$\rightarrow$]
+         \item Für jeden Zeitpunkt müssen mindestens zwei ungleiche Personen
+            \emph{nicht} in Tyrions Gemächern sein, über die anderen wird keine
+            Aussage getroffen. 
+      \end{itemize}
+      Es resultieren folgende Klauseln:
+      % a = []
+      % 1.upto(3) do |t|
+      %    arr = []
+      %    names1 = ['Stannis', 'Sansa', 'Shae', 'Sandor']
+      %    names2 = ['Stannis', 'Sansa', 'Shae', 'Sandor']
+      %    names1.each do |v1|
+      %       names2.each do |v2|
+      %          if v1 != v2 
+      %             arr.push "\\neg(x_\{#{v1},#{t}\} \\vee x_\{#{v2},#{t}\})"
+      %          end
+      %       end
+      %       names2.delete v1
+      %    end
+      %    a.push arr
+      % end
+
+      % a.map! {|array| "(" + array.join(" \\vee ") + ")"}
+      % puts "$", a.join(" \\wedge "), "$"
+
+      $ (\neg(x_{Stannis,1} \vee x_{Sansa,1}) \vee \neg(x_{Stannis,1} \vee
+      x_{Shae,1}) \vee \neg(x_{Stannis,1} \vee x_{Sandor,1}) \vee
+      \neg(x_{Sansa,1} \vee x_{Shae,1}) \vee \neg(x_{Sansa,1} \vee x_{Sandor,1})
+      \vee \neg(x_{Shae,1} \vee x_{Sandor,1})) \wedge (\neg(x_{Stannis,2} \vee
+      x_{Sansa,2}) \vee \neg(x_{Stannis,2} \vee x_{Shae,2}) \vee
+      \neg(x_{Stannis,2} \vee x_{Sandor,2}) \vee \neg(x_{Sansa,2} \vee
+      x_{Shae,2}) \vee \neg(x_{Sansa,2} \vee x_{Sandor,2}) \vee \neg(x_{Shae,2}
+      \vee x_{Sandor,2})) \wedge (\neg(x_{Stannis,3} \vee x_{Sansa,3}) \vee
+      \neg(x_{Stannis,3} \vee x_{Shae,3}) \vee \neg(x_{Stannis,3} \vee
+      x_{Sandor,3}) \vee \neg(x_{Sansa,3} \vee x_{Shae,3}) \vee \neg(x_{Sansa,3}
+      \vee x_{Sandor,3}) \vee \neg(x_{Shae,3} \vee x_{Sandor,3})) $
+
+   \item $\bigwedge\limits_{t_1\neq t_2} \neg(x_{Stannis,t_1} \wedge
+      x_{Stannis,t_2}) \wedge \neg(x_{Shae,t_1} \wedge x_{Shae,t_2})$
+
+      Es resultieren die Klauseln:
+
+      % a = []
+      % times1 = (1..3).to_a
+      % times2 = (1..3).to_a
+      % times1.each do |t1|
+      %    times2.each do |t2|
+      %       a.push "\\neg(x_\{Stannis,#{t1}\} \\wedge x_\{Stannis,#{t2}\}) \\wedge \\neg(x_\{Shae,#{t1}\} \\wedge x_\{Shae,#{t2}\})" if t1 != t2
+      %    end
+      %    times2.delete t1
+      % end
+      % puts "$" + a.join("\\wedge") + "$"
+      $\neg(x_{Stannis,1} \wedge x_{Stannis,2}) \wedge \neg(x_{Shae,1} \wedge
+      x_{Shae,2})\wedge\neg(x_{Stannis,1} \wedge x_{Stannis,3}) \wedge
+      \neg(x_{Shae,1} \wedge x_{Shae,3})\wedge\neg(x_{Stannis,2} \wedge
+      x_{Stannis,3}) \wedge \neg(x_{Shae,2} \wedge x_{Shae,3})$
+   \item $(x_{Sansa,1} \wedge x_{Sansa,2}) \vee \neg(x_{Sansa,1} \vee
+      x_{Sansa,2}) \wedge \neg x_{Sansa,3}$
+   \item $(x_{Sansa,2} \wedge x_{Shae,2}) \vee \neg(x_{Sansa,2} \vee x_{Shae,2})$
+      \begin{itemize}[label=$\rightarrow$]
+         \item Sansa und Shae müssen sich entweder beide in Tyrions Gemächern
+            aufgehalten haben, oder sie waren beide nicht dort. Zwar müssten sie
+            dann \emph{beide} am selben anderen Ort gewesen sein, dies spielt
+            hier aber keine Rolle und ist nicht direkt darstellbar, da die
+            einzigen Orte Tyrions Gemächer und Nicht-Tyrions-Gemächer sind.
+      \end{itemize}
+   \item $x_{Shae,2}$
+   \item $\bigwedge\limits_t x_{Shae,t} \rightarrow y_t$. Dies lässt sich
+      umformen zu $\bigwedge\limits_t \neg x_{Shae,t} \vee y_t$.
+      Es resultieren die Formeln
+
+      $(\neg x_{Shae,1} \vee y_1) \wedge (\neg x_{Shae,2} \vee y_2) \wedge (\neg
+      x_{Shae,3} \vee y_3)$
+   \item[(8*)] $\bigwedge\limits_{t_2 > t_1} \neg y_{t_1} \rightarrow \neg y_{t_2}$,
+      was äquivalent ist zu $\bigwedge\limits_{t_2 > t_1} y_{t_1} \vee \neg
+      y_{t_2}$. 
+      Es resultieren die Klauseln
+
+      $(y_{1} \vee \neg y_{2}) \wedge (y_{1} \vee \neg y_{3}) \wedge (y_{2} \vee
+      \neg y_{3})$
+\end{enumerate}
+
+Wir sind nun in der Position, einige Schlussfolgerungen zu machen.
+\renewcommand{\labelenumi}{\arabic{enumi}.}
+\begin{enumerate}
+   \item Wegen (6) wissen wir, dass $x_{Shae,2}=\texttt{true}$.
+   \item Wegen (7) und 1. wissen wir, dass $y_2 = \texttt{true}$.
+   \item Wegen (5) und 1. wissen wir, dass nicht nur $x_{Shae,2}=\texttt{true}$,
+      sondern auch $x_{Sansa,2}=\texttt{true}$, da beide am gleichen Ort waren.
+   \item Wegen (4) und 3. wissen wir, dass $x_{Sansa,1}=\texttt{true}$.
+   \item Wegen (1) und 4. wissen wir, dass $x_{Stannis,1}=\texttt{true}$, da
+      beide am gleichen Ort waren.
+   \item Wegen (3) und 5. wissen wir, dass $x_{Stannis,2}=\texttt{false}$. 
+      % Er war
+      % also nicht der Mörder, da Tyrion in Stunde 2 umgebracht worden sein muss
+      % (er lebte in Stunde 2 noch)
+   \item Wegen (2) und 3. wissen wir auch, dass $x_{Sandor,2}=\texttt{false}$ 
+      % Sandor nicht der Mörder sein
+      % kann, da er in Stunde 2 nicht bei Tyrion gewesen sein kann. 
+      Alle Konjunkte
+      müssen wahr sein, im zweiten Konjunkt sind jedoch wegen 3. alle Disjunkte
+      \texttt{false}, die Shae und Sansa enthalten. Also muss
+      $\neg(x_{Stannis,2} \vee x_{Sandor,2})$ \texttt{true} sein, mithin
+      $x_{Stannis,2}=\texttt{false}$ und $x_{Sandor,2}=\texttt{false}$. 
+      % Weder Stannis
+      % noch Sandor waren also zu Stunde 2 bei Tyrion und kommen nicht als Mörder
+      % in Frage.
+   \item Wegen (3) und 6. wissen wir, dass $x_{Stannis,3}=\texttt{false}$.
+   \item Wegen (3) und 1. wissen wir, dass $x_{Shae,3}=\texttt{false}$.
+   \item Wegen (4) wissen wir, dass $x_{Sansa,3}=\texttt{false}$
+   \item Der einzige, der zur Stunde 3 bei Tyrion gewesen sein kann, war Sandor.
+\end{enumerate}
+
+Der Mörder muss also Sandor Clegane sein.
+
+% Wir können den Verdächtigenkreis auf Sansa und Shae einschränken, da beide in
+% Stunde 2 in Tyrions Räumen waren. Zu diesem Zeitpunkt war er noch am Leben, zur
+% Stunde 3 allerdings tot (unter der Annahme, dass die 3 Stunden, über die wir
+% Informationen besitzen, jene Stunde mit einschließt, in der er getötet wurde).
+
+% Da Sansa viel zu schwach für eine solche Tat ist, und Shae zudem von Cersei
+% gekauft wurde, erhärtet sich der Verdacht, dass sie die Mörderin ist.
+
+\subsection{} 
+\subsection{} 
+
+Für $\chi = \text{SAT}$ ist die Lösung relativ simpel. Sei $n$ die Anzahl der
+vorkommenden Variablen. Die folgende Funktion gibt nach Eingabe einer
+Klauselmenge mithilfe von $\mathcal{A}_\chi$ einen Zeugen für $\mathcal{I}^*$ in
+Form einer Assoziationsliste zurück.
+
+Hierbei sei \texttt{solvedp} ein Prädikat, dass bestimmt, ob ein Satz Formeln
+mit gegebenen Variablenzuweisungen bereits erfüllt ist, und \texttt{variables}
+retourniere die Liste von Variablen der SAT-Instanz.
+
+Wer das hier lesen kann, bekommt einen Keks.
+
+\begin{lstlisting}[language=Lisp,escapeinside={|}{|}]
+(defun witness (problem)
+   (labels ((solve (formulas cur_assignments)
+      (cond ((solvedp formulas cur_assignments) cur_assignments)
+            ((not (|$\mathcal{A}_{\chi}$| formulas cur_assignments)) nil)
+            (t (or (solve formulas 
+                          (cons (cons (find-if #'unassignedp 
+                                               (variables formulas))
+                                      t) 
+                                cur_assignments))
+                   (solve formulas 
+                          (cons (cons (find-if #'unassignedp 
+                                               (variables formulas)) 
+                                      nil) 
+                                cur_assignments)))))))
+      (solve problem nil)))
+\end{lstlisting}
+
+% In Worten geht man wie folgt vor. Man betrachtet nacheinander alle in
+% $\mathcal{I}^*$ vorkommenden Variablen $x_1,\ldots,x_n$. Man setzt nun die
+% aktuelle Variable $x_i$ auf \texttt{true}, reduziert die Klauselmenge, sodass sie
+% wieder nur Variablen enthält und prüft, ob das um eine Variable reduzierte
+% Problem noch immer lösbar ist. 
+
+% Falls ja, so behält man die soeben getroffene
+% Zuweisung und wendet sich der nächsten freien Variable zu. 
+
+% Falls nein, so wählt man stattdessen $x_i = \texttt{false}$, reduziert die
+% Klauselmenge und geht zur nächsten Variable (das reduzierte Problem ist nun auf
+% jeden Fall lösbar, da wir bereits wissen, dass die vorliegende eine
+% Ja-Instanz ist).
+
+% Irgendwann ist man beim trivialen Problem \texttt{true} angekommen und weiß nun,
+% dass die gespeicherten Zuweisungen einen Zeugen von $\mathcal{I}^*$ darstellen.
+% Ob es noch andere gibt, weiß man nicht.
+
+% Dieses Schema ließe sich theoretisch auch auf andere Probleme anwenden. Diese
+% könnte man entweder auf SAT reduzieren (weil SAT $\NP$-vollständig ist), oder
+% die Reduktion des Problems geschieht auf andere Weise. Im Graph Coloring-Problem
+% würde man einem beliebigen Knoten eine Farbe zuordnen und ihn aus dem Graphen
+% entfernen und für alle Nachbarknoten seine Farbe aus der Menge erlaubter Farben
+% entfernen. Wiederum prüft man mit $\mathcal{A}_\chi$, ob der geschrumpfte Graph
+% noch colorierbar ist. Falls ja, geht man vor wie mit dem ersten Knoten, falls
+% nein, so backtracked man und wählt die nächste Farbe für den ersten Knoten.
+\end{document}

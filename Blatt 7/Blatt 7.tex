@@ -1,0 +1,417 @@
+\documentclass{article}
+\title{Informatik \rotatebox[origin=c]{180}{D}\raisebox{2pt}{:} -- Blatt 7}
+\author{Rasmus Diederichsen}
+\date{\today}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[table,svgnames]{xcolor}
+\usepackage{wasysym}
+\let\iiint\relax % wasysym-amsmath interference
+\let\iint\relax
+\usepackage{microtype,
+   booktabs,
+   enumitem,
+   multirow,
+   listings,
+   cwpuzzle,
+   tikz,
+   multicol,
+   IEEEtrantools,
+   array,
+   amsmath,
+   amssymb,
+   graphicx, 
+lmodern}
+\usepackage[pdftitle={Informatik D -- Blatt 7}, 
+   pdfauthor={Rasmus Diederichsen}, 
+   hyperfootnotes=true,
+   colorlinks,
+   bookmarksnumbered = true,
+   linkcolor = blue,
+   plainpages = false,
+citecolor = blue]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[all]{hypcap}
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{Aufgabe \arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{}
+\setcounter{section}{6}
+
+\begin{document}
+
+\maketitle
+
+\section{} 
+\subsection{} 
+\subsubsection{a)}
+
+Es ist $L = \{a^kb^lc^m \mid k,l,m\in\mathbb{N}\} \cup \{d^ja^kb^kc^k \mid
+j,k\in\mathbb{N}, j > 0\} = L_1 \cup L_2$. Offensichtlich ist $L_2$ nicht
+kontextfrei, da es sich in einer kontextfreien Grammatik nicht sicherstellen lässt,
+dass mehr als zwei verschieden Symbole gleich häufig vorkommen müssen. Dies wäre
+unproblematisch, falls $L_2 \subseteq L_1$, denn eine reguläre Sprache (wie
+$L_1$) kann ja ohne Weiteres eine Sprache höherer Klasse als Teilmenge
+beinhalten. Dies ist hier nicht der Fall, $L_1 \cap L_2 = \emptyset$. Um $L$
+darzustellen, ist also eine kontextfreie Grammatik nicht ausreichend.
+
+\subsubsection{b)}
+
+Es wird hier angenommen, dass es sich in der Sprachspezifikation um ein
+nicht-exklusives 'Oder' handelt.
+
+\let\oldlabelenumi\labelenumi
+\renewcommand{\labelenumi}{\textbf{Fall \arabic*:}}
+\begin{enumerate}[leftmargin=*]
+   \item Für $j = 0, k=l=m$ wähle $v,x$ entweder so, dass sie jeweils nur ein
+      Zeichen (beliebig oft wiederholt) enthalten oder leer sind (nicht beide
+      zugleich). Man kann dann beliebig aufpumpen. Zwar verliert man die
+      Struktur $a^kb^kc^k$, jedoch ist $a^lb^mc^n$ ja immernoch $\in L$.
+   \item 
+      Falls $j=0,k,l,m, \ge 0$, ist die Sprache offensichtlich kontextfrei (sie
+      ist sogar regulär), da es keine weiteren Beschränkungen für $k,l,m$ gibt. Das
+      Pumping Lemma hilft hier also schonmal nicht weiter.
+   \item Falls $j \neq 0, k, l, m \ge 0$, ist die Sprache ebenfalls regulär und
+      damit kontextfrei.
+   \item
+      Falls $j \neq 0, k = l = m$ haben wir ein Wort $z =
+      d^ja^kb^kc^k$ mit $j+3k\ge n$. In diesem Fall wähle
+      \begin{itemize}
+         \item $u=\varepsilon$
+         \item $v = d$
+         \item $w=\varepsilon$
+         \item $x=\varepsilon$
+         \item $y=a^kb^kc^k$
+      \end{itemize}
+      Die Bedingungen $|vx|\ge 1$ und $|vwx| \le n$ sind erfüllt.
+      Offensichtlich ist $uv^iwx^iy = \varepsilon d^i\varepsilon
+      \varepsilon^ia^kb^kc^k \in L$. Diese Zerlegung lässt sich immer finden,
+      unabhäbgig von $n$. Das Pumping Lemma ist demnach hier unnütz.
+
+\end{enumerate}
+
+\subsection{} 
+
+Die Sprache $L$ ist nicht kontextfrei, was mir mittels des Pumping Lemmas
+zeigen. Sei $n$ die Wortmindestlänge und $z_n = a^nb^{2^n} \in L$. Es gilt
+\begin{equation*}
+   |z_n| = n + 2^n \text{ und } |z_{n+1}| = n + 1 + 2^{n+1}
+\end{equation*}
+
+Es gibt folgende Möglichkeiten, eine Zerlegung $uvwxy$ von $z_n$ zu finden:
+\begin{enumerate}[leftmargin=*]
+   \item $vwx = a^k, k \ge 1$ enthält nur $a$s. Hierbei könten durch Pumpen beliebig viele $a$s
+      erzeugt werden, daher z.B. $uv^2wx^2y\not\in L$.
+   \item $vwx$ enthält $a$s und $b$s.
+      \begin{enumerate}
+         \item Falls $w = \varepsilon$, so ist $vwx = a^lb^k,n \ge l+k \ge 1$.
+            Es gilt für $uv^2wx^2y = a^{n-l}a^{2l}b^{2k}b^{2^n-k} =
+            a^{n+l}b^{2^n+k}$ dass
+            $|uv^2wx^2y| = n + l + 2^n + k$. Dieses Wort muss mindestens die
+            Länge von $z_{n+1}$ haben, um in $L$ enthalten sein zu können. Die
+            Gleichung
+            \begin{IEEEeqnarray*}{rCl}
+               n + l + 2^n + k & = & n + 1 + 2^{n+1} \\
+               l + k & = & 1 + 2^{n+1} -2^n \\
+                     & = & 1 + 2^n(2 - 1)\\
+                     & = & 1 + 2^n
+            \end{IEEEeqnarray*}
+            ist jedoch nicht erfüllbar, da $l + k \le n$ nach Vorraussetzung.
+         \item Falls $w \neq \varepsilon$, ändert dies nichts, da $l + k$
+            dadurch lediglich kleiner würde und die obige Gleichung weiterhin
+            unerfüllbar ist.
+      \end{enumerate}
+   \item $vwx$ enthält nur $b$s. Mit der Begründung von Punkt 1 gilt $uv^iwx^iy
+      \not\in L$
+\end{enumerate}
+
+\subsection{} 
+
+\newcommand{\grule}[2]{#1 & \rightarrow & #2}
+\begin{multicols}{2}
+
+   Ausgehend von 
+   \begin{equation*}
+      \begin{array}{rcl}
+         \grule{S}{E \mid ABC} \\
+         \grule{A}{bdC \mid E \mid S} \\
+         \grule{B}{acDC \mid C} \\
+         \grule{C}{ab \mid Ja \mid IdA} \\
+         \grule{D}{deF \mid DeF \mid dEF \mid DEF} \\
+         \grule{E}{abba \mid aBBa \mid AbbA} \\
+         \grule{F}{JcJ \mid GJ \mid bG} \\
+         \grule{G}{F \mid IG} \\
+         \grule{H}{SA \mid Hcc} \\
+         \grule{I}{c \mid cIc \mid dF} \\
+      \end{array}
+   \end{equation*}
+
+
+   Markieren wir
+
+   \newcommand{\marked}[1]{\colorbox{yellow}{\hspace{-2pt}$#1$\hspace{-2pt}}}
+
+   \subsubsection{Schritt 1}
+   \begin{equation*}
+      \begin{array}{rcl}
+         \grule{S}{E \mid ABC} \\
+         \grule{A}{bdC \mid E \mid S} \\
+         \grule{B}{acDC \mid C} \\
+         \grule{\marked{C}}{\marked{ab} \mid Ja \mid IdA} \\
+         \grule{D}{deF \mid DeF \mid dEF \mid DEF} \\
+         \grule{E}{abba \mid aBBa \mid AbbA} \\
+         \grule{F}{JcJ \mid GJ \mid bG} \\
+         \grule{G}{F \mid IG} \\
+         \grule{H}{SA \mid Hcc} \\
+         \grule{I}{c \mid cIc \mid dF} \\
+      \end{array}
+   \end{equation*}
+
+   \vfill{ }
+
+   \subsubsection{Schritt 2}
+   \begin{equation*}
+      \begin{array}{rcl}
+         \grule{S}{E \mid AB\marked{C}} \\
+         \grule{A}{bd\marked{C} \mid E \mid S} \\
+         \grule{\marked{B}}{acD\marked{C} \mid \marked{C}} \\
+         \grule{\marked{C}}{\marked{ab} \mid Ja \mid IdA} \\
+         \grule{D}{deF \mid DeF \mid dEF \mid DEF} \\
+         \grule{E}{abba \mid aBBa \mid AbbA} \\
+         \grule{F}{JcJ \mid GJ \mid bG} \\
+         \grule{G}{F \mid IG} \\
+         \grule{H}{SA \mid Hcc} \\
+         \grule{I}{c \mid cIc \mid dF} \\
+      \end{array}
+   \end{equation*}
+
+   \subsubsection{Schritt 3}
+
+   \begin{equation*}
+      \begin{array}{rcl}
+         \grule{S}{E \mid A\marked{B}\marked{C}} \\
+         \grule{A}{bd\marked{C} \mid E \mid S} \\
+         \grule{\marked{B}}{acD\marked{C} \mid \marked{C}} \\
+         \grule{\marked{C}}{\marked{ab} \mid Ja \mid IdA} \\
+         \grule{D}{deF \mid DeF \mid dEF \mid DEF} \\
+         \grule{\marked{E}}{\marked{abba}\mid \marked{aBBa} \mid AbbA} \\
+         \grule{F}{JcJ \mid GJ \mid bG} \\
+         \grule{G}{F \mid IG} \\
+         \grule{H}{SA \mid Hcc} \\
+         \grule{I}{c \mid cIc \mid dF} \\
+      \end{array}
+   \end{equation*}
+
+   \subsubsection{Schritt 4}
+
+   \begin{equation*}
+      \begin{array}{rcl}
+         \grule{\marked{S}}{\marked{E} \mid A\marked{B}\marked{C}} \\
+         \grule{\marked{A}}{bd\marked{C} \mid \marked{E} \mid S} \\
+         \grule{\marked{B}}{acD\marked{C} \mid \marked{C}} \\
+         \grule{\marked{C}}{\marked{ab} \mid Ja \mid IdA} \\
+         \grule{D}{deF \mid DeF \mid d\marked{E}F \mid D\marked{E}F} \\
+         \grule{\marked{E}}{\marked{abba}\mid \marked{aBBa} \mid AbbA} \\
+         \grule{F}{JcJ \mid GJ \mid bG} \\
+         \grule{G}{F \mid IG} \\
+         \grule{H}{SA \mid Hcc} \\
+         \grule{I}{c \mid cIc \mid dF} \\
+      \end{array}
+   \end{equation*}
+
+   \subsubsection{}
+
+   Wir sehen also, dass die Sprache nicht leer ist. Markiert man bis zum Ende
+   durch, erhält man
+   \begin{equation*}
+      \begin{array}{rcl}
+         \grule{\marked{S}}{\marked{E} \mid \marked{ABC}} \\
+         \grule{\marked{A}}{bd\marked{C} \mid \marked{E} \mid \marked{S}} \\
+         \grule{\marked{B}}{acD\marked{C} \mid \marked{C}} \\
+         \grule{\marked{C}}{\marked{ab} \mid Ja \mid \marked{IdA}} \\
+         \grule{D}{deF \mid DeF \mid d\marked{E}F \mid D\marked{E}F} \\
+         \grule{\marked{E}}{\marked{abba}\mid \marked{aBBa} \mid \marked{AbbA}} \\
+         \grule{F}{JcJ \mid GJ \mid bG} \\
+         \grule{G}{F \mid \marked{I}G} \\
+         \grule{\marked{H}}{\marked{SA} \mid \marked{Hcc}} \\
+         \grule{\marked{I}}{\marked{c} \mid \marked{cIc} \mid dF}
+      \end{array}
+   \end{equation*}
+\end{multicols}
+
+Die reduzierte Grammatik ist also 
+
+\begin{equation*}
+   \begin{array}{rcl}
+      \grule{S}{E \mid ABC} \\
+      \grule{A}{E \mid S} \\
+      \grule{B}{C} \\
+      \grule{C}{ab \mid IdA} \\
+      \grule{E}{abba \mid aBBa \mid AbbA} \\
+      \grule{I}{c \mid cIc}
+   \end{array}
+\end{equation*}
+Die Regeln der Form $V \rightarrow V$ sind $\{S\rightarrow E, A \rightarrow E, A
+\rightarrow S, B \rightarrow C\}$. Hieraus entsteht der Graph
+
+\usetikzlibrary{arrows,automata,positioning}
+\tikzset{every node/.append style={font=\sf}}
+
+\begin{center}
+   \begin{tikzpicture}[auto,thick,>=stealth',
+      initial text={\sffamily start},node distance=1cm]
+      \node[state] (S) {$S$};
+      \node[state] (A) [above right=of S] {$A$};
+      \node[state] (E) [below right=of S] {$E$};
+      \node[state] (B) [right=of A] {$B$};
+      \node[state] (C) [right=of E] {$C$};
+      \path[->]
+      (A) edge (S)
+      (S) edge (E)
+      (A) edge (E)
+      (B) edge (C);
+   \end{tikzpicture}
+\end{center}
+
+Der Graph ist bereits kreisfrei. Es müssen also noch die Senken eliminiert
+werden.
+
+\subsubsection{Elimination von Senke $C$}
+
+Man führt die neuen Regeln
+\begin{equation*}
+   \begin{array}{rcl}
+      \grule{B}{ab \mid IdA}
+   \end{array}
+\end{equation*}
+ein. Entfernt wird die Regel $B \rightarrow C$.
+
+\subsubsection{Elimination von Senke $E$}
+
+Man führt die neuen Regeln
+\begin{equation*}
+   \begin{array}{rcl}
+      \grule{S}{abba \mid aBBa \mid AbbA} \\
+      \grule{A}{abba \mid aBBa \mid AbbA}
+   \end{array}
+\end{equation*}
+ein. Entfernt werden die Regeln $A \rightarrow E$ und $S \rightarrow E$. Der reduzierte Graph ist
+
+\begin{center}
+   \begin{tikzpicture}[auto,thick,>=stealth',
+      initial text={\sffamily start},node distance=1cm]
+      \node[state] (A) {$A$};
+      \node[state] (S) [right=of A] {$S$};
+      \path[->]
+      (A) edge (S);
+   \end{tikzpicture}
+\end{center}
+
+\subsubsection{Eliminiere Senke $S$}
+
+Man führt die Regeln
+\begin{equation*}
+   \begin{array}{rcl}
+      \grule{A}{abba \mid aBBa \mid AbbA \mid ABC}
+   \end{array}
+\end{equation*}
+ein, von denen Teile in $A$ bereits enthalten sind.
+Wir entfernen $A \rightarrow S$. Die finale Grammatik ist
+\begin{equation*}
+   \begin{array}{rcl}
+      \grule{S}{abba \mid aBBa \mid AbbA \mid ABC} \\
+      \grule{A}{abba \mid aBBa \mid AbbA \mid ABC} \\
+      \grule{B}{ab \mid IdA} \\
+      \grule{C}{ab \mid IdA} \\
+      \rowcolor{lightgray!50} \grule{E}{abba \mid aBBa \mid AbbA}\\
+      \grule{I}{c \mid cIc}
+   \end{array}
+\end{equation*}
+wobei die Variable $E$ nicht mehr erreicht wird aufgrund der Subsitutionen mit
+ihrer rechten Seite in den anderen Regeln.
+
+Der Graph bestehend aus den Variablen ist
+\begin{center}
+   \begin{tikzpicture}[auto,thick,>=stealth',
+      initial text={\sffamily start},node distance=2cm]
+      \node[state,initial] (S) {$S$};
+      \node[state] (A) [right=of S]{$A$};
+      \node[state] (B) [below left=of A] {$B$};
+      \node[state] (C) [right=of A] {$C$};
+      \node[state] (I) [right=of B] {$I$};
+      \path[->]
+      (S) edge (A)
+      (S) edge (B)
+      (S) edge[bend left=40,looseness=1.1,out=60,in=120] (C)
+      (C) edge (I)
+      (C) edge[bend left,color=red] (A)
+      (A) edge[bend left,color=red] (C)
+      (A) edge[bend left,color=red] (B)
+      (B) edge[bend left,color=red] (A)
+      (B) edge (I)
+      (A) edge[loop above,color=red] ()
+      (I) edge[loop above,color=red] ();
+   \end{tikzpicture}
+\end{center}
+Dieser Graph hat Kreise, also ist die Sprache nicht endlich.
+
+\subsection{} 
+
+Das ``Problem'' mit der zweiten Definition ist, dass $A$ nur eine Variable sein
+kann, der Rest der Satzform muss auf $u$ und $w$ aufgeteilt werden, die auf der
+rechten Seite unverändert bestehen bleiben müssen. Egal ob man $A$ mit $A$ oder
+$B$ belegt, die jeweils andere Variable wird nach anwenden der Produktion
+rechts oder links stehen bleiben.
+
+Um diese Art von Regeln darstellen zu können, führen wir ein:
+\begin{equation*}
+   \begin{array}{rcl}
+      \grule{X}{AB} \\
+      \grule{Y}{BA}
+   \end{array}
+\end{equation*}
+ein, die beide der zweiten Definition Genüge tun. Zusätzlich definiert man die
+Regel
+\begin{equation*}
+   X\rightarrow Y
+\end{equation*}
+sowie für jede Regel
+\begin{equation*}
+   uVv \rightarrow u\ldots AB \ldots v
+\end{equation*}
+eine Regel
+\begin{equation*}
+   uVv \rightarrow u\ldots X \ldots v
+\end{equation*}
+
+Alternativ könnte man Regeln der folgenden Form einführen ($C$ sei eine neue
+Variable):
+
+\begin{equation*}
+   \begin{array}{rcl}
+      \grule{AB}{AC} \\
+      \grule{AC}{BC} \\
+      \grule{BC}{BA}
+   \end{array}
+\end{equation*}
+
+\subsection{} 
+
+\hspace{1.8cm}\begin{minipage}{.4\textwidth}
+   \def\PuzzleSolutionContent#1{\makebox(1,1){\itshape{#1}}}
+   \renewcommand{\PuzzleLineThickness}{1pt}
+   \PuzzleSolution
+   \begin{Puzzle}{5}{9}
+      |*|*|b|c|a|c|c|a|*|.
+      |*|*|*|c|*|*|*|c|*|.
+      |*|c|b|c|a|a|c|b|c|.
+      |*|*|*|c|*|a|c|a|b|.
+      |b|c|b|c|b|c|b|c|a|.
+   \end{Puzzle}
+\end{minipage}
+
+\subsection{} 
+
+\begin{center}
+   \includegraphics{niemand_kehrt.jpeg}
+\end{center}
+\end{document}

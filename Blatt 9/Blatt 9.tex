@@ -1,0 +1,211 @@
+\documentclass{article}
+\title{Informatik \rotatebox[origin=c]{180}{D}\raisebox{2pt}{:} -- Blatt 9}
+\author{Rasmus Diederichsen}
+\date{\today}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[table,svgnames]{xcolor}
+\usepackage{wasysym}
+\let\iiint\relax % wasysym-amsmath interference
+\let\iint\relax
+\usepackage{microtype,
+   booktabs,
+   enumitem,
+   multirow,
+   listings,
+   cwpuzzle,
+   tikz,
+   multicol,
+   IEEEtrantools,
+   array,
+   amsmath,
+   amssymb,
+   graphicx, 
+lmodern}
+\usepackage[pdftitle={Informatik D -- Blatt 9}, 
+   pdfauthor={Rasmus Diederichsen}, 
+   hyperfootnotes=true,
+   colorlinks,
+   bookmarksnumbered = true,
+   linkcolor = blue,
+   plainpages = false,
+citecolor = blue]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[all]{hypcap}
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{Aufgabe \arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{}
+\setcounter{section}{8}
+
+\begin{document}
+
+\maketitle
+
+\section{} 
+\subsection{} 
+
+Das Wort ``nichtselbstidentifizierend'' ist weder selbstidentifizierend noch
+nichtselbstidentifizierend. Es kann nicht unter den Begriff
+\emph{selbstidentifizierend} fallen, da es nicht mit dem Namen des Begriffs
+(``selbstidentifizierend'') übereinstimmt. Es kann nicht
+nichtselbstidentifizierend sein, denn dann fiele es unter den Begriff
+\emph{nichtselbstidentifizierend}, wäre also zugleich selbstidentifizierend und
+nichtselbstidentifizierend. Dies ist ein Widerspruch.
+
+\subsection{} 
+
+Sei das Eingabealphabet von $M$ bezeichnet mit $\Gamma$.
+Ein Algorithmus, der für gegebene $M$, $Z_i$ die positive Hälfte entscheidet, ob es eine Eingabe
+$w$ gibt, auf der $M$ $Z_i$ erreicht, kann folgendermaßen aussehen:
+
+\lstset{
+   basicstyle=\footnotesize\ttfamily,
+   language=Python,
+   breaklines=true,
+   commentstyle=\color{blue},
+   keywordstyle=\color{purple}\textbf,
+   numberstyle=\tiny\color{gray},
+   numbers=left,
+   stringstyle=\color{olive},
+}
+
+\begin{lstlisting}[escapeinside={*}{*}]
+for n in range(0,*$\infty$*):
+   for *$w$* in *$\Gamma^{k \le n}$*:
+      lasse *$M$* mit Eingabe *$w$* n Schritte ausfuehren
+      if *$M$* erreicht *$Z_i$*:
+         return 1
+\end{lstlisting}
+
+\subsection{} 
+
+\lstset{
+   basicstyle=\footnotesize\ttfamily,
+   language=C,
+   breaklines=true,
+   commentstyle=\color{blue},
+   keywordstyle=\color{purple}\textbf,
+   numberstyle=\tiny\color{gray},
+   numbers=left,
+   stringstyle=\color{olive},
+}
+\lstset{
+  literate={ö}{{\"o}}1
+           {ä}{{\"a}}1
+           {ü}{{\"u}}1
+           {ß}{{\ss}}1
+}
+
+Wir definieren eine Funktion als Programm $\mathcal{P}_1$ mit 
+\begin{equation*}
+   \mathcal{P}_1(n) =
+   \begin{cases}
+         1 & \text{falls Eingabe $n$ in einen Zyklus 4, 2, 1 führt} \\
+         undef & \text{sonst}
+      \end{cases}
+   \end{equation*}
+
+   \begin{lstlisting}[escapeinside={*}{*}, title=$\mathcal{P}_1$]
+   int *$\mathcal{P}_1$*(int n)
+   {
+      if (n < 1) return 1 // P sollte für alles anhalten, auch wenn collatz(n) nicht definiert ist
+      if (collatz(n) == 4) // wenn Eingabe 4, dann wiederholt sich 4, 2, 1
+         return 1
+      else return *$\mathcal{P}_1$*(collatz(n))
+   }
+\end{lstlisting}
+
+Falls $\mathcal{A}\left(\mathcal{P}_1\right) = 1$, so ist die Collatz-Vermutung
+bewiesen.
+
+\subsection{} 
+
+Angenommen, es gäbe ein Programm $\mathcal{P}$, das für eine gegebene Turingmaschine
+entscheidet, ob sie jemals anhält.
+\begin{lstlisting}[language=Java,title=$\mathcal{P}$]
+boolean haeltNicht(TuringMachine t)
+{
+   ...
+}
+\end{lstlisting}
+
+Wir definieren das Programm $\mathcal{P}_2$
+\begin{lstlisting}[language=Java,title=$\mathcal{P}_2$]
+void widerspruch(String input)
+{
+   if(haeltNicht(new TuringMachine(widerspruch))) return;
+   else while(true);
+}
+\end{lstlisting}
+
+Liefert die \texttt{if}-Abfrage \texttt{true}, so hält $\mathcal{P}_2$ für keine
+Eingabe an, hält dann aber an. Liefert die Abfrage \texttt{false}, so hält
+$\mathcal{P}_2$ für irgendeine Eingabe. Die Eingabe wird aber ignoriert und
+$\mathcal{P}_2$ gerät in eine Endlosschleife, hält also für keine Eingabe an.
+Dies ist ein Widerspruch. Das Problem ist also nicht entscheidbar.
+
+\subsection{} 
+
+\subsubsection{a)}
+
+\newcommand{\tile}[2]{
+      \begin{tabular}{|c|}
+         \hline
+         \cellcolor{lightgray!10} #1 \\ \hline
+         \cellcolor{lightgray!10} #2 \\
+         \hline
+      \end{tabular}
+}
+
+Eine Lösung ist
+
+\vspace{\baselineskip}
+
+\tile{we}{weinh}\tile{in}{ier}\tile{h}{un}\tile{ier}{d}\tile{un}{b}\tile{db}{ier}\tile{ier}{d}\tile{dort}{ort}
+
+\subsubsection{b)}
+
+Es ist keine Lösung möglich. Es gilt $\forall i: |y_i| \ge |x_i| \wedge \sum_i
+|x_i| < \sum_i |y_i|$. Es muss jedoch für eine Lösung gelten $\sum_k |x_{i_k}| =
+\sum_k |y_{i_k}|$. Dies ist nicht erfüllbar, weil man aufgrund der ersten
+Beobachtung ein durch $y_i$s generiertes Längedefizit nicht durch Wiederholung
+eines $x_i$s kompensieren kann. Die beiden Zeilen können also niemals die
+gleiche Länge haben, es sei denn, man verwendet nur die Steine, die oben wie
+unten die gleiche Zeichenzahl besitzen. Dies sind 
+
+\vspace{\baselineskip}
+\begin{center}
+   \tile{a}{m} und \tile{m}{a}
+\end{center}
+\vspace{\baselineskip}
+
+Offensichtlich kann man diese beiden auf keine Weise arrangieren, die die
+Anforderung erfüllt.
+
+\subsection{} 
+
+\subsubsection{a)}
+
+Die Rückgabe ist immer korrekt, weil $\mathcal{K}$ alle möglichen
+\textsc{Purl}-Programme durchprobiert, bis eins die Ausgabe $w$ erzeugt. Da
+hierbei von kurz nach lang iteriert wird, kommt hier zudem das kürzestmögliche
+heraus. Es gilt $\mathcal{K}(w) \le |w| + \lfloor\log_{10}|w|\rfloor + 2$, da eine
+Ausgabe $w$ in jedem Fall durch das Programm $|w|$\texttt{:}$w$ generiert
+werden. $\log_{10}|w|$ + 1 liefert gerade die Anzahl von Ziffern der
+dezimalkodierten Länge von $w$. Hinzu kommen noch ``\texttt{:}'' sowie alle
+Zeichen des Wortes selbst. Mithin ist maximal diese Programmlänge nötig.
+
+\subsubsection{b)}
+
+$\mathcal{K}$ terminiert immer, sofern $|w|<\infty \wedge |\Sigma| < \infty$, da
+beide Schleifenindizes dann endliche Wertebereiche haben und ein
+\textsc{Purl}-Programm keine Endlosschleifen enthalten kann.
+
+\subsubsection{c)}
+
+Die Nichtberechenbarkeit der Kolmogorov-Komplexität gilt nur für
+Turing-vollständige Sprachen. \textsc{Purl} ist dies nicht. Die Sprache erlaubt
+keine Endlosschleifen und es gibt keine Variablen oder arithmetische Operationen
+und keine Verzweigung. Es ist daher nicht möglich, alle berechenbaren Funktionen
+in \textsc{Purl} zu schreiben.  
+\end{document}

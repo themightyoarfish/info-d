@@ -1,0 +1,219 @@
+\documentclass{article}
+\title{Informatik \rotatebox[origin=c]{180}{D}\raisebox{2pt}{:} -- Blatt 1}
+\author{Rasmus Diederichsen}
+\date{\today}
+\usepackage[ngerman]{babel}
+\usepackage{microtype,
+            xcolor,
+            cwpuzzle,
+            tikzsymbols,
+            IEEEtrantools,
+            array,
+            amsmath,
+            amssymb,
+            graphicx, subcaption,
+            lmodern}
+\usepackage[pdftitle={Informatik :D -- Blatt 1}, 
+       pdfauthor={Rasmus Diederichsen}, 
+       hyperfootnotes=true,
+       colorlinks,
+       bookmarksnumbered = true,
+       linkcolor = blue,
+       plainpages = false,
+       citecolor = blue]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[all]{hypcap}
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{Aufgabe \arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{}
+
+\begin{document}
+
+   \maketitle
+
+   \section{} 
+   \subsection{} 
+
+   Die Reihenfolge ist 
+   \begin{IEEEeqnarray*}{CCCCCCCC}
+      & \mathcal{O}\left(\log x\right) & \subseteq & \textcolor{teal}{\mathcal{O}\left(\sqrt{x}\right)} & \textcolor{teal}{\subseteq} &
+      \textcolor{teal}{\mathcal{O}\left(\frac{x}{\sqrt{x}}\right)} & \subseteq &
+      \mathcal{O}\left(n^{0.99}\right) \\ 
+      \subseteq & \textcolor{teal}{\mathcal{O}\left(\frac{x}{\log{x}}\right)} &
+      \textcolor{teal}{\subseteq} &
+      \textcolor{teal}{\mathcal{O}\left(\frac{x}{\log{\log{x}}}\right)} &
+      \subseteq & \mathcal{O}\left(x\log{x}\right) &
+      \subseteq & \mathcal{O}\left(x\log{x^2}\right) \\
+      \subseteq & \mathcal{O}\left(x\log^2 x\right) & 
+      \subseteq & \mathcal{O}\left(x^{1.01}\right) & \subseteq &
+      \textcolor{teal}{\mathcal{O}\left(2^x\right)} & \textcolor{teal}{\subseteq} &
+      \textcolor{teal}{\mathcal{O}\left(2^{x+1}\right)} \\
+      \subseteq & \mathcal{O}\left(2^{2x}\right)
+   \end{IEEEeqnarray*}
+
+   Dies kann leichter nachvollzogen werden, f\"uhrt man sich vor Augen, dass
+   $\log{x}$ asymptotisch langsamer w\"achst als jede Potenz von $x$ und damit
+   jedes Polynom in $x$ (ohne Beweis). Weiterhin w\"achst jede
+   Exponentialfunktion asymptotisch st\"arker als jedes Polynom (ebenfalls hier
+   ohne Beweis). 
+   
+   \subsection{} 
+
+   \subsubsection{I}
+
+   Zu Zeigen:
+   \begin{equation}
+      f_2(n) = n^2 + 1000n \in \mathcal{O}\left(n^2\right)
+   \end{equation}
+   Wir betrachten $n>0$.
+   \begin{IEEEeqnarray*}{rCl}
+      n^2 + 1000n & \le & cn^2 \\
+      n(n + 1000) & \le & cn^2 \\
+      n + 1000 & \le & cn
+   \end{IEEEeqnarray*}
+   Sei nun $c = 1001$. F\"ur alle $n> 0$ gilt
+   \begin{IEEEeqnarray*}{rCl}
+      n + 1000 & \le & 1001n \\
+      1000 & \le & 1000n
+   \end{IEEEeqnarray*}
+   Daher gibt es f\"ur alle $n>0$ ein $c$ sodass $f_1(n)\le cf_2(n)$, dies gilt
+   f\"ur alle $c \ge 1001$.
+
+   \subsubsection{II}
+
+   Zu Zeigen:
+   \begin{equation}
+      f_3(n) = m^{\log n} \le cn^{\log m}
+   \end{equation}
+   Es ist
+   \begin{IEEEeqnarray*}{rCl}
+      m^{\log n} & \le & cn^{\log m} \\
+      \log{m^{\log n}} & \le & \log{cn^{\log m}} \\
+      \log{n}\log{m} & \le & \log{n}\log{m} + \log{c}
+   \end{IEEEeqnarray*}
+   Die letzte Ungleichung ist erf\"ullt f\"ur $c\ge1$.
+   
+   \subsubsection{III}
+   
+   Zu Zeigen:
+   \begin{equation}
+      f_6(n) \not\in f_5(n)
+   \end{equation}
+   Die Beziehung ist erf\"ullt genau dann wenn $\forall c \forall n_0 > 0: \exists
+   n \ge n_0: f_6(n) > cf_5(n)$. Sei daher $c$ beliebig fest gew\"ahlt .
+   Die Ungleichung ist genau dann l\"osbar, wenn $n$ ungerade ist und $> 100$. In
+   diesem Fall
+   \begin{IEEEeqnarray*}{rCl}
+      f_6(n) & > & f_5(n) \\
+      n^3 & > & cn \\
+      n & > & \sqrt{c}
+   \end{IEEEeqnarray*}
+
+   Die Wahl von $n_0$ ist hier nicht relevant, da ich f\"ur jedes beliebige $c$
+   ein ungerades und beliebig gro\ss{}es $n > n_0$ finden kann, sodass $n >
+   \sqrt{c}$ gilt.
+
+   \subsection{} 
+
+   \subsubsection{a)}
+
+   \begin{equation*}
+      L_{min} = \{aa, ab, ac, ca, ba\}
+   \end{equation*}
+   \begin{equation*}
+      L_{max} = \{ab, ba, ac, ca, bb, cc, bc, cb\}
+   \end{equation*}
+   \begin{equation*}
+      L_{min} \cap L_{max} = \{ab, ac, ca, ba\}
+   \end{equation*}
+   \begin{equation*}
+      L_{min} \cup L_{max} = \{aa, ab, ba, ac, ca, bb, cc, bc, cb\}
+   \end{equation*}
+   \begin{equation*}
+      L_{min} \setminus L_{max} = \{aa\}
+   \end{equation*}
+   \subsubsection{b)}
+
+   \begin{eqnarray*}
+      \overline{L_{min}} & = &  \Sigma^* \setminus L_{min} \\
+                         & = & \{w~ |~ w \in \Sigma^*, w \not\in L_{min}\} \\
+                         & = & \{a, b, c, bb, cc, cb, bc\} \cup \{a^ib^jc^k \mid
+   i+j+k > 2\} \cup \{\varepsilon\}
+   \end{eqnarray*}
+   \subsubsection{c)}
+   
+   \begin{equation*}
+      \left(L_{min}\setminus L_{max}\right)^* = \{a^{2i} \mid i \in
+      \mathbb{N}\}
+   \end{equation*}
+
+   \subsection{} 
+   
+   \subsubsection{a)}
+   
+   \begin{equation*}
+      \{a^i \mid i > 0, i \% 2 = 1\} \cup \{b^i \mid i > 1, i \% = 0\}
+   \end{equation*}
+
+   \subsubsection{b)}
+
+   \begin{equation*}
+      \{b(ca)^i \mid i \ge 0\} \cup \{a(ca)^i \mid i \ge 0\}
+   \end{equation*}
+
+   \subsubsection{c)}
+
+   \begin{equation*}
+      \{aba, bab, abb\}^+
+   \end{equation*}
+
+   \subsection{} 
+   
+   \def\PuzzleSolutionContent#1{\makebox(1,1){\itshape{#1}}}
+   \renewcommand{\PuzzleLineThickness}{1pt}
+   \PuzzleSolution
+   \begin{Puzzle}{6}{6}
+      |a |c |b |c |b |a|.
+      |a|c|*|*|*|*|.
+      |b|d|*|*|*|*|.
+      |b|d|d|b|[][.]*|c|.
+      |c|[][.]*|[][.]*|a|[][.]*|d|.
+      |c|c|c|d|d|b|.
+   \end{Puzzle}
+
+   \subsection{} 
+   
+   \subsubsection{a)}
+      
+   \renewcommand{\r}{\rightarrow}
+      \begin{IEEEeqnarray*}{rCl}
+         S & \r & \Smiley A \\
+         A & \r & \Smiley B \\
+         B & \r & \Smiley B \mid \Neutrey B \mid \Sadey B \mid \Sadey C \\
+         C & \r & \Sadey
+      \end{IEEEeqnarray*}
+
+   \subsubsection{b)}
+
+   \begin{IEEEeqnarray*}{rCl}
+      S & \r & \Smiley S \mid \Sadey S \mid \Neutrey S \mid \Neutrey A \\
+      A & \r & \Neutrey B \\
+      B & \r & \Smiley B \mid \Sadey B \mid \Neutrey B \mid \Neutrey C \\
+      C & \r & \Smiley C \mid \Sadey C \mid \Neutrey C \mid \Neutrey D \\
+      D & \r & \Smiley D \mid \Sadey D \mid \Neutrey D \mid \Neutrey E \\
+      E & \r & \Smiley E \mid \Sadey E \mid \Neutrey E \mid \Neutrey F \\
+      F & \r & \Smiley F \mid \Sadey F \mid \Neutrey F \mid \Smiley \mid \Sadey
+         \mid \Neutrey
+   \end{IEEEeqnarray*}
+
+   \subsubsection{c)}
+
+   \begin{IEEEeqnarray*}{rCl}
+      S & \r & \Neutrey S \mid \Sadey S \mid \Smiley A \\
+      A & \r & \Neutrey S \mid \Sadey S \mid \Smiley B \\
+      B & \r & \Neutrey C \mid \Sadey C \\
+      C & \r & \Neutrey C \mid \Sadey C \mid \Smiley D \\
+      D & \r & \Neutrey C \mid \Sadey C \mid \Smiley E \mid \Smiley \\
+      E & \r & \Neutrey \mid \Sadey \mid \Neutrey D \mid \Sadey D
+   \end{IEEEeqnarray*}
+\end{document}
