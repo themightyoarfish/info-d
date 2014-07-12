@@ -1,0 +1,231 @@
+\documentclass{article}
+\title{Informatik \rotatebox[origin=c]{180}{D}\raisebox{2pt}{:} -- Blatt 2}
+\author{Rasmus Diederichsen}
+\date{\today}
+\usepackage[ngerman]{babel}
+\usepackage{microtype,
+            xcolor,
+            cwpuzzle,
+            tikzsymbols,
+            IEEEtrantools,
+            array,
+            amsmath,
+            amssymb,
+            graphicx, subcaption,
+            lmodern}
+\usepackage[pdftitle={Informatik D -- Blatt 2}, 
+       pdfauthor={Rasmus Diederichsen}, 
+       hyperfootnotes=true,
+       colorlinks,
+       bookmarksnumbered = true,
+       linkcolor = blue,
+       plainpages = false,
+       citecolor = blue]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[all]{hypcap}
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{Aufgabe \arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{}
+\setcounter{section}{1}
+
+\begin{document}
+
+   \maketitle
+
+   \section{} 
+   \subsection{} 
+   
+   Die Regul\"are Grammatik ist
+
+   \begin{IEEEeqnarray*}{rCl}
+      S & \rightarrow & 1A \mid 2A \mid 3A \mid 4A \mid 5A \mid 6A \mid 7A \mid 8A \mid 9A \\
+        & & \mid 0 \mid 1 \mid 2 \mid 3 \mid 4 \mid 5 \mid 6 \mid 7 \mid 8 \mid 9 \\
+      A & \rightarrow & 0A \mid S %1A \mid 2A \mid 3A \mid 4A \mid 5A \mid 6A \mid 7A \mid 8A \mid 9A \\
+       % & & \mid 0 \mid 1 \mid 2 \mid 3 \mid 4 \mid 5 \mid 6 \mid 7 \mid 8 \mid 9
+   \end{IEEEeqnarray*}
+
+   Ein \"aquivalenter Regul\"arer Ausdruck ist \textcolor{teal}{(0 $\mid$ (1-9)(0-9)\textsuperscript{*})}
+
+   \subsection{} 
+   
+   \subsubsection{a)}
+
+   Eine M\"oglichkeit ist \textcolor{teal}{$s(a \mid \ldots \mid z)^*(b \mid
+   \ldots \mid z)$}.
+
+   \subsubsection{b)}
+
+   Eine M\"oglichkeit ist \textcolor{teal}{$(0 \mid 1)^*00(0 \mid 1)^*$}.
+   \subsection{} 
+   \usetikzlibrary{arrows,automata}
+   
+   FSAs f\"ur $\Sigma = \{\Smiley, \Neutrey, \Sadey\}$
+
+   \subsubsection{a)}
+
+   Der Endliche Automat ist
+
+   \begin{tikzpicture}[shorten >=1pt,node distance=5em,auto,
+                       semithick]
+
+     \node[initial,state] (A)                    {A};
+     \node[state]         (B) [right of=A] {B};
+     \node[state]         (C) [right of=B] {C};
+     \node[state]         (D) [right of=C] {D};
+     \node[accepting,state] (E) [right of=D]       {E};
+
+     \path[->] (A) edge              node {\Smiley} (B)
+     (B) edge node {\Smiley} (C)
+     (C) edge[loop above] node {\Smiley,\Neutrey} ()
+     (C) edge[bend left] node {\Sadey} (D)
+     (D) edge[bend left] node {\Smiley,\Neutrey} (C)
+     (D) edge node {\Sadey} (E)
+     (E) edge[bend left=80] node {\Smiley,\Neutrey} (C);
+   \end{tikzpicture}
+
+   Ein regul\"arer Ausdruck ist
+   \textcolor{teal}{\Smiley\Smiley(\Smiley|\Neutrey|\Sadey)\textsuperscript{*}
+   \Sadey\Sadey}
+
+   \subsubsection{b)}
+
+   Der Endliche Automat ist
+
+   \vspace{\baselineskip}
+   \begin{tikzpicture}[shorten >=1pt,node distance=5em,auto,
+                       semithick]
+                      
+      \node[initial,state] (S) {S};
+      \node[state] (A) [right of=S] {A};
+      \node[state] (B) [right of=A] {B};
+      \node[state] (C) [right of=B] {C};
+      \node[state] (D) [below of=C] {D};
+      \node[state] (E) [left of=D] {E};
+      \node[state,accepting] (F) [left of=E] {F};
+
+      \path[->] (S) edge[loop above] node {\Smiley,\Neutrey,\Sadey}()
+      (S) edge node {\Neutrey} (A)
+      (A) edge node {\Neutrey} (B)
+      (B) edge[loop above] node {\Smiley,\Neutrey,\Sadey} ()
+      (B) edge node {\Neutrey} (C)
+      (C) edge[loop right] node {\Smiley,\Neutrey,\Sadey} ()
+      (C) edge node {\Neutrey} (D)
+      (D) edge[loop below] node {\Smiley,\Neutrey,\Sadey} ()
+      (D) edge node {\Neutrey} (E)
+      (E) edge node {\Neutrey} (F)
+      (F) edge[loop below] node {\Smiley,\Neutrey,\Sadey} ();
+   \end{tikzpicture}
+
+   Ein Regul\"arer Ausdruck zu dem Automaten ist \textcolor{teal}{
+   (\Smiley|\Neutrey|\Sadey)\textsuperscript{*} \Neutrey\Neutrey
+   (\Smiley|\Neutrey|\Sadey)\textsuperscript{*} \Neutrey\Neutrey
+   (\Smiley|\Neutrey|\Sadey)\textsuperscript{*} \Neutrey\Neutrey
+   (\Smiley|\Neutrey|\Sadey)\textsuperscript{*}}
+   
+   \subsubsection{c)}
+
+   Der Endliche Automat ist
+
+   \vspace{\baselineskip}
+   \begin{tikzpicture}[shorten >=1pt,node distance=7em,auto,
+                       semithick]
+        \node[initial,state] (S) {S};
+        \node[state] (A) [right of=S] {A};
+        \node[state] (B) [right of=A] {B};
+        \node[state] (C) [right of=B] {C};
+        \node[state] (D) [below of=C] {D};
+        \node[accepting,state] (E) [left of=D] {E};
+        \node[state,accepting] (F) [left of=E] {F};
+
+        \path[->]
+        (S) edge[loop above] node {\Neutrey,\Sadey} ()
+        (S) edge[bend left] node {\Smiley} (A)
+        (A) edge[bend left] node {\Neutrey,\Sadey} (S)
+        (A) edge node {\Smiley} (B)
+        (B) edge node {\Neutrey,\Sadey} (C)
+        (C) edge[loop right] node {\Neutrey,\Sadey}
+        (C) edge[bend left] node {\Smiley} (D)
+        (D) edge node {\Smiley} (E)
+        (D) edge[bend left] node {\Neutrey,\Sadey} (C)
+        (E) edge[bend left] node {\Neutrey,\Sadey} (F)
+        (F) edge[loop left] node {\Neutrey,\Sadey} ()
+        (F) edge[bend left] node {\Smiley} (E);
+   \end{tikzpicture}
+
+   Ein m\"ogliche \"aquivalenter Regul\"arer Ausdruck ist
+   \textcolor{teal}{(\Neutrey{}\textsuperscript{*}\Sadey\textsuperscript{*}(\Smiley(\Neutrey|
+      \Sadey)\textsuperscript{+})\textsuperscript{*})\textsuperscript{*}\Smiley\Smiley(\Neutrey|
+   \Sadey)\textsuperscript{+}(\Smiley(\Neutrey|
+   \Sadey)\textsuperscript{+})\textsuperscript{*}\Smiley\Smiley((\Neutrey|
+   \Sadey)\textsuperscript{+}((\Smiley(\Neutrey|
+\Sadey)\textsuperscript{+})\textsuperscript{*}|\Smiley))\textsuperscript{*}}
+ 
+   \subsection{} 
+   
+   \begin{tikzpicture}[shorten >=1pt,node distance=7em,auto,
+                       semithick]
+      \node[initial,state] (A) {A};
+      \node[state] (B) [right of=A]{B};
+      \node[state] (C) [right of=B]{C};
+      \node[state] (D) [right of=C]{D};
+      \node[state] (E) [below of=A] {E};
+      \node[state,accepting] (F) [below of=B] {F};
+      % \node[state] (J) [right of=C] {J};
+      % \node[state] (F) [right of=J] {F};
+      % \node[state] (H) [right of=F] {H};
+      % \node[state, accepting] (G) [below of=F] {G};
+
+      \path[->]
+      (A) edge[bend left] node {0} (B)
+      (B) edge[bend left] node {0} (A)
+      (B) edge node {1} (C)
+      (C) edge[bend left] node {0,1} (D)
+      (D) edge[bend left] node {0,1} (C)
+      (C) edge node {\#} (F)
+      (A) edge[bend left] node {1} (E)
+      (E) edge[bend left] node {1} (A)
+      (A) edge node[pos=.75] {\#} (F);
+      % (A) edge node {0} (B)
+      % (A) edge node {1} (C)
+      % (B) edge[pos=0.6] node {0} (F)
+      % (B) edge node {1} (D)
+      % (C) edge[bend right=60] node {1} (F)
+      % (D) edge node {\#} (E)
+      % (D) edge[bend left] node {0,1} (K)
+      % (K) edge[bend left] node {0,1} (D)
+      % (F) edge node {\#} (G)
+      % (D) edge node {\#} (E)
+      % (F) edge[bend left] node {1} (H)
+      % (H) edge[bend left] node {1} (F)
+      % (J) edge[bend left] node {0} (F)
+      % (J) edge[bend left=20,pos=0.25] node {1} (D)
+      % (F) edge[bend left] node {0} (J);
+
+   \end{tikzpicture}
+
+   \subsection{} 
+   
+   \def\PuzzleSolutionContent#1{\makebox(1,1){\itshape{#1}}}
+   \renewcommand{\PuzzleLineThickness}{1pt}
+   \PuzzleSolution
+   \begin{Puzzle}{6}{6}
+      |b |a |b |b |a |b|.
+      |b|*|a|b|*|a|.
+      |a|b|c|c|b|a|.
+      |a|c|b|a|c|c|.
+      |a|*|a|c|*|c|.
+      |b|c|a|b|c|a|.
+   \end{Puzzle}
+
+   \subsection{} 
+   
+   Eine \"Aquivalente kontextfreie Grammatik ist
+
+   \begin{IEEEeqnarray*}{lCl}
+      A & \rightarrow & Ba \mid BCa \mid BCDa \\
+      B & \rightarrow & BB \mid Ba \mid bB \mid a \\
+      C & \rightarrow & a \mid aa \mid ada \\
+      D & \rightarrow & c \mid cC \mid DD
+   \end{IEEEeqnarray*}
+   
+\end{document}
