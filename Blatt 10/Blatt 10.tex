@@ -290,8 +290,6 @@ Hierbei sei \texttt{solvedp} ein Prädikat, dass bestimmt, ob ein Satz Formeln
 mit gegebenen Variablenzuweisungen bereits erfüllt ist, und \texttt{variables}
 retourniere die Liste von Variablen der SAT-Instanz.
 
-Wer das hier lesen kann, bekommt einen Keks.
-
 \begin{lstlisting}[language=Lisp,escapeinside={|}{|}]
 (defun witness (problem)
    (labels ((solve (formulas cur_assignments)
@@ -310,30 +308,30 @@ Wer das hier lesen kann, bekommt einen Keks.
       (solve problem nil)))
 \end{lstlisting}
 
-% In Worten geht man wie folgt vor. Man betrachtet nacheinander alle in
-% $\mathcal{I}^*$ vorkommenden Variablen $x_1,\ldots,x_n$. Man setzt nun die
-% aktuelle Variable $x_i$ auf \texttt{true}, reduziert die Klauselmenge, sodass sie
-% wieder nur Variablen enthält und prüft, ob das um eine Variable reduzierte
-% Problem noch immer lösbar ist. 
+In Worten geht man wie folgt vor. Man betrachtet nacheinander alle in
+$\mathcal{I}^*$ vorkommenden Variablen $x_1,\ldots,x_n$. Man setzt nun die
+aktuelle Variable $x_i$ auf \texttt{true}, reduziert die Klauselmenge, sodass sie
+wieder nur Variablen enthält und prüft, ob das um eine Variable reduzierte
+Problem noch immer lösbar ist. 
 
-% Falls ja, so behält man die soeben getroffene
-% Zuweisung und wendet sich der nächsten freien Variable zu. 
+Falls ja, so behält man die soeben getroffene
+Zuweisung und wendet sich der nächsten freien Variable zu. 
 
-% Falls nein, so wählt man stattdessen $x_i = \texttt{false}$, reduziert die
-% Klauselmenge und geht zur nächsten Variable (das reduzierte Problem ist nun auf
-% jeden Fall lösbar, da wir bereits wissen, dass die vorliegende eine
-% Ja-Instanz ist).
+Falls nein, so wählt man stattdessen $x_i = \texttt{false}$, reduziert die
+Klauselmenge und geht zur nächsten Variable (das reduzierte Problem ist nun auf
+jeden Fall lösbar, da wir bereits wissen, dass die vorliegende eine
+Ja-Instanz ist).
 
-% Irgendwann ist man beim trivialen Problem \texttt{true} angekommen und weiß nun,
-% dass die gespeicherten Zuweisungen einen Zeugen von $\mathcal{I}^*$ darstellen.
-% Ob es noch andere gibt, weiß man nicht.
+Irgendwann ist man beim trivialen Problem \texttt{true} angekommen und weiß nun,
+dass die gespeicherten Zuweisungen einen Zeugen von $\mathcal{I}^*$ darstellen.
+Ob es noch andere gibt, weiß man nicht.
 
-% Dieses Schema ließe sich theoretisch auch auf andere Probleme anwenden. Diese
-% könnte man entweder auf SAT reduzieren (weil SAT $\NP$-vollständig ist), oder
-% die Reduktion des Problems geschieht auf andere Weise. Im Graph Coloring-Problem
-% würde man einem beliebigen Knoten eine Farbe zuordnen und ihn aus dem Graphen
-% entfernen und für alle Nachbarknoten seine Farbe aus der Menge erlaubter Farben
-% entfernen. Wiederum prüft man mit $\mathcal{A}_\chi$, ob der geschrumpfte Graph
-% noch colorierbar ist. Falls ja, geht man vor wie mit dem ersten Knoten, falls
-% nein, so backtracked man und wählt die nächste Farbe für den ersten Knoten.
+Dieses Schema ließe sich theoretisch auch auf andere Probleme anwenden. Diese
+könnte man entweder auf SAT reduzieren (weil SAT $\NP$-vollständig ist), oder
+die Reduktion des Problems geschieht auf andere Weise. Im Graph Coloring-Problem
+würde man einem beliebigen Knoten eine Farbe zuordnen und ihn aus dem Graphen
+entfernen und für alle Nachbarknoten seine Farbe aus der Menge erlaubter Farben
+entfernen. Wiederum prüft man mit $\mathcal{A}_\chi$, ob der geschrumpfte Graph
+noch colorierbar ist. Falls ja, geht man vor wie mit dem ersten Knoten, falls
+nein, so backtracked man und wählt die nächste Farbe für den ersten Knoten.
 \end{document}

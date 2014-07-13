@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.4.17)  10 JUL 2014 16:53
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.4.17)  13 JUL 2014 11:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1225,39 +1225,39 @@ File: lstlang1.sty 2014/03/04 1.5c listings language file
 File: lstlang2.sty 2014/03/04 1.5c listings language file
 )
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 308.
+(babel)             in language  on input line 307.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 308.
+(babel)             in language  on input line 307.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 308.
+(babel)             in language  on input line 307.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 308.
+(babel)             in language  on input line 307.
  [4]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 339.
+(babel)             in language  on input line 337.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 339.
+(babel)             in language  on input line 337.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 339.
+(babel)             in language  on input line 337.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 339.
+(babel)             in language  on input line 337.
 
 [5]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 339.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 339.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 337.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 337.
  (./Blatt 10.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 339.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 339.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 337.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 337.
 Package rerunfilecheck Info: File `"Blatt 10".out' has not changed.
 (rerunfilecheck)             Checksum: 4427E9C5764D05519B6110BA5CFBC327;881.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 339.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 337.
  ) 
 Here is how much of TeX's memory you used:
- 21397 strings out of 493308
- 380451 string characters out of 6137816
- 564691 words of memory out of 5000000
+ 21413 strings out of 493308
+ 380619 string characters out of 6137816
+ 564653 words of memory out of 5000000
  24314 multiletter control sequences out of 15000+600000
- 66873 words of font info for 89 fonts, out of 8000000 for 9000
+ 67537 words of font info for 97 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  55i,10n,54p,439b,2201s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/lo
@@ -1283,7 +1283,7 @@ msy8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><
 /texlive/2013/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/local/texlive/20
 13/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texliv
 e/2013/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "Blatt 10.pdf" (5 pages, 312977 bytes).
+Output written on "Blatt 10.pdf" (5 pages, 315120 bytes).
 PDF statistics:
  255 PDF objects out of 1000 (max. 8388607)
  224 compressed objects within 3 object streams
