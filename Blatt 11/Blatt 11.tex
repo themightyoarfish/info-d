@@ -1,0 +1,174 @@
+\documentclass{article}
+\title{Informatik \rotatebox[origin=c]{180}{D}\raisebox{2pt}{:} -- Blatt 11}
+\author{Rasmus Diederichsen}
+\date{\today}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{microtype,
+   booktabs,
+   enumitem,
+   amssymb,
+   multirow,
+   listings,
+   cwpuzzle,
+   tikz,
+   multicol,
+   IEEEtrantools,
+   array,
+   amsmath,
+   amssymb,
+   graphicx, 
+lmodern}
+\usepackage[pdftitle={Informatik D -- Blatt 11}, 
+   pdfauthor={Rasmus Diederichsen}, 
+   hyperfootnotes=true,
+   colorlinks,
+   bookmarksnumbered = true,
+   linkcolor = blue,
+   plainpages = false,
+citecolor = blue]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[all]{hypcap}
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{Aufgabe \arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{}
+\setcounter{section}{10}
+
+\begin{document}
+
+\maketitle
+
+\section{} 
+
+\subsection{} 
+
+\newcommand{\NP}{N\kern-2ptP}
+
+Der Beweis ist Bullshit. Es wird reduziert von dem in Polynomialzeit lösbaren
+Problem \textsc{Eulerkreis} auf das Problem \textsc{Hamiltonkreis}. Dies zeigt
+aber nur, das \textsc{Hamiltonkreis} mindestens so schwer ist wie
+\textsc{Eulerkreis}, was nicht überrascht, da \textsc{Hamiltonkreis}
+$\NP$-vollständig ist. Um zu zeigen, dass
+\textsc{Eulerkreis} $\NP$-vollständig ist, müsste man aber zeigen, dass sich
+\textsc{Hamiltonkreis} in polynomiell-deterministischer Zeit auf
+\textsc{Eulerkreis} reduzieren lässt. Dann wäre bewiesen, dass
+\textsc{Eulerkreis} mindestens so schwer ist wie \textsc{Hamiltonkreis}.
+
+
+\subsection{} 
+
+\subsubsection{a)}
+
+Gegeben einen Zeugen für die Lösbarkeit einer Instanz (also einen Weg, dessen
+Länge angeblich $\le k$ ist und der alle Knoten genau einmal enthält), ist es
+einfach in polynomieller Zeit, nachzuprüfen ob 
+\begin{enumerate}
+   \item er wirklich kumulierte Kosten $\le k$ hat (in Linearzeit prüfbar)
+   \item er alle Knoten enthält (ebenfalls in Linearzeit prüfbar)
+\end{enumerate}
+
+\subsubsection{b)} 
+
+Wie wissen (s.o), dass \textsc{Hamiltonkreis} $\NP$-vollständig ist. Wir müssen
+also zeigen, dass sich jede Probleminstanz von \textsc{Hamiltonkreis} auf eine
+Instanz von \textsc{TSP} reduzieren lässt. 
+
+Gegeben einen Graphen $G = (V,E)$, $|V| = n$, für den ein Hamilton-Kreis gefunden werden soll,
+können wir die Problemstellung umformulieren. Sei $G^\prime = (V^\prime,E^\prime)$ ein vollständiger
+Graph mit $V^\prime = V$ und $E^\prime = \{(u,v) \mid u, v \in V^\prime\}$. Es
+sind also alle Vertices miteinander verbunden, auch wenn es zwischen ihnen in
+$G$ keine Kante gab. Die Kantenkosten seien durch die Funktion
+\begin{equation*}
+   d(e = (u,v)\in E^\prime) = \begin{cases}
+      1 & \text{falls } (u,v) \in E \\
+      2 & \text{sonst}
+   \end{cases}
+\end{equation*}
+gegeben. Die Fragestellung lautet nun
+
+\tikzstyle{mybox}=[draw=teal!50, fill=lightgray!5, very thick,
+      rectangle, rounded corners, inner sep=10pt]
+
+\begin{center}
+   \begin{tikzpicture}
+      \node [mybox] (box){
+         \begin{minipage}{0.8\textwidth}
+            Gibt es einen Weg in $G^\prime$, der jeden Knoten genau einmal besucht und
+            dessen kumulierte Kosten ($\le$) $n$ sind?
+         \end{minipage}
+      };
+   \end{tikzpicture}
+
+\end{center}
+
+\subsubsection{c)}
+
+Es bleibt zu zeigen
+
+\begin{center}
+   \begin{tikzpicture}
+      \node[mybox] (box) {
+         \begin{minipage}{.8\textwidth}
+            $G$ enthält einen Hamiltonkreis
+            \textcolor{teal}{$\Longleftrightarrow$} $G^\prime$ enthält eine
+            Rundtour $\le n$.
+         \end{minipage}
+      };
+   \end{tikzpicture}
+\end{center}
+\begin{itemize}
+   \item[``\textcolor{teal}{$\Rightarrow$}'']
+      Falls $G$ einen Hamiltonkreis besitzt, dann enthält dieser jeden Knoten
+      genau einmal und derselbe Kreis existiert in $G^\prime$. Da in $G^\prime$
+      alle Kanten aus $G$ die Kosten 1 besitzen, hat die Rundtour in $G^\prime$
+      die Kosten maximal $n$, da maximal $n$ Kanten zwischen $n$ Knoten besucht
+      werden können.
+   \item[``\textcolor{teal}{$\Leftarrow$}'']
+      Wenn es in $G^\prime$ eine Rundtour mit Kosten $\le n$ gibt,
+      so sind die kumulierten Kosten die Summe aus $n$ Kantenkosten
+      (damit ein Kreis entstehen kann). Es muss also jede Kante die
+      Kosten 1 haben, da ansonsten $\sum_{i=1}^n c_i \le n$
+      nicht erfüllbar ist mit $c\in\{1,2\}$. Dies wiederum bedeutet
+      aber (nach Definition von $d$ oben), dass derselbe Kreis auch
+      in $G$ existiert.
+\end{itemize}
+
+\subsection{} 
+
+\subsubsection{a)}
+
+\lstset{
+   basicstyle=\footnotesize\ttfamily,
+   language=Python,
+   breaklines=true,
+   commentstyle=\color{blue},
+   keywordstyle=\color{purple}\textbf,
+   numberstyle=\tiny\color{gray},
+   numbers=left,
+   stringstyle=\color{olive},
+}
+
+Das Problem lässt sich in Polynomialzeit per Brute-Force-Search lösen.
+\begin{lstlisting}[escapeinside={*}{*}, title=Algorithmus für
+\textsc{Clique}-Lösung]
+def find_clique(graph, k):
+   for g in graph.subgraphs: 
+      for (v1, v2) in [(u,v) for u in g.vertices for v in g.vertives if u != v]:
+         if !g.hasEdge(v1, v2):
+            return false
+      return true, g
+\end{lstlisting}
+
+\subsubsection{b)}
+
+Es gibt in einem Graphen mit Maximalgrad $k$ und Knotenzahl $n$ nur $n^k$ viele
+Teilgraphen, die theoretisch eine Clique bilden können, da diese nur $k$ Knoten
+enthalten kann (weil sie vollständig verbunden sein muss). In der Clique muss
+jeder der $k$ Knoten $k$ Kanten besitzen und diese müssen ihn mit den anderen
+Knoten in der Clique verbinden. Um die Verbundenheit zu prüfen, muss man also
+$k^2$ Kanten betrachten. Der Algorithmus läuft also in
+$\mathcal{O}\left(n^kk^2\right)$, in diesem Fall $\mathcal{O}\left(n^5\right)$.
+
+Für jede Konstante $k$ läuft der Algorithmus aber immer in Polynomialzeit.
+
+\end{document}
