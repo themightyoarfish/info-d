@@ -53,7 +53,7 @@ können. Für reale Computer kann dies je nach Architektur nur für Zahlen $\le
 können.
 
 Die Werte, die $y$ in $\mathcal{A}$ annimmt, laufen jedoch schon für relativ
-kleine $x$ ($x \lessapprox 3.366$ bei 64 Bit Integralzahlen) über diesen Wertebereich und
+kleine $x$ ($x \gtrapprox 3.366$ bei 64-Bit-Integralzahlen) über diesen Wertebereich und
 sind dann nicht mehr in 32 oder 64 Bit darstellbar. Die arithmetischen
 Operationen sind dann nicht mehr atomar und der Aufwand wächst mit der
 Eingabegröße, ist also nicht mehr konstant.
@@ -65,7 +65,7 @@ Schleifendurchlauf $i$ $3(3^i\log{3})^2$ viele Schritte. Die Gesamtzahl an
 Schritten ist somit
 \begin{equation*}
    f(x) = \sum\limits_{i=1}^x 3(\log_2 3^{3^i})^2 = \sum\limits_{i=1}^x 3(3^i\log_2 3)^2\in
-   \mathcal{O}\left(3^{2x}\right)
+   \mathcal{O}\left(3^{2x}\right) = \mathcal{O}\left(9^x\right)
 \end{equation*}
 
 \subsection{} 
@@ -76,7 +76,7 @@ Das zugehörige Entscheidungsproblem ist
 
 \begin{center}
    \begin{tabular}{p{.6\textwidth}}
-      Gibt es ein $x\in\mathbb{R}^n$, sodass $c^Tx \ge k$ mit $Ax \le b$?
+      Gegeben Konstanten $c, A, b$ sowie $k \in \mathbb{R}$, gibt es ein $x\in\mathbb{R}^n$, sodass $c^Tx \ge k$ mit $Ax \le b$?
    \end{tabular}
 \end{center}
 
@@ -248,20 +248,12 @@ Wir sind nun in der Position, einige Schlussfolgerungen zu machen.
    \item Wegen (1) und 4. wissen wir, dass $x_{Stannis,1}=\texttt{true}$, da
       beide am gleichen Ort waren.
    \item Wegen (3) und 5. wissen wir, dass $x_{Stannis,2}=\texttt{false}$. 
-      % Er war
-      % also nicht der Mörder, da Tyrion in Stunde 2 umgebracht worden sein muss
-      % (er lebte in Stunde 2 noch)
    \item Wegen (2) und 3. wissen wir auch, dass $x_{Sandor,2}=\texttt{false}$ 
-      % Sandor nicht der Mörder sein
-      % kann, da er in Stunde 2 nicht bei Tyrion gewesen sein kann. 
       Alle Konjunkte
       müssen wahr sein, im zweiten Konjunkt sind jedoch wegen 3. alle Disjunkte
       \texttt{false}, die Shae und Sansa enthalten. Also muss
       $\neg(x_{Stannis,2} \vee x_{Sandor,2})$ \texttt{true} sein, mithin
       $x_{Stannis,2}=\texttt{false}$ und $x_{Sandor,2}=\texttt{false}$. 
-      % Weder Stannis
-      % noch Sandor waren also zu Stunde 2 bei Tyrion und kommen nicht als Mörder
-      % in Frage.
    \item Wegen (3) und 6. wissen wir, dass $x_{Stannis,3}=\texttt{false}$.
    \item Wegen (3) und 1. wissen wir, dass $x_{Shae,3}=\texttt{false}$.
    \item Wegen (4) wissen wir, dass $x_{Sansa,3}=\texttt{false}$
@@ -270,15 +262,52 @@ Wir sind nun in der Position, einige Schlussfolgerungen zu machen.
 
 Der Mörder muss also Sandor Clegane sein.
 
-% Wir können den Verdächtigenkreis auf Sansa und Shae einschränken, da beide in
-% Stunde 2 in Tyrions Räumen waren. Zu diesem Zeitpunkt war er noch am Leben, zur
-% Stunde 3 allerdings tot (unter der Annahme, dass die 3 Stunden, über die wir
-% Informationen besitzen, jene Stunde mit einschließt, in der er getötet wurde).
-
-% Da Sansa viel zu schwach für eine solche Tat ist, und Shae zudem von Cersei
-% gekauft wurde, erhärtet sich der Verdacht, dass sie die Mörderin ist.
-
 \subsection{} 
+
+\subsubsection{a)}
+
+Es bezeichne $H$ einen Haufen mit Hinkelsteinen, die die Farben $a,\ldots,c$
+annehmen können. Wir verwenden die Variable $x_f$, die \texttt{true} ist, genau
+dann wenn $f \in F_{schön}$.
+
+Weil eine Unterschiedliche Anzahl Steine auf einem Haufen
+liegen können, ergeben sich folgende Möglichkeiten :
+
+\begin{equation*}
+   \left.
+   \begin{minipage}{.7\textwidth}
+      \begin{itemize}[align=left]
+         \item[$H=\{a,b,c\}$] $(\neg x_a \vee x_b \vee x_c) \wedge (x_a \vee \neg x_b
+            \vee x_c) \wedge (x_a \vee x_b \vee \neg x_c)$. Die Möglichkeit, dass
+            alle 3 Farben schön sind, ist hierbei ebenfalls abgedeckt.
+         \item[$H=\{a,a,b\}$:] $(x_b \rightarrow x_a)$
+         \item[$H=\{a,a,a\}$:] $(x_a \vee \neg x_a) \equiv \texttt{true}$
+         \item[$H=\{a,b\}$:] $(x_a \wedge x_b) \vee (\neg x_a \wedge \neg x_b)$
+         \item[$H=\{a,a\}$:] $(x_a \vee \neg x_a) \equiv \texttt{true}$
+         \item[$H=\{a\}$:] $\neg x_a$ (da bei nur einem Stein dessen Farbe nicht schön
+            sein darf)
+         \item[$H=\emptyset$:] trivialerweise \texttt{true}, da dieser Haufen nichts
+            zur Lösung beiträgt.
+      \end{itemize}
+   \end{minipage}\quad
+\right\}\bigwedge \wedge x_{\ell}
+\end{equation*}
+
+\subsubsection{b)}
+
+Ein Algorithmus zur Lösung kann so aussehen:
+
+\begin{lstlisting}[escapeinside={*}{*}]
+F*$_{schön}$* = {'a','b',...}
+while(*$\exists$* Haufen mit genau einem schoenen Stein mit Farbe x):
+   F*$_{schön}$* = F*$_{schön} \setminus $*{x}
+   loesche diesen Stein von Haufen
+if(*$\ell\in$* F*$_{schön}$*):
+   return true
+else 
+   return false
+\end{lstlisting}
+
 \subsection{} 
 
 Für $\chi = \text{SAT}$ ist die Lösung relativ simpel. Sei $n$ die Anzahl der
