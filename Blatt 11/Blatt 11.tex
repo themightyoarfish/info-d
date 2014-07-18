@@ -34,6 +34,17 @@ citecolor = blue]{hyperref}
 \renewcommand{\thesubsubsection}{}
 \setcounter{section}{10}
 
+\newenvironment{mybox}[1]{
+   \begin{tikzpicture}%
+      \node[draw=teal!50, fill=lightgray!5, very thick,%
+      rectangle, rounded corners, inner sep=10pt] (box) \bgroup%
+         \begin{minipage}{#1}%
+         }{%
+         \end{minipage}%
+      \egroup ;%
+   \end{tikzpicture}%
+}
+
 \begin{document}
 
 \maketitle
@@ -86,18 +97,11 @@ $G$ keine Kante gab. Die Kantenkosten seien durch die Funktion
 \end{equation*}
 gegeben. Die Fragestellung lautet nun
 
-\tikzstyle{mybox}=[draw=teal!50, fill=lightgray!5, very thick,
-      rectangle, rounded corners, inner sep=10pt]
-
 \begin{center}
-   \begin{tikzpicture}
-      \node [mybox] (box){
-         \begin{minipage}{0.8\textwidth}
-            Gibt es einen Weg in $G^\prime$, der jeden Knoten genau einmal besucht und
-            dessen kumulierte Kosten ($\le$) $n$ sind?
-         \end{minipage}
-      };
-   \end{tikzpicture}
+   \begin{mybox}{.8\textwidth}
+      Gibt es einen Weg in $G^\prime$, der jeden Knoten genau einmal besucht und
+      dessen kumulierte Kosten ($\le$) $n$ sind?
+   \end{mybox}
 
 \end{center}
 
@@ -106,16 +110,13 @@ gegeben. Die Fragestellung lautet nun
 Es bleibt zu zeigen
 
 \begin{center}
-   \begin{tikzpicture}
-      \node[mybox] (box) {
-         \begin{minipage}{.8\textwidth}
-            $G$ enthält einen Hamiltonkreis
-            \textcolor{teal}{$\Longleftrightarrow$} $G^\prime$ enthält eine
-            Rundtour $\le n$.
-         \end{minipage}
-      };
-   \end{tikzpicture}
+   \begin{mybox}{.8\textwidth}
+      $G$ enthält einen Hamiltonkreis
+      \textcolor{teal}{$\Longleftrightarrow$} $G^\prime$ enthält eine
+      Rundtour $\le n$.
+   \end{mybox}
 \end{center}
+
 \begin{itemize}
    \item[``\textcolor{teal}{$\Rightarrow$}'']
       Falls $G$ einen Hamiltonkreis besitzt, dann enthält dieser jeden Knoten
@@ -151,12 +152,16 @@ Es bleibt zu zeigen
 Das Problem lässt sich in Polynomialzeit per Brute-Force-Search lösen.
 \begin{lstlisting}[escapeinside={*}{*}, title=Algorithmus für
 \textsc{Clique}-Lösung]
-def find_clique(graph, k):
-   for g in graph.subgraphs: 
+def find_clique (graph, k):
+   for g in graph.subgraphs(k): # get subgraphs of size <= k
+      found = true
       for (v1, v2) in [(u,v) for u in g.vertices for v in g.vertives if u != v]:
          if !g.hasEdge(v1, v2):
-            return false
-      return true, g
+            found = false
+            break # skip rest of subgraph
+      if found:
+         return true, g
+   return false
 \end{lstlisting}
 
 \subsubsection{b)}
@@ -167,8 +172,113 @@ enthalten kann (weil sie vollständig verbunden sein muss). In der Clique muss
 jeder der $k$ Knoten $k$ Kanten besitzen und diese müssen ihn mit den anderen
 Knoten in der Clique verbinden. Um die Verbundenheit zu prüfen, muss man also
 $k^2$ Kanten betrachten. Der Algorithmus läuft also in
-$\mathcal{O}\left(n^kk^2\right)$, in diesem Fall $\mathcal{O}\left(n^5\right)$.
+$\mathcal{O}\left(n^k k^2\right)$, in diesem Fall $\mathcal{O}\left(n^5\right)$.
 
-Für jede Konstante $k$ läuft der Algorithmus aber immer in Polynomialzeit.
+Für jede Konstante $k$ läuft der Algorithmus immer in Polynomialzeit.
 
+\subsection{} 
+
+Wir können zumindest die Vermutung anstellen, dass der Beweis prinzipiell nicht
+funktionieren kann. Damit \textsc{NonSat} in $\NP$ ist, muss ein Zeuge für die
+Nichterfüllbarkeit einer Formel in polynomiell-deterministischer Zeit
+verifizierbar sein. Die Frage ist, wie so ein Zeuge überhaupt aussehen kann.
+Meines Erachtens ist die einzige Art von Zeuge, die die Nichterfüllbarkeit
+beweist, eine Enumeration sämtlicher möglicher Variablenbelegungen mit dem Wert,
+zu dem die Formel mit der Belegung evaluiert (nämlich \texttt{false}). Dieser Zeuge müsste bei $n$
+Variablen die Länge $k\cdot2^n$ haben. Ein exponetieller Zeuge ist nicht in
+polynomieller Zeit verifizierbar. Das Problem kann also nicht in $\NP$ sein (es
+sei denn, es gibt irgendeinen schlaueren Weg, einen Zeugen zu spezifizieren).
+\subsection{} 
+\subsection{} 
+   
+\subsubsection{a)}
+
+\textbf{Definition von SetCover}
+\vspace{\baselineskip}
+
+Das \textsc{SetCover}-Problem formuliert als Entscheidungsproblem ist wie folgt
+definiert:
+
+\begin{center}
+   \begin{mybox}{.8\textwidth}
+      Gegeben ein Universum $\mathcal{U} = \left\{1, 2, \dots, m\right\}$, eine Menge
+      von Mengen $\mathcal{S} = \left\{S_1, \dots, S_n\right\}$ mit
+      $\bigcup_{i=1}^n S_i = \mathcal{U}$ und ein $k \in \mathbb{N}$, gibt es
+      eine Teilmenge $\mathcal{C} = \left\{C_1, \dots, C_k\right\} \subseteq
+      \mathcal{S}$ mit $\bigcup_{i=1}^k C_i = \mathcal{U}$ und
+      $|\mathcal{C}| \le k$?
+   \end{mybox}
+\end{center}
+
+\textbf{Komplexität von SetCover}
+\vspace{\baselineskip}
+
+Wir zeigen, dass \textsc{SetCover} $\NP$-vollständig ist.
+
+\begin{enumerate}
+   \item Gegeben ein Zeuge $\mathcal{Z} = \{S_1,\ldots,S_k\}
+      \subseteq \mathcal{S}$, für jedes $S_i$ und für jedes $l \in S_i$ entferne $l$
+      aus $\mathcal{U}$. Am Ende prüfe, ob $\mathcal{U} = \emptyset$. Da die $n$
+      $S_i$ jeweils maximal $m$ Elemente enthalten können und die Suche in
+      $\mathcal{U}$ linearen Aufwand bedeutet, sind die Gesamtkosten im Worst
+      Case $\mathcal{O}(n\cdot m^2)$, also polynomiell.
+   \item Wir zeigen die Härte durch Reduktion von \textsc{VertexCover}. 
+      Sei $VC = (G = (V,E), k)$ eine beliebige \textsc{VertexCover}-Instanz.
+      Erstelle eine \textsc{SetCover}-Instanz $SC = (\mathcal{U, S}, k)$ mit
+      $\mathcal{U} = \{\{u,v\} \mid (u,v) \in E\}$ und $\mathcal{S} = \{S_i \mid
+      S_i = \{\{u,v\} \mid V_u = V_i \vee V_v = V_i\}\}$. $\mathcal{S}$ ist also eine
+      Menge, die für jeden Knoten die Menge der von ihm ausgehenden Kanten
+      enthält. Diese Reduktion ist offensichtlich schlimmstenfalls quadratisch
+      in $|V|$.
+
+      Zu zeigen ist:
+
+      \begin{center}
+         \begin{mybox}{.8\textwidth}
+            \begin{center}
+               \textsc{SetCover} ist erfüllbar
+               \textcolor{teal}{$\Leftrightarrow$} \textsc{VertexCover}
+               erfüllbar.
+            \end{center}
+         \end{mybox}
+      \end{center}
+
+      \begin{itemize}
+         \item[``\textcolor{teal}{$\Rightarrow$}'']
+            Sei $\mathcal{C}$ eine Lösung der \textsc{SetCover}-Instanz für $k$. Dann
+            enthält $\mathcal{C} \subseteq \mathcal{S}$ alle Kanten von $G$, da
+            $\mathcal{U}$ alle Kanten enthält und von $\mathcal{C}$ vollständig
+            abgedeckt wird.
+
+            Jedes $S_i$ entspricht genau einem $V_i \in V$. Die Menge $\{V_i
+            \mid S_i \in \mathcal{C}\}$ ist also ein \textsc{Vertex Cover} für
+            $G$ mit $k$ Knoten.
+         \item[``\textcolor{teal}{$\Leftarrow$}'']
+            Sei $K \subseteq V$ ein \textsc{Vertex Cover} für $G$ mit $|K| =
+            k$. Dann ist jede Kante in $G$ inzident zu einem Knoten in $K$.
+            Konstruieren wir also für jeden Knoten in $K$ die Menge seiner
+            inzidenten Kanten und vereinigen diese Kantenmengen, erhalten wir
+            gerade $E$, was äquivalent zu $\mathcal{U}$ ist (s.o.). Die Menge
+            $\mathcal{K} = \{S_i \mid S_i = \{\{u,v\} \mid (u,v)\text{ inzident
+            zu }v_i \in K\}\}$ ist also gerade ein \textsc{Set Cover} für
+            $\mathcal{U}$ mit $|\mathcal{K}| = k$.
+      \end{itemize}
+\end{enumerate}
+\hfill{}$\Box$
+
+\subsubsection{b)}
+
+Das \textsc{Kgb}-Problem lässt sich leicht in ein \textsc{SetCover}-Problem
+umformulieren. Es sei
+\begin{itemize}[label=$\circ$]
+   \item $\mathcal{U}$ die Menge aller Studierenden, nummeriert von 1 bis $n$,
+   \item $\mathcal{S} = \{S_i = \{ s \mid \text{ Student/in $s$ hat Zeit an
+      Termin $i$}\}\}$ die Menge von Mengen, die jeweils die Studierenden umfassen,
+      die sich für einen gegebenen Termin eingetragen haben.
+\end{itemize}
+
+Offensichtlich ist das Problem genau dann gelöst, wenn es eine Teilmenge
+$\mathcal{C} \subseteq \mathcal{S}$ gibt, sodass alle Studierenden aus
+$\mathcal{U}$ abgedeckt sind durch die Auswahl der in $\mathcal{C}$ enthaltenen
+Termine und $|\mathcal{C}| \le k$.
 \end{document}
