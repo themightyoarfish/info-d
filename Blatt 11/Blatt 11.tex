@@ -245,16 +245,22 @@ folgt.
       \begin{equation*}
          (x_i \vee x_j \vee e) \wedge (x_i \vee x_j \vee e^\prime).
       \end{equation*}
-      Diese hat dieselben Wahrheitsbedingungen wie zuvor. Transformiere nun wie
-      oben zu
+      Diese hat dieselben Wahrheitsbedingungen wie zuvor. Transformiere nun
+      beide Konjunkte wie oben zu
+      \begin{IEEEeqnarray*}{c}
+         [[x_i^\prime \vee a \vee b]] \wedge [[x_j \vee b \vee c]] \wedge [[e^\prime \vee c \vee d]] \\
+         \wedge  \\{}
+         [[x_i^\prime \vee a \vee b]] \wedge [[x_j \vee b \vee c]] \wedge [[e \vee c \vee d]]
+      \end{IEEEeqnarray*}
+      wobei $a, b, c, d$ neue Variablen sind. Füge dann noch die Klausel 
       \begin{equation*}
-         [[x_i^\prime \vee a \vee b]] \wedge [[x_j \vee b \vee c]] \wedge [[e^\prime \vee c
-         \vee d]],
-      \end{equation*} wobei $a, b, c, d$ neue Variablen sind.
+         [[e \vee e^\prime]]
+      \end{equation*}
+      hinzu.
    \item Für jede Klausel in $\mathcal{F}$ mit einem Literal, kreiere eine
       Klausel
       \begin{equation*}
-         [[x_i]]
+         [[x_i]].
       \end{equation*}
    \item Verbinde alle Klauseln mit $\wedge$.
 \end{enumerate}
