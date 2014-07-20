@@ -28,11 +28,18 @@ lmodern}
    plainpages = false,
 citecolor = blue]{hyperref}
 \usepackage[T1]{fontenc}
+
+% % garamond!
+% \usepackage{textcomp}
+% \renewcommand{\rmdefault}{ugm}
+% \usepackage[urw-garamond]{mathdesign}
+
 \usepackage[all]{hypcap}
 \renewcommand{\thesection}{}
 \renewcommand{\thesubsection}{Aufgabe \arabic{section}.\arabic{subsection}}
 \renewcommand{\thesubsubsection}{}
 \setcounter{section}{10}
+
 
 \newenvironment{mybox}[1]{
    \begin{tikzpicture}%
@@ -86,7 +93,8 @@ Instanz von \textsc{TSP} reduzieren lässt.
 
 Gegeben einen Graphen $G = (V,E)$, $|V| = n$, für den ein Hamilton-Kreis gefunden werden soll,
 können wir die Problemstellung umformulieren. Sei $G^\prime = (V^\prime,E^\prime)$ ein vollständiger
-Graph mit $V^\prime = V$ und $E^\prime = \{(u,v) \mid u, v \in V^\prime\}$. Es
+Graph mit $V^\prime = V$ und $E^\prime = \{(u,v) \mid u, v \in V^\prime, u \neq
+v\}$. Es
 sind also alle Vertices miteinander verbunden, auch wenn es zwischen ihnen in
 $G$ keine Kante gab. Die Kantenkosten seien durch die Funktion
 \begin{equation*}
@@ -129,10 +137,11 @@ Es bleibt zu zeigen
       so sind die kumulierten Kosten die Summe aus $n$ Kantenkosten
       (damit ein Kreis entstehen kann). Es muss also jede Kante die
       Kosten 1 haben, da ansonsten $\sum_{i=1}^n c_i \le n$
-      nicht erfüllbar ist mit $c\in\{1,2\}$. Dies wiederum bedeutet
+      nicht erfüllbar ist mit $c_i\in\{1,2\}$. Dies wiederum bedeutet
       aber (nach Definition von $d$ oben), dass derselbe Kreis auch
       in $G$ existiert.
 \end{itemize}
+\hfill{}$\Box$
 
 \subsection{} 
 
@@ -166,7 +175,8 @@ def find_clique (graph, k):
 
 \subsubsection{b)}
 
-Es gibt in einem Graphen mit Maximalgrad $k$ und Knotenzahl $n$ nur $n^k$ viele
+Es gibt in einem Graphen mit Maximalgrad $k$ und Knotenzahl $n$ nur
+$n^k$ (bzw. $\frac{n!}{(n-k-1)!}$, wenn die Clique maximal sein soll)  viele
 Teilgraphen, die theoretisch eine Clique bilden können, da diese nur $k$ Knoten
 enthalten kann (weil sie vollständig verbunden sein muss). In der Clique muss
 jeder der $k$ Knoten $k$ Kanten besitzen und diese müssen ihn mit den anderen
@@ -176,6 +186,7 @@ $\mathcal{O}\left(n^k k^2\right)$, in diesem Fall $\mathcal{O}\left(n^5\right)$.
 
 Für jede Konstante $k$ läuft der Algorithmus immer in Polynomialzeit.
 
+\hfill{}$\Box$
 \subsection{} 
 
 Wir können zumindest die Vermutung anstellen, dass der Beweis prinzipiell nicht
@@ -188,9 +199,65 @@ zu dem die Formel mit der Belegung evaluiert (nämlich \texttt{false}). Dieser Z
 Variablen die Länge $k\cdot2^n$ haben. Ein exponetieller Zeuge ist nicht in
 polynomieller Zeit verifizierbar. Das Problem kann also nicht in $\NP$ sein (es
 sei denn, es gibt irgendeinen schlaueren Weg, einen Zeugen zu spezifizieren).
+
 \subsection{} 
+
+\subsubsection{a)}
+
+Sei $F = \left\{f_1, \dots, f_m\right\}$ die Menge aller Farben. Seien $H_1,
+\dots, H_n \subseteq F$ Mengen mit je höchstens drei Elementen. Gibt es eine
+Teilmenge $F_{\text{schön}}\subseteq F$ der Farben, sodass $\forall i \le n:
+|F_{\text{schön}} \cap H_i| = 1$?
+
+\subsubsection{b)}
+
+\begin{equation*}
+   [[x_i \vee x_j \vee x_k]]
+\end{equation*}
+
+\subsubsection{c)}
+
+\textbf{\textsc{Asterix} ist in $\NP$}
+\vspace{\baselineskip}
+
+Offensichtlich ist in polynomialzeit feststellbar, ob jede Farbe maximal einmal
+pro Haufen vorkommt.
+
+\vspace{\baselineskip}
+\noindent\textbf{\textsc{Asterix} ist $\NP$-vollständig}
+\vspace{\baselineskip}
+
+Wir reduzieren eine beliebige \textsc{3-SAT}-Instanz $\mathcal{F}$ auf \textsc{Asterix} wie
+folgt. 
+
+\begin{enumerate}
+   \item Für jedes Literal $x_i$ in $\mathcal{F}$, führe Literal $x_i^\prime$
+      ein und ersetze jedes Vorkommen von $\neg x_i$ durch $x_i^\prime$. Erzeuge
+      für jede Ersetzung eine Klausel $[[x_i \vee x_i^\prime]]$.
+   \item Für jede Klausel in $\mathcal{F}$ mit 3 Literalen $x_i, x_j, x_k$, kreiere eine Klausel 
+      \begin{equation*}
+         [[x_i^\prime \vee a \vee b]] \wedge [[x_j \vee b \vee c]] \wedge [[x_k^\prime\vee b
+         \vee d]],
+      \end{equation*} wobei $a, b, c, d$ neue Variablen sind.
+   \item Für jede Klausel in $\mathcal{F}$ mit zwei Literalen $x_i, x_j$, kreiere eine
+      Klausel
+      \begin{equation*}
+         [[x_i \vee a]] \wedge [[x_j \vee b]] \wedge [[a \vee b]],
+      \end{equation*} wobei $a, b$ neue Variablen sind
+   \item Für jede Klausel in $\mathcal{F}$ mit einem Literal, kreiere eine
+      Klausel
+      \begin{equation*}
+         [[x_i]]
+      \end{equation*}
+   \item Verbinde alle Klauseln mit $\wedge$.
+\end{enumerate}
+
+Die Umformungen sind allesamt wahrheitserhaltend, daher ist die
+\textsc{3-SAT}-Instanz lösbar genau dann wenn, die \textsc{Asterix}-Instanz
+lösbar ist.
+
+\hfill{}$\Box$
 \subsection{} 
-   
 \subsubsection{a)}
 
 \textbf{Definition von SetCover}
@@ -281,4 +348,6 @@ Offensichtlich ist das Problem genau dann gelöst, wenn es eine Teilmenge
 $\mathcal{C} \subseteq \mathcal{S}$ gibt, sodass alle Studierenden aus
 $\mathcal{U}$ abgedeckt sind durch die Auswahl der in $\mathcal{C}$ enthaltenen
 Termine und $|\mathcal{C}| \le k$.
+
+\hfill{}$\Box$
 \end{document}
