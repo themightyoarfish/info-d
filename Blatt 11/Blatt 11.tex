@@ -162,7 +162,7 @@ Das Problem lässt sich in Polynomialzeit per Brute-Force-Search lösen.
 \begin{lstlisting}[escapeinside={*}{*}, title=Algorithmus für
 \textsc{Clique}-Lösung]
 def find_clique (graph, k):
-   for g in graph.subgraphs(k): # get subgraphs of size <= k
+   for g in graph.subgraphs(k + 1): # get subgraphs of size k + 1
       found = true
       for (v1, v2) in [(u,v) for u in g.vertices for v in g.vertives if u != v]:
          if !g.hasEdge(v1, v2):
@@ -176,13 +176,16 @@ def find_clique (graph, k):
 \subsubsection{b)}
 
 Es gibt in einem Graphen mit Maximalgrad $k$ und Knotenzahl $n$ nur
-$n^k$ (bzw. $\frac{n!}{(n-k-1)!}$, wenn die Clique maximal sein soll)  viele
-Teilgraphen, die theoretisch eine Clique bilden können, da diese nur $k$ Knoten
-enthalten kann (weil sie vollständig verbunden sein muss). In der Clique muss
-jeder der $k$ Knoten $k$ Kanten besitzen und diese müssen ihn mit den anderen
-Knoten in der Clique verbinden. Um die Verbundenheit zu prüfen, muss man also
-$k^2$ Kanten betrachten. Der Algorithmus läuft also in
-$\mathcal{O}\left(n^k k^2\right)$, in diesem Fall $\mathcal{O}\left(n^5\right)$.
+$n^{k+1}$ (bzw. $\left(\begin{array}{c}n \\ k +
+1\end{array}\right) = \frac{n!}{(n-k)!}$, wenn die Clique maximal sein
+soll)  viele Teilgraphen, die theoretisch eine Clique bilden können,
+da diese nur $k + 1$ Knoten enthalten kann (weil sie vollständig
+verbunden sein muss). In der Clique muss jeder der $k + 1$ Knoten
+$k$ Kanten besitzen und diese müssen ihn mit den anderen Knoten in
+der Clique verbinden. Um die Verbundenheit zu prüfen, muss man also
+$(k+1)^2$ Kanten betrachten. Der Algorithmus läuft also in
+$\mathcal{O}\left(n^{k+1} (k+1)^2\right)$, in diesem Fall
+$\mathcal{O}\left(n^6\right)$.
 
 Für jede Konstante $k$ läuft der Algorithmus immer in Polynomialzeit.
 
@@ -239,24 +242,34 @@ folgt.
          [[x_i^\prime \vee a \vee b]] \wedge [[x_j \vee b \vee c]] \wedge [[x_k^\prime \vee c
          \vee d]],
       \end{equation*} wobei $a, b, c, d$ neue Variablen sind.
-   \item Für jede Klausel in $\mathcal{F}$ mit zwei Literalen $x_i, x_j$, führe
-      eine neue Variable $e$ ein, sowie $e^\prime := \neg e$. Schreibe die
-      Klausel um zu
+   \item Für jede Klausel in $\mathcal{F}$ mit zwei Literalen $x_i, x_j$, forme
+      diese um in eine Klausel
       \begin{equation*}
-         (x_i \vee x_j \vee e) \wedge (x_i \vee x_j \vee e^\prime).
-      \end{equation*}
-      Diese hat dieselben Wahrheitsbedingungen wie zuvor. Transformiere nun
-      beide Konjunkte wie oben zu
-      \begin{IEEEeqnarray*}{c}
-         [[x_i^\prime \vee a \vee b]] \wedge [[x_j \vee b \vee c]] \wedge [[e^\prime \vee c \vee d]] \\
-         \wedge  \\{}
-         [[x_i^\prime \vee a \vee b]] \wedge [[x_j \vee b \vee c]] \wedge [[e \vee c \vee d]]
-      \end{IEEEeqnarray*}
-      wobei $a, b, c, d$ neue Variablen sind. Füge dann noch die Klausel 
+         (x_i \vee x_j \vee x_j),
+      \end{equation*} welche die selben Wahrheitsbedingungen hat, wie das
+      Original. Wende dann die selbe Umformung an wie bei 1. und erhalte mit
+      neuen Variablen $a,b,c,d$
       \begin{equation*}
-         [[e \vee e^\prime]]
+         [[x_i^\prime \vee a \vee b]] \wedge [[x_j \vee b \vee c]] \wedge [[x_j^\prime \vee c
+         \vee d]].
       \end{equation*}
-      hinzu.
+      % eine neue Variable $e$ ein, sowie $e^\prime := \neg e$. Schreibe die
+      % Klausel um zu
+      % \begin{equation*}
+      %    (x_i \vee x_j \vee e) \wedge (x_i \vee x_j \vee e^\prime).
+      % \end{equation*}
+      % Diese hat dieselben Wahrheitsbedingungen wie zuvor. Transformiere nun
+      % beide Konjunkte wie oben zu
+      % \begin{IEEEeqnarray*}{c}
+      %    [[x_i^\prime \vee a \vee b]] \wedge [[x_j \vee b \vee c]] \wedge [[e^\prime \vee c \vee d]] \\
+      %    \wedge  \\{}
+      %    [[x_i^\prime \vee a \vee b]] \wedge [[x_j \vee b \vee c]] \wedge [[e \vee c \vee d]]
+      % \end{IEEEeqnarray*}
+      % wobei $a, b, c, d$ neue Variablen sind. Füge dann noch die Klausel 
+      % \begin{equation*}
+      %    [[e \vee e^\prime]]
+      % \end{equation*}
+      % hinzu.
    \item Für jede Klausel in $\mathcal{F}$ mit einem Literal, kreiere eine
       Klausel
       \begin{equation*}

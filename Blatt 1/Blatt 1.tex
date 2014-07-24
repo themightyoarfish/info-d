@@ -62,9 +62,9 @@
    \subsubsection{I}
 
    Zu Zeigen:
-   \begin{equation}
+   \begin{equation*}
       f_2(n) = n^2 + 1000n \in \mathcal{O}\left(n^2\right)
-   \end{equation}
+   \end{equation*}
    Wir betrachten $n>0$.
    \begin{IEEEeqnarray*}{rCl}
       n^2 + 1000n & \le & cn^2 \\
@@ -82,23 +82,24 @@
    \subsubsection{II}
 
    Zu Zeigen:
-   \begin{equation}
+   \begin{equation*}
       f_3(n) = m^{\log n} \le cn^{\log m}
-   \end{equation}
+   \end{equation*}
    Es ist
    \begin{IEEEeqnarray*}{rCl}
       m^{\log n} & \le & cn^{\log m} \\
       \log{m^{\log n}} & \le & \log{cn^{\log m}} \\
-      \log{n}\log{m} & \le & \log{n}\log{m} + \log{c}
+      \log{n}\log{m} & \le & \log{n}\log{m} + \log{c}\log{m} \\
+      \log{n} & \le & \log{n} + \log{c}
    \end{IEEEeqnarray*}
    Die letzte Ungleichung ist erf\"ullt f\"ur $c\ge1$.
    
    \subsubsection{III}
    
    Zu Zeigen:
-   \begin{equation}
+   \begin{equation*}
       f_6(n) \not\in f_5(n)
-   \end{equation}
+   \end{equation*}
    Die Beziehung ist erf\"ullt genau dann wenn $\forall c \forall n_0 > 0: \exists
    n \ge n_0: f_6(n) > cf_5(n)$. Sei daher $c$ beliebig fest gew\"ahlt .
    Die Ungleichung ist genau dann l\"osbar, wenn $n$ ungerade ist und $> 100$. In
