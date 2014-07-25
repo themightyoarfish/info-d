@@ -65,23 +65,25 @@
 
    Der Endliche Automat ist
 
-   \begin{tikzpicture}[shorten >=1pt,node distance=5em,auto,
-                       semithick]
+   \begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=5em,auto,
+         semithick]
 
-     \node[initial,state] (A)                    {A};
-     \node[state]         (B) [right of=A] {B};
-     \node[state]         (C) [right of=B] {C};
-     \node[state]         (D) [right of=C] {D};
-     \node[accepting,state] (E) [right of=D]       {E};
+         \node[initial,state] (A)                    {A};
+         \node[state]         (B) [right of=A] {B};
+         \node[state]         (C) [right of=B] {C};
+         \node[state]         (D) [right of=C] {D};
+         \node[accepting,state] (E) [right of=D]       {E};
 
-     \path[->] (A) edge              node {\Smiley} (B)
-     (B) edge node {\Smiley} (C)
-     (C) edge[loop above] node {\Smiley,\Neutrey} ()
-     (C) edge[bend left] node {\Sadey} (D)
-     (D) edge[bend left] node {\Smiley,\Neutrey} (C)
-     (D) edge node {\Sadey} (E)
-     (E) edge[bend left=80] node {\Smiley,\Neutrey} (C);
-   \end{tikzpicture}
+         \path[->] (A) edge              node {\Smiley} (B)
+         (B) edge node {\Smiley} (C)
+         (C) edge[loop above] node {\Smiley,\Neutrey} ()
+         (C) edge[bend left] node {\Sadey} (D)
+         (D) edge[bend left] node {\Smiley,\Neutrey} (C)
+         (D) edge node {\Sadey} (E)
+         (E) edge[bend left=80] node {\Smiley,\Neutrey} (C);
+      \end{tikzpicture}
+   \end{center}
 
    Ein regul\"arer Ausdruck ist
    \textcolor{teal}{\Smiley\Smiley(\Smiley|\Neutrey|\Sadey)\textsuperscript{*}
@@ -92,29 +94,30 @@
    Der Endliche Automat ist
 
    \vspace{\baselineskip}
-   \begin{tikzpicture}[shorten >=1pt,node distance=5em,auto,
-                       semithick]
-                      
-      \node[initial,state] (S) {S};
-      \node[state] (A) [right of=S] {A};
-      \node[state] (B) [right of=A] {B};
-      \node[state] (C) [right of=B] {C};
-      \node[state] (D) [below of=C] {D};
-      \node[state] (E) [left of=D] {E};
-      \node[state,accepting] (F) [left of=E] {F};
+   \begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=5em,auto,
+         semithick]
 
-      \path[->] (S) edge[loop above] node {\Smiley,\Neutrey,\Sadey}()
-      (S) edge node {\Neutrey} (A)
-      (A) edge node {\Neutrey} (B)
-      (B) edge[loop above] node {\Smiley,\Neutrey,\Sadey} ()
-      (B) edge node {\Neutrey} (C)
-      (C) edge[loop right] node {\Smiley,\Neutrey,\Sadey} ()
-      (C) edge node {\Neutrey} (D)
-      (D) edge[loop below] node {\Smiley,\Neutrey,\Sadey} ()
-      (D) edge node {\Neutrey} (E)
-      (E) edge node {\Neutrey} (F)
-      (F) edge[loop below] node {\Smiley,\Neutrey,\Sadey} ();
-   \end{tikzpicture}
+         \node[initial,state] (S) {S};
+         \node[state] (A) [right of=S] {A};
+         \node[state] (B) [right of=A] {B};
+         \node[state] (C) [right of=B] {C};
+         \node[state] (D) [below of=C] {D};
+         \node[state] (E) [left of=D] {E};
+         \node[state,accepting] (F) [left of=E] {F};
+
+         \path[->] (S) edge[loop above] node {\Smiley,\Neutrey,\Sadey}()
+         (S) edge node {\Neutrey} (A)
+         (A) edge node {\Neutrey} (B)
+         (B) edge[loop above] node {\Smiley,\Neutrey,\Sadey} ()
+         (B) edge node {\Neutrey} (C)
+         (C) edge node {\Neutrey} (D)
+         (D) edge[loop below] node {\Smiley,\Neutrey,\Sadey} ()
+         (D) edge node {\Neutrey} (E)
+         (E) edge node {\Neutrey} (F)
+         (F) edge[loop below] node {\Smiley,\Neutrey,\Sadey} ();
+      \end{tikzpicture}
+   \end{center}
 
    Ein Regul\"arer Ausdruck zu dem Automaten ist \textcolor{teal}{
    (\Smiley|\Neutrey|\Sadey)\textsuperscript{*} \Neutrey\Neutrey
@@ -127,81 +130,85 @@
    Der Endliche Automat ist
 
    \vspace{\baselineskip}
-   \begin{tikzpicture}[shorten >=1pt,node distance=7em,auto,
-                       semithick]
-        \node[initial,state] (S) {S};
-        \node[state] (A) [right of=S] {A};
-        \node[state] (B) [right of=A] {B};
-        \node[state] (C) [right of=B] {C};
-        \node[state] (D) [below of=C] {D};
-        \node[accepting,state] (E) [left of=D] {E};
-        \node[state,accepting] (F) [left of=E] {F};
+   \begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=7em,auto,
+         semithick]
+         \node[initial,state] (S) {S};
+         \node[state] (A) [right of=S] {A};
+         \node[state] (B) [right of=A] {B};
+         \node[state] (C) [right of=B] {C};
+         \node[state] (D) [below of=C] {D};
+         \node[accepting,state] (E) [left of=D] {E};
+         \node[state,accepting] (F) [left of=E] {F};
 
-        \path[->]
-        (S) edge[loop above] node {\Neutrey,\Sadey} ()
-        (S) edge[bend left] node {\Smiley} (A)
-        (A) edge[bend left] node {\Neutrey,\Sadey} (S)
-        (A) edge node {\Smiley} (B)
-        (B) edge node {\Neutrey,\Sadey} (C)
-        (C) edge[loop right] node {\Neutrey,\Sadey}
-        (C) edge[bend left] node {\Smiley} (D)
-        (D) edge node {\Smiley} (E)
-        (D) edge[bend left] node {\Neutrey,\Sadey} (C)
-        (E) edge[bend left] node {\Neutrey,\Sadey} (F)
-        (F) edge[loop left] node {\Neutrey,\Sadey} ()
-        (F) edge[bend left] node {\Smiley} (E);
-   \end{tikzpicture}
+         \path[->]
+         (S) edge[loop above] node {\Neutrey,\Sadey} ()
+         (S) edge[bend left] node {\Smiley} (A)
+         (A) edge[bend left] node {\Neutrey,\Sadey} (S)
+         (A) edge node {\Smiley} (B)
+         (B) edge node {\Neutrey,\Sadey} (C)
+         (C) edge[loop right] node {\Neutrey,\Sadey}
+         (C) edge[bend left] node {\Smiley} (D)
+         (D) edge node {\Smiley} (E)
+         (D) edge[bend left] node {\Neutrey,\Sadey} (C)
+         (E) edge[bend left] node {\Neutrey,\Sadey} (F)
+         (F) edge[loop left] node {\Neutrey,\Sadey} ()
+         (F) edge[bend left] node {\Smiley} (E);
+      \end{tikzpicture}
+   \end{center}
 
    Ein m\"ogliche \"aquivalenter Regul\"arer Ausdruck ist
-   \textcolor{teal}{(\Neutrey{}\textsuperscript{*}\Sadey\textsuperscript{*}(\Smiley(\Neutrey|
-      \Sadey)\textsuperscript{+})\textsuperscript{*})\textsuperscript{*}\Smiley\Smiley(\Neutrey|
-   \Sadey)\textsuperscript{+}(\Smiley(\Neutrey|
-   \Sadey)\textsuperscript{+})\textsuperscript{*}\Smiley\Smiley((\Neutrey|
-   \Sadey)\textsuperscript{+}((\Smiley(\Neutrey|
-\Sadey)\textsuperscript{+})\textsuperscript{*}|\Smiley))\textsuperscript{*}}
+   \textcolor{teal}{(\Neutrey{}{}\textsuperscript{*}\Sadey{}{}\textsuperscript{*}(\Smiley{}(\Neutrey{}|
+      \Sadey{})\textsuperscript{+})\textsuperscript{*})\textsuperscript{*}\Smiley{}\Smiley{}(\Neutrey{}|
+   \Sadey{})\textsuperscript{+}(\Smiley{}(\Neutrey{}|
+   \Sadey{})\textsuperscript{+})\textsuperscript{*}\Smiley{}\Smiley{}((\Neutrey{}|
+   \Sadey{})\textsuperscript{+}((\Smiley{}(\Neutrey{}|
+\Sadey{})\textsuperscript{+})\textsuperscript{*}|\Smiley{}))\textsuperscript{*}}
  
    \subsection{} 
    
-   \begin{tikzpicture}[shorten >=1pt,node distance=7em,auto,
-                       semithick]
-      \node[initial,state] (A) {A};
-      \node[state] (B) [right of=A]{B};
-      \node[state] (C) [right of=B]{C};
-      \node[state] (D) [right of=C]{D};
-      \node[state] (E) [below of=A] {E};
-      \node[state,accepting] (F) [below of=B] {F};
-      % \node[state] (J) [right of=C] {J};
-      % \node[state] (F) [right of=J] {F};
-      % \node[state] (H) [right of=F] {H};
-      % \node[state, accepting] (G) [below of=F] {G};
+   \begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=7em,auto,
+         semithick]
+         \node[initial,state] (A) {A};
+         \node[state] (B) [right of=A]{B};
+         \node[state] (C) [right of=B]{C};
+         \node[state] (D) [right of=C]{D};
+         \node[state] (E) [below of=A] {E};
+         \node[state,accepting] (F) [below of=B] {F};
+         % \node[state] (J) [right of=C] {J};
+         % \node[state] (F) [right of=J] {F};
+         % \node[state] (H) [right of=F] {H};
+         % \node[state, accepting] (G) [below of=F] {G};
 
-      \path[->]
-      (A) edge[bend left] node {0} (B)
-      (B) edge[bend left] node {0} (A)
-      (B) edge node {1} (C)
-      (C) edge[bend left] node {0,1} (D)
-      (D) edge[bend left] node {0,1} (C)
-      (C) edge node {\#} (F)
-      (A) edge[bend left] node {1} (E)
-      (E) edge[bend left] node {1} (A)
-      (A) edge node[pos=.75] {\#} (F);
-      % (A) edge node {0} (B)
-      % (A) edge node {1} (C)
-      % (B) edge[pos=0.6] node {0} (F)
-      % (B) edge node {1} (D)
-      % (C) edge[bend right=60] node {1} (F)
-      % (D) edge node {\#} (E)
-      % (D) edge[bend left] node {0,1} (K)
-      % (K) edge[bend left] node {0,1} (D)
-      % (F) edge node {\#} (G)
-      % (D) edge node {\#} (E)
-      % (F) edge[bend left] node {1} (H)
-      % (H) edge[bend left] node {1} (F)
-      % (J) edge[bend left] node {0} (F)
-      % (J) edge[bend left=20,pos=0.25] node {1} (D)
-      % (F) edge[bend left] node {0} (J);
+         \path[->]
+         (A) edge[bend left] node {0} (B)
+         (B) edge[bend left] node {0} (A)
+         (B) edge node {1} (C)
+         (C) edge[bend left] node {0,1} (D)
+         (D) edge[bend left] node {0,1} (C)
+         (C) edge node {\#} (F)
+         (A) edge[bend left] node {1} (E)
+         (E) edge[bend left] node {1} (A)
+         (A) edge node[pos=.75] {\#} (F);
+         % (A) edge node {0} (B)
+         % (A) edge node {1} (C)
+         % (B) edge[pos=0.6] node {0} (F)
+         % (B) edge node {1} (D)
+         % (C) edge[bend right=60] node {1} (F)
+         % (D) edge node {\#} (E)
+         % (D) edge[bend left] node {0,1} (K)
+         % (K) edge[bend left] node {0,1} (D)
+         % (F) edge node {\#} (G)
+         % (D) edge node {\#} (E)
+         % (F) edge[bend left] node {1} (H)
+         % (H) edge[bend left] node {1} (F)
+         % (J) edge[bend left] node {0} (F)
+         % (J) edge[bend left=20,pos=0.25] node {1} (D)
+         % (F) edge[bend left] node {0} (J);
 
-   \end{tikzpicture}
+      \end{tikzpicture}
+   \end{center}
 
    \subsection{} 
    
