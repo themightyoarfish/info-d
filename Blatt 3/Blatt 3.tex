@@ -70,23 +70,25 @@
    Die obige Grammatik als nichtdeterministischer endlicher Automat ausgedr\"uckt ist
    
    \usetikzlibrary{arrows,automata}
-   \begin{tikzpicture}[node distance=5em,auto,
-                       semithick]
+   \begin{center}
+      \begin{tikzpicture}[node distance=5em,auto,
+         semithick]
 
-     \node[initial,state] (Z1)               {$Z_1$};
-     \node[state]         (Z2) [right of=Z1] {$Z_2$};
-     \node[state]         (Z3) [right of=Z2] {$Z_3$};
-     \node[accepting,state] (ZE) [below of=Z2] {$Z_{end}$};
+         \node[initial,state] (Z1)               {$Z_1$};
+         \node[state]         (Z2) [right of=Z1] {$Z_2$};
+         \node[state]         (Z3) [right of=Z2] {$Z_3$};
+         \node[accepting,state] (ZE) [below of=Z2] {$Z_{end}$};
 
-     \path[->] 
-     (Z1) edge node {1} (Z2)
-     (Z1) edge node {1} (ZE)
-     (Z2) edge[loop above] node[right,pos=.8] {1} ()
-     (Z2) edge node {0} (Z3)
-     (Z2) edge node {1} (ZE)
-     (Z3) edge[bend right=80] node[above] {0} (Z1)
-     (Z3) edge node {1} (ZE);
-   \end{tikzpicture}
+         \path[->] 
+         (Z1) edge node {1} (Z2)
+         (Z1) edge node {1} (ZE)
+         (Z2) edge[loop above] node[right,pos=.8] {1} ()
+         (Z2) edge node {0} (Z3)
+         (Z2) edge node {1} (ZE)
+         (Z3) edge[bend right=80] node[above] {0} (Z1)
+         (Z3) edge node {1} (ZE);
+      \end{tikzpicture}
+   \end{center}
 
    \subsection{} 
    
@@ -94,34 +96,36 @@
    ist\\[\baselineskip]
 
    \usetikzlibrary{arrows,automata}
-   \begin{tikzpicture}[node distance=7em,auto,semithick]
+   \begin{center}
+      \begin{tikzpicture}[node distance=7em,auto,semithick]
 
-     \node[initial,state,accepting] (12) {1,2};
-     \node[state] (23) [right of=12] {2,3};
-     \node[state] (235) [right of=23] {2,3,5};
-     \node[state] (34) [below of=12] {3,4};
-     \node[state] (3) [below of=23] {3};
-     \node[state,accepting] (346) [right of=3] {3,4,6};
-     \node[state] (5) [below of=3] {5};
-     \node[state] (46) [below of=34] {4,6};
-     \node[state,accepting] (23456) [below of=346] {2,3,4,5,6};
+         \node[initial,state,accepting] (12) {1,2};
+         \node[state] (23) [right of=12] {2,3};
+         \node[state] (235) [right of=23] {2,3,5};
+         \node[state] (34) [below of=12] {3,4};
+         \node[state] (3) [below of=23] {3};
+         \node[state,accepting] (346) [right of=3] {3,4,6};
+         \node[state] (5) [below of=3] {5};
+         \node[state] (46) [below of=34] {4,6};
+         \node[state,accepting] (23456) [below of=346] {2,3,4,5,6};
 
-     \path[->]
-     (12) edge node {1} (23)
-     (23) edge node {1} (235)
-     (235) edge node {0} (346)
-     (235) edge[bend left] node {1} (23456)
-     (12) edge node {0} (34)
-     (23) edge node {0} (3)
-     (34) edge node {1} (5)
-     (3) edge node {1} (5)
-     (46) edge[bend left] node {1} (5)
-     (5) edge[bend left] node {1} (46)
-     (5) edge[bend left=10] node {0} (346)
-     (23456) edge node {0} (346)
-     (23456) edge[loop right] node {1} ()
-     (346) edge[bend left=10] node {1} (5);
-   \end{tikzpicture}
+         \path[->]
+         (12) edge node {1} (23)
+         (23) edge node {1} (235)
+         (235) edge node {0} (346)
+         (235) edge[bend left] node {1} (23456)
+         (12) edge node {0} (34)
+         (23) edge node {0} (3)
+         (34) edge node {1} (5)
+         (3) edge node {1} (5)
+         (46) edge[bend left] node {1} (5)
+         (5) edge[bend left] node {1} (46)
+         (5) edge[bend left=10] node {0} (346)
+         (23456) edge node {0} (346)
+         (23456) edge[loop right] node {1} ()
+         (346) edge[bend left=10] node {1} (5);
+      \end{tikzpicture}
+   \end{center}
 
    \subsection{} 
    
@@ -366,16 +370,19 @@
    \fbox{
    \begin{tabular}{M|M|M|M|M}
         & 1 & \cellcolor{Blue!5} 2 & 3 & \cellcolor{Blue!5} 4 \\ \hline
-      \cellcolor{Red!5} 1 & \varepsilon \mid (a\x{}^*ca)^* & \cellcolor{Blue!5} (a\x{}^*ca)^*b & a\x{}^*(c\y{}\x{}^*)^* & \cellcolor{Blue!5} a\x{}^*c(\y{}\x{}^*c)^* \\ \hline
+      \cellcolor{Red!5} 1 & \varepsilon \mid  (a\x{}^*ca)^* & \cellcolor{Blue!5}
+       (a\x{}^*ca)^*b & a\x{}^* (c\y{}\x{}^*)^* & \cellcolor{Blue!5}
+      a\x{}^*c (\y{}\x{}^*c)^* \\ \hline
       2 & \emptyset & \varepsilon & \emptyset & \emptyset \\ \hline
-      3 & \x{}^*ca(a\x{}^*ca)^* & \x{}^*(\x{}^*c\y{})^*c\z{} & \varepsilon \mid
-      \x{}^*(c\y{}\x{}^*)^*& \x{}^*c(\y{}\x{}^*c)^*\\ \hline
-      4 & a(a\x{}^*ca)^* & (\y{}\x{}^*c)^*\z{} & \y{}\x{}^*(c\y{}\x{}^*)^* & \varepsilon \mid (\y{}\x{}^*c)^*
+      3 & \x{}^*ca (a\x{}^*ca)^* & \x{}^* (\x{}^*c\y{})^*c\z{} & \varepsilon \mid
+      \x{}^* (c\y{}\x{}^*)^*& \x{}^*c (\y{}\x{}^*c)^*\\ \hline
+      4 & a (a\x{}^*ca)^* &  (\y{}\x{}^*c)^*\z{} & \y{}\x{}^* (c\y{}\x{}^*)^* &
+      \varepsilon \mid  (\y{}\x{}^*c)^*
    \end{tabular}
    }
    \vspace{\baselineskip}
 
    Es sind $Z_1$ der einzige Startzustand und $Z_2, Z_4$ Endzust\"ande. Der
-   generierte regul\"are Audruck ist daher $(a\x{}^*ca)^*b \mid a\x{}^*c(\y{}\x{}^*c)^* 
+   generierte regul\"are Audruck ist daher $(a\x^*ca)^*b\mid a\x^*c(\y\x^*c)^* 
    = (a(a\mid b)^*ca)^*b \mid a(a\mid b)^*c(aa(a\mid b)^*c)^*$
 \end{document}
