@@ -30,7 +30,7 @@ citecolor = blue]{hyperref}
 \usepackage[all]{hypcap}
 \renewcommand{\thesection}{}
 \renewcommand{\thesubsection}{Aufgabe \arabic{section}.\arabic{subsection}}
-\renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+\renewcommand{\thesubsubsection}{}
 \setcounter{section}{4}
 
 \begin{document}
@@ -136,23 +136,24 @@ f\"ur $k=1$ $w^{10}=21$ oder $w^{10}=33$.
 
 Sei bis $k$ bewiesen. Wir betrachten zun\"achst den Fall, dass eine 1 an dritter
 Stelle angef\"ugt wird. In dem Fall gilt f\"ur $w=a_n,\ldots,a_0$
-\begin{eqnarray*}
-   w_{neu}^{10} & = & \left(\frac{(w^{10} - (a_1a_0)^{10})}{2} + 1\right) \cdot 4 + 1 \\
-   & = & 2w^{10} + 3
-\end{eqnarray*}
+\begin{IEEEeqnarray*}{rCll}
+   w_{neu}^{10} & = & \left(\frac{(w^{10} - (a_1a_0)^{10})}{2} + 1\right) \cdot
+   4 + (a_1a_0)^{10} &\\
+   & = & 2w^{10} + 3 & | ~~ (a_1a_0)^{10}\text{ ist hier immer 1}
+\end{IEEEeqnarray*}
 Dies macht man sich folgenderma\ss{}en klar, wir betrachten als Beispiel die
 Zahl $w = \texttt{1001}$.
 
 \begin{center}
-\begin{tabular}{>{\ttfamily}rrr}
-   Bin\"ar & Operation & Dezimal \\\toprule
-   1001 & -1 & 9 \\
-   1000 & $\div 2$ \\
-   100 & +1 \\
-   101 & $\cdot 4$ \\
-   10100 & +1 \\
-   10101 & & 21
-\end{tabular}
+   \begin{tabular}{>{\ttfamily}rrr}
+      Bin\"ar & Operation & Dezimal \\\toprule
+      1001 & -1 & 9 \\
+      1000 & $\div 2$ \\
+      100 & +1 \\
+      101 & $\cdot 4$ \\
+      10100 & +1 \\
+      10101 & & 21
+   \end{tabular}
 \end{center}
 
 Nach Voraussetzung ist $w$ bereits durch 3 teilbar, mithin auch $2w$ und daher
@@ -321,7 +322,7 @@ herleitbar.
 
 \subsection{} 
 
-Wir zeigen die detmerminstische Kontextfreiheit durch einen DKA-AdEZ.
+Wir zeigen die deterministische Kontextfreiheit durch einen DKA-AdEZ.
 
 \begin{center}
    \begin{tikzpicture}[auto,thick,>=stealth',
