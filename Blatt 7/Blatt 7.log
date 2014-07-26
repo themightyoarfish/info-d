@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.19)  19 JUL 2014 17:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.19)  26 JUL 2014 11:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1187,7 +1187,10 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 153.
 
-Overfull \vbox (42.38838pt too high) has occurred while \output is active []
+Overfull \vbox (54.38838pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (1.88838pt too high) has occurred while \output is active []
 
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 167.
@@ -1372,11 +1375,11 @@ Package rerunfilecheck Info: File `"Blatt 7".out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 419.
  ) 
 Here is how much of TeX's memory you used:
- 22219 strings out of 493108
- 415285 string characters out of 6134847
+ 22217 strings out of 493108
+ 415265 string characters out of 6134847
  573677 words of memory out of 5000000
  25143 multiletter control sequences out of 15000+600000
- 66865 words of font info for 96 fonts, out of 8000000 for 9000
+ 66782 words of font info for 95 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,11n,68p,437b,894s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
@@ -1395,7 +1398,7 @@ ic/lm/lmr7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/lm/lmri10
 /local/texlive/2014/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/tex
 live/2014/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2014/t
 exmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "Blatt 7.pdf" (6 pages, 305959 bytes).
+Output written on "Blatt 7.pdf" (6 pages, 306460 bytes).
 PDF statistics:
  184 PDF objects out of 1000 (max. 8388607)
  159 compressed objects within 2 object streams

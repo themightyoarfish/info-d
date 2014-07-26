@@ -67,7 +67,7 @@ nicht-exklusives 'Oder' handelt.
       zugleich). Man kann dann beliebig aufpumpen. Zwar verliert man die
       Struktur $a^kb^kc^k$, jedoch ist $a^lb^mc^n$ ja immernoch $\in L$.
    \item 
-      Falls $j=0,k,l,m, \ge 0$, ist die Sprache offensichtlich kontextfrei (sie
+      Falls $j=0,k,l,m \ge 0$, ist die Sprache offensichtlich kontextfrei (sie
       ist sogar regulär), da es keine weiteren Beschränkungen für $k,l,m$ gibt. Das
       Pumping Lemma hilft hier also schonmal nicht weiter.
    \item Falls $j \neq 0, k, l, m \ge 0$, ist die Sprache ebenfalls regulär und
@@ -100,7 +100,7 @@ zeigen. Sei $n$ die Wortmindestlänge und $z_n = a^nb^{2^n} \in L$. Es gilt
 Es gibt folgende Möglichkeiten, eine Zerlegung $uvwxy$ von $z_n$ zu finden:
 \begin{enumerate}[leftmargin=*]
    \item $vwx = a^k, k \ge 1$ enthält nur $a$s. Hierbei könten durch Pumpen beliebig viele $a$s
-      erzeugt werden, daher z.B. $uv^2wx^2y\not\in L$.
+      erzeugt werden, ohne dass die $b$s mitgepumpt werden daher z.B. $uv^2wx^2y\not\in L$.
    \item $vwx$ enthält $a$s und $b$s.
       \begin{enumerate}
          \item Falls $w = \varepsilon$, so ist $vwx = a^lb^k,n \ge l+k \ge 1$.
