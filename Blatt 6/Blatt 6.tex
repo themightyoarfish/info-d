@@ -224,9 +224,11 @@ und notieren, dass $R_3$ nicht erreichbar ist.
    frame=single
 }
 
-Der (vermutlich falsche) Algorithmus l\"auft in $\mathcal{O}\left(|V|^2\right)$
-da f\"ur jeden Knoten die Suche gestartet wird und in deren Verlauf alle anderen
-Knoten maximal zweimal besucht werden.
+Dieser Algorithmus ist vermutlich nicht ausreichend. Ich weiß auch nicht
+wirklich, welche Laufzeit er hat.
+% Der (vermutlich falsche) Algorithmus l\"auft in $\mathcal{O}\left(|V|^2\right)$
+% da f\"ur jeden Knoten die Suche gestartet wird und in deren Verlauf alle anderen
+% Knoten maximal zweimal besucht werden.
 \begin{lstlisting}[language=Java]
 class DeCycle {
    static void deCycle(Graph g)
