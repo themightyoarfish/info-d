@@ -177,7 +177,7 @@ def find_clique (graph, k):
 
 Es gibt in einem Graphen mit Maximalgrad $k$ und Knotenzahl $n$ nur
 $n^{k+1}$ (bzw. $\left(\begin{array}{c}n \\ k +
-1\end{array}\right) = \frac{n!}{(n-k)!k!}$, wenn die Clique maximal sein
+1\end{array}\right) = \frac{n!}{(n-k-1)!(k-1)!}$, wenn die Clique maximal sein
 soll)  viele Teilgraphen, die theoretisch eine Clique bilden können,
 da diese nur $k + 1$ Knoten enthalten kann (weil sie vollständig
 verbunden sein muss). In der Clique muss jeder der $k + 1$ Knoten
