@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.19)  25 JUL 2014 15:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.19)  29 JUL 2014 19:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -987,17 +987,17 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 42.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 58.
+(babel)             in language  on input line 55.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 58.
+(babel)             in language  on input line 55.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 59.
+(babel)             in language  on input line 56.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 59.
+(babel)             in language  on input line 56.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 68.
+(babel)             in language  on input line 65.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 68.
+(babel)             in language  on input line 65.
 
 (/usr/local/texlive/2014/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
 s/tikzlibraryautomata.code.tex
@@ -1033,150 +1033,150 @@ File: pgflibraryshapes.multipart.code.tex 2010/01/07 v3.0.0 (rcs-revision 1.2)
 \pgfnodepartfivebox=\box88
 )))
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 91.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 91.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 91.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 91.
+(babel)             in language  on input line 88.
  [1
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 93.
+(babel)             in language  on input line 90.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 93.
+(babel)             in language  on input line 90.
 
-Underfull \hbox (badness 10000) in paragraph at lines 95--97
+Underfull \hbox (badness 10000) in paragraph at lines 92--94
 
  []
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 130.
+(babel)             in language  on input line 127.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 130.
+(babel)             in language  on input line 127.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 154.
+(babel)             in language  on input line 151.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 154.
+(babel)             in language  on input line 151.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 154.
+(babel)             in language  on input line 151.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 154.
+(babel)             in language  on input line 151.
 [2]
-Overfull \hbox (29.77594pt too wide) in paragraph at lines 282--282
+Overfull \hbox (29.77594pt too wide) in paragraph at lines 279--279
 [][] 
  []
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 287.
+(babel)             in language  on input line 284.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 287.
+(babel)             in language  on input line 284.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 299.
+(babel)             in language  on input line 296.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 299.
+(babel)             in language  on input line 296.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 299.
+(babel)             in language  on input line 296.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 299.
+(babel)             in language  on input line 296.
 [3]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 301.
+(babel)             in language  on input line 298.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 301.
+(babel)             in language  on input line 298.
 
-Underfull \hbox (badness 10000) in paragraph at lines 314--315
+Underfull \hbox (badness 10000) in paragraph at lines 311--312
 
  []
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 318.
+(babel)             in language  on input line 315.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 318.
+(babel)             in language  on input line 315.
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 318.
+(hyperref)                removing `math shift' on input line 315.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 318.
+(hyperref)                removing `math shift' on input line 315.
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 331.
+(babel)             in language  on input line 328.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 331.
+(babel)             in language  on input line 328.
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 331.
+(hyperref)                removing `math shift' on input line 328.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 331.
+(hyperref)                removing `math shift' on input line 328.
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 343.
+(babel)             in language  on input line 340.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 343.
+(babel)             in language  on input line 340.
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 343.
+(hyperref)                removing `math shift' on input line 340.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 343.
+(hyperref)                removing `math shift' on input line 340.
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 355.
+(babel)             in language  on input line 352.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 355.
+(babel)             in language  on input line 352.
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 355.
+(hyperref)                removing `math shift' on input line 352.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 355.
+(hyperref)                removing `math shift' on input line 352.
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 368.
+(babel)             in language  on input line 365.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 368.
+(babel)             in language  on input line 365.
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 368.
+(hyperref)                removing `math shift' on input line 365.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 368.
+(hyperref)                removing `math shift' on input line 365.
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 384.
+(babel)             in language  on input line 381.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 384.
+(babel)             in language  on input line 381.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 384.
+(babel)             in language  on input line 381.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 384.
+(babel)             in language  on input line 381.
 [4]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 388.
+(babel)             in language  on input line 385.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 388.
+(babel)             in language  on input line 385.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 388.
+(babel)             in language  on input line 385.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 388.
+(babel)             in language  on input line 385.
  [5]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 388.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 388.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 385.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 385.
  (./Blatt 3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 388.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 388.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 385.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 385.
 Package rerunfilecheck Info: File `"Blatt 3".out' has not changed.
 (rerunfilecheck)             Checksum: CFA4387007CA0B5379922FC3A3F69ADC;862.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 388.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 385.
  ) 
 Here is how much of TeX's memory you used:
  22908 strings out of 493108
@@ -1200,7 +1200,7 @@ cal/texlive/2014/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive
 c/lm/lmr7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/lm/lmri10.
 pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/
 local/texlive/2014/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-Output written on "Blatt 3.pdf" (5 pages, 209443 bytes).
+Output written on "Blatt 3.pdf" (5 pages, 209245 bytes).
 PDF statistics:
  157 PDF objects out of 1000 (max. 8388607)
  136 compressed objects within 2 object streams

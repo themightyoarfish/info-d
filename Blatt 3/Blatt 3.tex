@@ -40,19 +40,16 @@
    \subsection{} 
 
    Sei $L = \{a_1, a_2, \ldots, a_n\}$ eine endliche Sprache, $n < \infty$. Definiere f\"ur alle $i
-   \in [1,n]$ Regeln $S_{ik}$, wobei $k = |a_i|$
+   \in [1,n]$ Regeln $S_{i,k}$, wobei $k = |a_i|$
    \begin{eqnarray*}
-      S_{i1} & \rightarrow & a_i[1] S_{i2} \\
-      S_{i2} & \rightarrow & a_i[2] S_{i3} \\
+      S = S_{i,1} & \rightarrow & a_i[1] S_{i,2} \\
+      S_{i,2} & \rightarrow & a_i[2] S_{i,3} \\
           & \vdots & \\
-      S_{ik} & \rightarrow & a_i[k]
+      S_{i,k} & \rightarrow & a_i[k]
    \end{eqnarray*}
-   sowie die Regel
-   \begin{equation*}
-      S \rightarrow S_i \mid \ldots \mid S_n
-   \end{equation*}
+
    Durch diese Aufz\"ahlung k\"onnen alle Worte in $L$ generiert
-   werden. Alle $S_{ik}$ sind regul\"ar, daher sind alle endlichen Sprachen
+   werden. Alle $S_{i,k}$ sind regul\"ar, daher sind alle endlichen Sprachen
    regul\"ar.
 
    \subsection{} 
