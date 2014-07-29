@@ -112,10 +112,10 @@ Es gibt folgende Möglichkeiten, eine Zerlegung $uvwxy$ von $z_n$ zu finden:
             Länge von $z_{n+1}$ haben, um in $L$ enthalten sein zu können. Die
             Gleichung
             \begin{IEEEeqnarray*}{rCl}
-               n + l + 2^n + k & = & n + 1 + 2^{n+1} \\
-               l + k & = & 1 + 2^{n+1} -2^n \\
-                     & = & 1 + 2^n(2 - 1)\\
-                     & = & 1 + 2^n
+               n + l + 2^n + k & \ge & n + 1 + 2^{n+1} \\
+               l + k & \ge & 1 + 2^{n+1} -2^n \\
+                     & \ge & 1 + 2^n(2 - 1)\\
+                     & \ge & 1 + 2^n
             \end{IEEEeqnarray*}
             ist jedoch nicht erfüllbar, da $l + k \le n$ nach Vorraussetzung.
          \item Falls $w \neq \varepsilon$, ändert dies nichts, da $l + k$
