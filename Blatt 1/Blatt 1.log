@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.19)  6 AUG 2014 14:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.7.19)  6 AUG 2014 14:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1065,6 +1065,16 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 172.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 172.
+LaTeX Font Info:    Try loading font information for T1+lmss on input line 176.
+
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/lm/t1lmss.fd
+File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Package microtype Info: Loading generic settings for font family
+(microtype)             `lmss' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
 Missing character: There is no ; in font nullfont!
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 190.
@@ -1114,15 +1124,15 @@ Package rerunfilecheck Info: File `"Blatt 1".out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 225.
  ) 
 Here is how much of TeX's memory you used:
- 23694 strings out of 493108
- 468385 string characters out of 6134847
- 633380 words of memory out of 5000000
- 26654 multiletter control sequences out of 15000+600000
- 50704 words of font info for 65 fonts, out of 8000000 for 9000
+ 23737 strings out of 493108
+ 469204 string characters out of 6134847
+ 633389 words of memory out of 5000000
+ 26687 multiletter control sequences out of 15000+600000
+ 56465 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,9n,94p,439b,733s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/lo
-cal/texlive/2014/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/20
+{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
+texlive/2014/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/20
 14/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2014/texmf-d
 ist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2014/texmf-dist/fonts/enc/
 dvips/lm/lm-mathex.enc}</usr/local/texlive/2014/texmf-dist/fonts/type1/public/l
@@ -1133,13 +1143,14 @@ ve/2014/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/local/texlive/2014/tex
 mf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2014/texmf-dist/fon
 ts/type1/public/lm/lmr12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/pu
 blic/lm/lmr17.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/lm/lmr
-7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></us
-r/local/texlive/2014/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/tex
-live/2014/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "Blatt 1.pdf" (4 pages, 184353 bytes).
+7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/lm/lmss17.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/te
+xlive/2014/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2014/
+texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on "Blatt 1.pdf" (4 pages, 197427 bytes).
 PDF statistics:
- 165 PDF objects out of 1000 (max. 8388607)
- 145 compressed objects within 2 object streams
+ 169 PDF objects out of 1000 (max. 8388607)
+ 148 compressed objects within 2 object streams
  24 named destinations out of 1000 (max. 500000)
- 14501 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 17061 words of extra memory for PDF output out of 17280 (max. 10000000)
 
