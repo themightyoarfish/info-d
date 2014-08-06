@@ -1,0 +1,68 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{infodcw}[2014/08/06 Crossword Package]
+
+\RequirePackage{tikz,xcolor,pdftexcmds}
+
+%% Switch-case construct. Taken from http://tex.stackexchange.com/a/29139.
+%% Not sure what the \ifnum does here. THIS IS PDF[LA]TEX ONLY.
+\newcommand{\getrotation}[1]{%
+   \ifnum\pdf@strcmp{#1}{left}=0
+   180%
+   \else\ifnum\pdf@strcmp{#1}{right}=0
+   0%
+   \else\ifnum\pdf@strcmp{#1}{top}=0
+   90%
+   \else\ifnum\pdf@strcmp{#1}{bottom}=0
+   270%
+   \else
+   0%
+\fi\fi\fi\fi}
+
+% hopefully, this approximates Chimani's green. TODO: Use actual RGB value.
+\colorlet{darkgreen}{green!50!black}
+\colorlet{mylightgray}{lightgray!20}
+% How large shall the circles be
+\newlength{\circlesize}\setlength{\circlesize}{1.05cm}
+% Position of the little triangle relative to the circle midpoint
+\newlength{\arrowshift}\setlength{\arrowshift}{.46cm}
+% Size of the boxes
+\newlength{\rectsize}\setlength{\rectsize}{1.2cm}
+% Space between boxes
+\newlength{\fieldsep}\setlength{\fieldsep}{3pt}
+% Position of pointing nodes relative to box centers
+\newlength{\pointingnodeoffset}\setlength{\pointingnodeoffset}{\rectsize}\addtolength{\pointingnodeoffset}{2pt}
+
+%% Macro for hiding some of the details for generting the pointing nodes which
+%% tell which word of the puzzle goes where. 
+%% @param #1 The node label content (typically number)
+%% @param #2 A node description. Can be a pair (x,y) or a calculable expression 
+%% @param #3 Direction in which the little arrow points {top,bottom,left,right}
+\newcommand{\pointingnode}[3]{%
+   \node [line width=1.7pt,draw=darkgreen,shape=circle,minimum size=\circlesize,
+   color=darkgreen,name=#1] at ($#2$) {#1};%
+   \node [scale=.5,isosceles triangle,fill=darkgreen,shape border uses %
+   incircle,rotate around={\getrotation{#3}:(#1)}] at ($#2 + (\arrowshift,0)$)%
+   {};%
+}
+\usetikzlibrary{calc,shapes}
+
+\newcommand{\infodcwpuzzle}[1]{
+   \tikzstyle{solution}=[font=\sffamily\LARGE]
+   \begin{tikzpicture}[every node/.style={font=\large}]
+      \filldraw[fill=mylightgray,draw=black]
+         \foreach \x / \y / \z [evaluate={\x,\y}] in
+         {#1}{
+            ($(\x*\rectsize + \x*\fieldsep,\y*\rectsize + \y*\fieldsep)$)
+            rectangle +(\rectsize,\rectsize) node[solution]
+            [pos=.5,name={node\x\y}] {\z}
+         };
+         \pointingnode{1}{(node05) + (0,\pointingnodeoffset)}{bottom}
+         \pointingnode{3}{(node15) + (0,\pointingnodeoffset)}{bottom}
+         \pointingnode{2}{(node05) + (-\pointingnodeoffset,0)}{right}
+         \pointingnode{5}{(node00) + (-\pointingnodeoffset,0)}{right}
+         \pointingnode{4}{(node02) + (-\pointingnodeoffset,0)}{right}
+         \pointingnode{6}{(node32) + (0,\pointingnodeoffset)}{bottom}
+         \pointingnode{7}{(node52) + (0,\pointingnodeoffset)}{bottom}
+   \end{tikzpicture}
+}
+\endinput
