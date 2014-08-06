@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 \ProvidesPackage{infodcw}[2014/08/06 Crossword Package]
 
-\RequirePackage{tikz,xcolor,pdftexcmds}
+\RequirePackage{xstring,tikz,xcolor,pdftexcmds}
 
 %% Switch-case construct. Taken from http://tex.stackexchange.com/a/29139.
 %% Not sure what the \ifnum does here. THIS IS PDF[LA]TEX ONLY.
@@ -17,6 +17,26 @@
    \else
    0%
 \fi\fi\fi\fi}
+
+%% SHIT'S NOT WORKING BECAUSE THE EXAPANSION CONTAINS ANOTHER MACRO. I DON NOT
+%% 
+%% KNOW HOW TO INFLUENCE EXPANSION ORDER, THE WHOLE TOPIC IS MADDENINGLY COMPLEX
+%% Switch case to map a pointing node direction to the correct x-shift and
+%% y-shift (in order to postiion it left or above of the node given).
+%% If the pointer should point downwards, we need to put the node above, if it
+%% should point to the right we put it left etc.
+% \newcommand{\getnodeoffset}[1]{%
+%    \ifnum\pdf@strcmp{#1}{bottom}=0
+%    (0,\pointingnodeoffset)%
+%    \else\ifnum\pdf@strcmp{#1}{right}=0
+%    (-\pointingnodeoffset,0)%
+%    \else\ifnum\pdf@strcmp{#1}{left}=0
+%    (\pointingnodeoffset,0)%
+%    \else\ifnum\pdf@strcmp{#1}{top}=0
+%    (0,-\pointingnodeoffset)%
+%    \else
+%    (0,0)
+% \fi\fi\fi\fi}
 
 % hopefully, this approximates Chimani's green. TODO: Use actual RGB value.
 \colorlet{darkgreen}{green!50!black}
@@ -46,7 +66,7 @@
 }
 \usetikzlibrary{calc,shapes}
 
-\newcommand{\infodcwpuzzle}[1]{
+\newcommand{\infodcwpuzzle}[2]{
    \tikzstyle{solution}=[font=\sffamily\LARGE]
    \begin{tikzpicture}[every node/.style={font=\large}]
       \filldraw[fill=mylightgray,draw=black]
@@ -56,13 +76,26 @@
             rectangle +(\rectsize,\rectsize) node[solution]
             [pos=.5,name={node\x\y}] {\z}
          };
-         \pointingnode{1}{(node05) + (0,\pointingnodeoffset)}{bottom}
-         \pointingnode{3}{(node15) + (0,\pointingnodeoffset)}{bottom}
-         \pointingnode{2}{(node05) + (-\pointingnodeoffset,0)}{right}
-         \pointingnode{5}{(node00) + (-\pointingnodeoffset,0)}{right}
-         \pointingnode{4}{(node02) + (-\pointingnodeoffset,0)}{right}
-         \pointingnode{6}{(node32) + (0,\pointingnodeoffset)}{bottom}
-         \pointingnode{7}{(node52) + (0,\pointingnodeoffset)}{bottom}
-   \end{tikzpicture}
-}
-\endinput
+         % Draw the pointing nodes
+         \foreach \label / \x / \y / \direction in {#2} {
+            % This nested structure emulates a switch-case on the arrow
+            % direction
+            \IfStrEq{\direction}{bottom}{
+               \pointingnode{\label}{(node\x\y) + (0,\pointingnodeoffset)}{\direction}
+            }{
+               \IfStrEq{\direction}{top}{
+                  \pointingnode{\label}{(node\x\y) + (0,-\pointingnodeoffset)}{\direction}
+               }{
+                  \IfStrEq{\direction}{left}{
+                     \pointingnode{\label}{(node\x\y) + (\pointingnodeoffset,0)}{\direction}
+                  }{
+                     \IfStrEq{\direction}{right}{
+                        \pointingnode{\label}{(node\x\y) + (-\pointingnodeoffset,0)}{\direction}
+                     }{}
+                  }
+                }
+             }
+          }
+       \end{tikzpicture}
+    }
+    \endinput
