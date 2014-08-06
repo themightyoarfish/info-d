@@ -52,50 +52,71 @@
 % Position of pointing nodes relative to box centers
 \newlength{\pointingnodeoffset}\setlength{\pointingnodeoffset}{\rectsize}\addtolength{\pointingnodeoffset}{2pt}
 
-%% Macro for hiding some of the details for generting the pointing nodes which
+%% Macro for hiding some of the details for generating the pointing nodes which
 %% tell which word of the puzzle goes where. 
 %% @param #1 The node label content (typically number)
-%% @param #2 A node description. Can be a pair (x,y) or a calculable expression 
+%% @param #2 A node description. Can be a pair (x,y) or a calculable expression.
+%%           must not be passed within $$'s like calc allows you. Only the
+%%           expression itself, without the $'s should be entered.
 %% @param #3 Direction in which the little arrow points {top,bottom,left,right}
 \newcommand{\pointingnode}[3]{%
-   \node [line width=1.7pt,draw=darkgreen,shape=circle,minimum size=\circlesize,
-   color=darkgreen,name=#1] at ($#2$) {#1};%
-   \node [scale=.5,isosceles triangle,fill=darkgreen,shape border uses %
-   incircle,rotate around={\getrotation{#3}:(#1)}] at ($#2 + (\arrowshift,0)$)%
-   {};%
+   \node [line width=1.7pt,
+          draw=darkgreen,
+          shape=circle,
+          minimum size=\circlesize,
+          color=darkgreen,name=#1] at ($#2$) {#1}; % here the position is
+                                                   % calculated using calc
+   \node [scale=.5, % I found no other way to size this fckng thing
+          isosceles triangle, % from the shapes library
+          fill=darkgreen,
+          shape border uses incircle, % not sure why this works here. Without
+                                      % it, nothing ist printed
+          rotate around={\getrotation{#3}:(#1)} % rotate around midpoint to
+                                                % point up, down or whatever
+       ] at ($#2 + (\arrowshift,0)$) % shift the arrow onto the line
+       {};%
 }
+
 \usetikzlibrary{calc,shapes}
 
+%% Macro which generates the complete puzzle.
+%% @param #1 List of boxes of the form x1/y1/c1,...xn/yn/cn where xi and yi are the
+%%           index of the box (starting at 0/0 at the lower left) and ci is the
+%%           content of the box
+%% @param #2 List of pointing node labels of the form cn/xn/yn/sn,...,cn/xn/yn/sn where cn is the
+%%           pointing node label, xn and yn are the indices of the box to which
+%%           it belongs, sn is the direction in which the arrow points
 \newcommand{\infodcwpuzzle}[2]{
-   \tikzstyle{solution}=[font=\sffamily\LARGE]
+
+   \tikzstyle{solution}=[font=\sffamily\LARGE,text height=.2\rectsize,text centered]
    \begin{tikzpicture}[every node/.style={font=\large}]
-      \filldraw[fill=mylightgray,draw=black]
-         \foreach \x / \y / \z [evaluate={\x,\y}] in
-         {#1}{
-            ($(\x*\rectsize + \x*\fieldsep,\y*\rectsize + \y*\fieldsep)$)
-            rectangle +(\rectsize,\rectsize) node[solution]
-            [pos=.5,name={node\x\y}] {\z}
-         };
-         % Draw the pointing nodes
-         \foreach \label / \x / \y / \direction in {#2} {
-            % This nested structure emulates a switch-case on the arrow
-            % direction
-            \IfStrEq{\direction}{bottom}{
-               \pointingnode{\label}{(node\x\y) + (0,\pointingnodeoffset)}{\direction}
+      % draw the box nodes
+      \foreach \x / \y / \z [evaluate={\x,\y}] in
+      {#1}{
+         \node[solution,name=node\x\y,fill=mylightgray,draw=black,shape=rectangle,minimum size=\rectsize]
+         at ($(\x*\rectsize + \x*\fieldsep,\y*\rectsize + \y*\fieldsep)$) % leave space between boxes of \fieldsep
+         {\z};
+      };
+      % Draw the pointing nodes
+      \foreach \label / \x / \y / \direction in {#2} {
+         % This nested structure emulates a switch-case on the arrow
+         % direction
+         \IfStrEq{\direction}{bottom}{
+            \pointingnode{\label}{(node\x\y) + (0,\pointingnodeoffset)}{\direction}
+         }{
+            \IfStrEq{\direction}{top}{
+               \pointingnode{\label}{(node\x\y) + (0,-\pointingnodeoffset)}{\direction}
             }{
-               \IfStrEq{\direction}{top}{
-                  \pointingnode{\label}{(node\x\y) + (0,-\pointingnodeoffset)}{\direction}
+               \IfStrEq{\direction}{left}{
+                  \pointingnode{\label}{(node\x\y) + (\pointingnodeoffset,0)}{\direction}
                }{
-                  \IfStrEq{\direction}{left}{
-                     \pointingnode{\label}{(node\x\y) + (\pointingnodeoffset,0)}{\direction}
-                  }{
-                     \IfStrEq{\direction}{right}{
-                        \pointingnode{\label}{(node\x\y) + (-\pointingnodeoffset,0)}{\direction}
-                     }{}
-                  }
-                }
-             }
-          }
-       \end{tikzpicture}
-    }
-    \endinput
+                  \IfStrEq{\direction}{right}{
+                     \pointingnode{\label}{(node\x\y) + (-\pointingnodeoffset,0)}{\direction}
+                  }{}
+               }
+            }
+         }
+      }
+   \end{tikzpicture}
+}
+\endinput
