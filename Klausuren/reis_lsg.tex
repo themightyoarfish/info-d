@@ -1,0 +1,613 @@
+\documentclass{scrartcl}
+\title{Informatik D Klausur SS2014 -- Gruppe Reis}
+\author{Rasmus Diederichsen \and Sebastian H\"offner}
+\date{Letzte \"Anderung: \today}
+\usepackage{microtype,
+   enumitem,
+   calligra,
+   lastpage,
+   titlesec,
+   listings,
+   xcolor,
+   IEEEtrantools,
+   tabularx,
+   tikz,
+   fancyhdr,
+   array,
+   amsmath,
+   amssymb,
+   graphicx,
+   colortbl,
+   subcaption,
+   lmodern}
+\usetikzlibrary{automata,arrows}
+\tikzstyle{every state}=[ minimum size=.8cm ]
+\usepackage[ngerman]{babel}
+\usepackage[top=2cm,bottom=2.5cm,right=2cm,left=2cm]{geometry}
+\usepackage[pdftitle={Info D Klausur SS2014 Gruppe Reis}, 
+   pdfauthor={Rasmus Diederichsen}, 
+   hyperfootnotes=true,
+   colorlinks,
+   bookmarksnumbered = true,
+   linkcolor = black,
+   plainpages = false,
+   citecolor = lightgray]{hyperref}
+\lstset{
+   basicstyle=\footnotesize\ttfamily,
+   language=Python,
+   numbersep=-5pt,
+   breaklines=true,
+   commentstyle=\color{blue},
+   keywordstyle=\color{purple}\textbf,
+   numberstyle=\tiny\color{gray},
+   numbers=left,
+   stringstyle=\color{olive},
+}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[all]{hypcap}
+\titleformat{\subsection}{\normalfont\fontsize{12}{15}\bfseries}{\thesubsection}{1em}{}
+\titleformat{\section}{\normalfont\fontsize{12}{15}\bfseries}{\thesection}{1em}{}
+\DeclareMathOperator*{\op}{\bigcirc}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+% for last page footer
+\fancypagestyle{lastpage}{
+   \fancyhf{}
+   \fancyfoot[L]{\emph{Blatt \thepage{} von \pageref{LastPage}}}
+   \fancyfoot[R]{\calligra Viel Erfolg!}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\emph{Blatt \thepage{} von \pageref{LastPage}}}
+
+\setlength{\fboxsep}{10pt} % padding for boxes
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{titlepage}
+   \maketitle
+
+   \begin{abstract}
+      Dies sind unsere Lösungsvorschläge zur Reis-Klausur von 2014, die wir
+      zusammengestellt haben, nachdem wir unsere korrigierten Klausuren
+      eingesehen haben. Die Lösungen sollten also mehr oder weniger stimmen. Mit
+      Hilfe dieser Lösungen kann man auch die meisten Fragen der zweiten Gruppe
+      beantworten. Bitte teilt uns Korrekturbedarf über die üblichen Kanäle mit.
+   \end{abstract}
+\end{titlepage}
+
+\section*{Aufgabe 1: Sprache vs. Grammatik \hfill (12 Punkte)} 
+
+\subsection*{(a) Hierarchie und Automaten \hfill \normalfont (10 Punkte)}
+Zu jeder Sprache gibt es entsprechende Automaten. Vervollständigen Sie die 
+folgende Tabelle:
+{
+   % this cell content alignment shit is credited to
+   % http://tex.stackexchange.com/a/195604/31250
+   \newlength\origtabcolsep
+   \origtabcolsep=\tabcolsep
+   \tabcolsep=0pt
+   \renewcommand{\tabularxcolumn}[1]{m{#1}}
+   \newcolumntype{e}{>{\hsize=0pt}X}
+   \newcolumntype{x}{>{\hskip\origtabcolsep}X<{\hskip\origtabcolsep}}
+   \newcolumntype{C}{>{\hskip\origtabcolsep\hspace{1em}}l<{\hskip\origtabcolsep}}
+   \begin{center}
+      \begin{tabularx}{\textwidth}{|C|x|xe|}
+         \hline
+         Chomsky-Typ & Name der Sprachfamilie & Automaten & \\
+         \hline\hline\hline
+         0 & \cellcolor{lightgray!20}rekursiv aufzählbar & \cellcolor{lightgray!20}(N)DTM & \\[3em]
+         \hline
+         \cellcolor{lightgray!20}1 & \cellcolor{lightgray!20}kontext-sensitiv & NLBA & \\[3em]
+         \hline
+         \cellcolor{lightgray!20}3 & regulär & \cellcolor{lightgray!20}(N)DEA & \\[3em]
+         \hline
+      \end{tabularx}
+   \end{center}
+}
+
+
+\subsection*{(b) Grammatikdefinition \hfill{} \normalfont{(2 Punkte)}} 
+Definieren Sie kontextfreie Grammatiken (für Sprachen $L$ mit
+\vspace{\baselineskip}
+$\varepsilon\not\in L$).
+
+\begin{center}
+   \noindent\fcolorbox{black}{lightgray!20}{
+      \begin{minipage}[t][3.5cm]{.95\textwidth}
+         \emph{Alle Regeln haben die Form\ldots}
+         \vspace{\baselineskip}
+         \begin{equation*}
+            V \rightarrow (V \cup \Sigma)^+
+         \end{equation*}
+         \vspace{\baselineskip}
+      \end{minipage}
+   }
+\end{center}
+
+\section*{Aufgabe 2: Sprachen \hfill{} (12 Punkte)}
+
+\newcommand{\mpsol}{\setlength{\fboxsep}{3pt}\colorbox{lightgray!20}{$\boxtimes$}}
+\renewcommand{\mp}{\setlength{\fboxsep}{3pt}\colorbox{lightgray!20}{$\square$}}
+
+{\renewcommand{\arraystretch}{1.4}
+   \begin{tabularx}{\textwidth}{ccX}
+      korrekt & falsch & \\ \hline
+      \mpsol & \mp & Die Sprache $\left\{0^k1^\ell2^k22^\ell \mid k,\ell\ge 0\right\}$ ist kontextfrei.\\
+      \mpsol & \mp & Nicht-deterministische Kellerautomaten, die maximal ein Symbol im Keller
+      speichern können, sind nur so mächtig wie deterministische
+      endliche Automaten. \\
+      \mp & \mpsol & Man kann jeden deterministischen Kellerautomaten in einen
+      nichtdeterministischen Kellerautomaten umformen, dessen Keller immer maximal 2
+      Elemente enthält.\\
+      \mp & \mpsol & Es gibt endliche Mengen, die nicht das Alphabet einer Sprache
+      sein können. \\
+      \mpsol & \mp & Das Alphabet einer Sprache kann unendlich groß sein.\\
+      \mp & \mpsol & $\Sigma^*$ ist die Potenzmenge von $\Sigma$.
+\end{tabularx}}
+
+\pagebreak
+\section*{Aufgabe 3: Pumping Lemma \hfill (16 Punkte)}
+\subsection*{(a) Definition \hfill \normalfont (4 Punkte)}
+Wie lautet das Pumping Lemma für reguläre Sprachen?
+
+\vspace{4pt}
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][6cm]{.95\textwidth}
+      Sei $L$ eine reguläre Sprache. Es gibt eine Zahl $n:=n(L)$, sodass alle 
+      Wörter $z \in L$ mit $|z| \ge n$ sich zerlegen lassen als $z = uvw$ mit den 
+      Eigenschaften $|v| \ge 1$, $|uv| \le n$, $uv^*w \in L$.
+   \end{minipage}
+}
+
+\subsection*{(b) Anwendung \hfill \normalfont (12 Punkte)}
+Beweisen Sie, dass $\left\{c^ja^ica^{3i}c \mid i,j \ge 0\right\}$ keine 
+reguläre Sprache ist.
+
+\vspace{4pt}
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][13.6cm]{.95\textwidth}
+
+      Betrachten wir das Wort $z=c^0a^nca^{3n}$. Dann sind die möglichen
+      Zerlegungen $uv = a^{n-l}, l \ge 0$ und $w = a^lca^{3n}$.  In $v$ sind so
+      garantiert nur $a$s, d.h. $z^\prime=uv^0w \notin L$ und $z^{\prime\prime}=uvv^+w \notin L$,
+      da die Anzahl $a$s am vor dem trennenden $c$ nicht mehr zur Anzahl $a$s
+      nach dem $c$ passt. 
+      \hfill{}$\square$
+   \end{minipage}
+}
+
+\pagebreak
+\section*{Aufgabe 4: RegEx vs. DEA \hfill (12 Punkte)}
+Geben Sie einen deterministischen endlichen Automaten an, der dem folgenden 
+regulären Ausdruck entspricht:
+\begin{align*}
+   \left(\varnothing^*\middle|23^*2\middle|2^*\right)1
+\end{align*}
+(Es gibt genug Platz, damit Sie Zwischenschritte aufschreiben können. Markieren 
+Sie Ihr Endergebnis bitte entsprechend.)
+
+\vspace{4pt}
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][20cm]{.95\textwidth}
+      \begin{center}
+         \begin{tikzpicture}[->, auto, node distance=3cm]
+            \node[state,initial]   (1)                    {};
+            \node[state]           (2) [below of=1]       {};
+            \node[state]           (3) [below right of=2] {};
+            \node[state]           (4) [right of=3]       {};
+            \node[state,accepting] (5) [above right of=4] {};
+            \node[state]           (6) [below of=4]       {};
+            \path (1) edge [bend left=20]         node {1} (5)
+            edge                        node {2} (2)
+            (2) edge                        node {1} (5)
+            edge [bend right=40, left]  node {2} (6)
+            edge                        node {3} (3)
+            (3) edge                        node {2} (4)
+            edge [loop below]           node {3} (3)
+            (4) edge                        node {1} (5)
+            (6) edge [bend right=10, right] node {1} (5)
+            edge [loop below]           node {2} (6)
+            ;
+         \end{tikzpicture}
+      \end{center}
+   \end{minipage}
+}
+
+\pagebreak
+\section*{Aufgabe 5: Kellerautomat \hfill (10 Punkte)}
+Geben Sie für die Sprache $\left\{a^jcb^{j-i}cd^i\mid j \ge i \ge 0 \right\}$
+einen Kellerautomaten an, der durch leeren Keller akzeptiert.
+
+\vspace{4pt}
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][7cm]{.95\textwidth}
+      \begin{center}
+         \begin{tikzpicture}[->, auto, node distance=3cm,
+            ]
+            \node[state,initial]   (1)              {};
+            \node[state]           (2) [right of=1, node distance=3cm] {};
+            \node[state]           (3) [right of=2] {};
+            \node[state]           (4) [below of=3] {};
+            \path (1) edge [loop above] node {$a,\circ\!\in\!\Gamma/a\circ$} (1)
+            edge              node {$c,\circ\!\in\!\Gamma/a\circ$} (2)
+            (2) edge [loop above] node {$b,a/\epsilon$} (2)
+            edge              node {$c,a/a$} (3)
+            edge [left]       node {$c,\#/\epsilon$} (4)
+            (3) edge [loop above] node {$d,a/\epsilon$} (3)
+            edge [right]      node {$\epsilon,\#/\epsilon$} (4)
+            ;
+         \end{tikzpicture}
+      \end{center}
+   \end{minipage}
+}
+
+\section*{Aufgabe 6: Rechnende Turingmaschine \hfill (12 Punkte)}
+Gegeben eine binär kodierte Zahl $\alpha$. Geben Sie eine Turingmaschine an,
+die die folgende Funktion berechnet:
+\begin{align*}
+   f(\alpha):=\begin{cases}
+      \text{undef} & \alpha \in \mathbb{N}_g \cup \{0\} \\
+      \alpha - 1 & \text{sonst}
+   \end{cases}
+\end{align*}
+
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][10cm]{.95\textwidth}
+      \begin{center}
+         \begin{tikzpicture}[->, auto, node distance=3cm,
+            ]
+            \node[state,initial]   (1)              {};
+            \node[state]           (2) [right of=1] {};
+            \node[state]           (3) [right of=2] {};
+            \node[state]           (4) [right of=3] {};
+            \node[state]           (5) [below of=2] {};
+            \path (1) edge [loop below] node[align=center] {$1/1,R$\\$0/0,R$} (1)
+            edge              node {$\square/\square,L$} (2)
+            (2) edge              node {$1/0,L$} (3)
+            edge              node {$0/0,R$} (5)
+            (3) edge [loop below] node[align=center] {$1/1,L$\\$0/0,L$} (3)
+            edge              node {$\square/\square,R$} (4)
+            (5) edge [loop below] node {$\square/\square,S$} (5)
+            ;
+         \end{tikzpicture}
+      \end{center}
+   \end{minipage}
+}
+
+\pagebreak
+\section*{Aufgabe 7: LOOP-Berechenbarkeit \hfill (12 Punkte)}
+\subsection*{(a) LOOP-Programm \hfill \normalfont (8 Punkte)}
+Geben Sie ein LOOP-Programm an (eingeschränkte Definition, d.h. keine Addition
+von Variablen oder höheren Rechenoperationen), dass der folgenden Codezeile
+entspricht:
+\begin{align*}
+   x_4 := 3 \cdot x_1 \cdot x_2
+\end{align*}
+
+\newsavebox{\mybox}
+\begin{lrbox}{\mybox}
+   \begin{lstlisting}[escapeinside={*}{*}]
+   x*$_4$* := 0
+   loop(3) {
+      loop(x*$_1$*) {
+         loop(x*$_2$*) {
+            x*$_4$* := x*$_4$* + 1
+         }
+      }
+   }
+   \end{lstlisting}
+\end{lrbox}
+
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][8cm]{.95\textwidth}
+      \begin{center}
+         \usebox{\mybox}
+      \end{center}
+   \end{minipage}
+}
+\subsection*{(b) Turing-vollständig \hfill \normalfont (4 Punkte)}
+Begründen Sie, warum LOOP-Programme nicht so mächtig wie Turingmaschinen sind.
+
+\vspace{4pt}
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][5cm]{.95\textwidth}
+      Da LOOP-Programme nur eine jeweils konstante Anzahl Schleifeniterationen
+      durchführen können, gibt es Funktionen, die so nicht berechenbar sind.
+      Eine bekannte Funktion ist die Ackermannfunktion.
+   \end{minipage}
+}
+
+\pagebreak
+
+\section*{Aufgabe 8: Entscheidbarkeit \hfill{} (12 Punkte)}
+
+Wir definieren das Ergebnis des \emph{Klebeoperators} $\circ$ als die Zahl, die
+durch das Hintereinanderschreiben der Dezimaldarstellungen ihrer einzelnen
+Argumente repräentiert wird. Wir können mehrere Klebeoperationen gesammelt
+schreiben, z.B.
+
+\begin{equation*}
+   \op\limits_{i=1}^4 i^2 = 1 \circ 4 \circ 9 \circ 16 = 14916.
+\end{equation*}
+Betrachten Sie das folgende Problem:
+\begin{center}
+   \fbox{
+      \begin{minipage}{.95\textwidth}
+         \textbf{Gegeben}: Drei jeweils $m-$elementige Mengen $\mathcal{A} :=
+         \left\{a_i\right\}_{1\le i\le k}$, $\mathcal{B} :=
+         \left\{b_i\right\}_{1\le i\le k}$, $\mathcal{C} :=
+         \left\{c_i\right\}_{1\le i\le k}$ mit Elementen aus $\mathbb{N}$.
+
+         \noindent\textbf{Frage}: Gibt es eine Sequenz $s(1),s(2),\ldots,s(n)$ mit $n \ge
+         1$ und $s(i) \in \{1,\ldots,k\}$ für alle $1 \le i \le n$, sodass 
+
+         \begin{tabularx}{\textwidth}{>{\raggedleft\arraybackslash}p{.5\textwidth}cl>{\raggedleft\arraybackslash}X}
+            % \begin{IEEEeqnarray*}{+rCl+r*}
+            $\op\limits_{i=1}^na_{s(i)} - \op\limits_{i=1}^nb_{s(i)}$ & = & $\op\limits_{i=1}^nc_{s(i)}$ &  ("`Gleichung"')
+         \end{tabularx}
+      \end{minipage}
+   }
+\end{center}
+
+\subsection*{(a) Beispiele \hfill{} \normalfont{(4 Punkte)}}
+
+Geben Sie jeweils ein Beispiel einer Ja- und einer Nein-Instanz für dieses
+Problem an:\\[.5\baselineskip]
+Ja-Instanz \hfill{} Nein-Instanz
+
+\vspace{2pt}
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][3cm]{.40\textwidth}
+      Sei $\mathcal{A} = \mathcal{B} := \left\{1,1,1\right\}, \mathcal{C}
+      := \{0,0,0\}$. Offensichtlich ist die Instanz lösbar mit $s(1) =
+      s(2) = s(3) \in \{1,2,3\}$.
+   \end{minipage}
+}
+\hfill{}\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][3cm]{.40\textwidth}
+      $\mathcal{A} = \mathcal{B} = \mathcal{C} := \left\{1,2,3\right\}$
+   \end{minipage}
+}
+
+\subsection*{(b) Semi-Entscheidbarkeit \hfill{} \normalfont{(4 Punkte)}}
+
+% lstlisting cannot go inside fbox, so we need to do this shit
+\newsavebox{\codebox}
+\begin{lrbox}{\codebox}
+   \begin{lstlisting}[escapeinside={*}{*}]
+   for n = 1,...,*$\infty$*:
+      foreach *$\vec{i}$* in *$\{1,...,n\}^k$*:
+         if *$\op\limits_{i=1}^na_{\vec{i}[i]} - \op\limits_{i=1}^nb_{\vec{i}[i]}$ = $\op\limits_{i=1}^nc_{\vec{i}[i]}$*:
+            return true
+   \end{lstlisting}
+\end{lrbox}
+
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][9cm]{.95\textwidth}
+      Wir beweisen die Semi-Entscheidbarkeit, indem wir einen Algorithmus
+      angeben, der eine Lösung findet, sofern sie existiert.
+
+      \begin{center}
+         \usebox{\codebox}
+      \end{center}
+
+      Es gibt in einer $n$-Elementigen Menge nur endlich viele Auswahlen von $k$
+      Elementen. Gibt es eine Lösung, wird sie also irgendwann gefunden.
+   \end{minipage}
+}
+
+\subsection*{(c) Unentscheidbarkeit \hfill{} \normalfont{(4 Punkte)}}
+
+Beschreiben Sie kurz die notwendige Reduktion (von? nach? wie?) um zu begründen,
+warum das Problem nicht entscheidbar ist:
+
+\vspace{4pt}
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][9cm]{.95\textwidth}
+      Es muss ein unentscheidbares Problem auf das \emph{Klebeproblem} reduziert
+      werden. Es bietet sich hierfür das PCP an. Gegeben eine PCP-Instanz mit
+      Tupelmenge 
+      \begin{equation*}
+         \mathcal{M} = \{(x_i,y_i) \mid 1\le i\le k, x,y\in\mathbb{N}\}
+      \end{equation*} und $|\mathcal{M}| = k$, erstellen wir eine Klebeinstanz
+      mit 
+      \begin{equation*}
+         \mathcal{A} := \{x_i \mid 1\le i\le k,
+         (x_i,y_i)\in\mathcal{M}\},~\mathcal{B} := \{0\}^k,~\mathcal{C} := \{y_i \mid
+         1\le i \le k, (x_i,y_i)\in\mathcal{M}\}.
+      \end{equation*} 
+      Offensichtlich ist die PCP-Instanz lösbar, genau
+      dann, wenn die Klebeinstanz lösbar ist, da
+      \begin{equation*}
+         \op\limits_{i=1}^ka_{s(i)} - \{0\}^k = \op\limits_{i=1}^kc_{s(i)}
+      \end{equation*}
+      gleichbedeutend ist mit der Aussage, dass links dieselbe Zahl steht wie
+      rechts. Da links die $x_i$ der PCP-Instanz stehen und rechts die $y_i$,
+      sind die Problemstellungen identisch. Man muss eine Auswahl an Indizes
+      finden (wobei nicht alle $k$ vorkommen müssen, und Indizes mehrfach
+      verwended werden können), sodass die konkatenierten $x_i$ gleich den
+      konkatenierten $y_i$ sind, was genau der Klebeoperation entspricht.
+   \end{minipage}
+}
+
+\section*{Aufgabe 9: {\sffamily \textbf{\itshape P}} vs. {\sffamily \textbf{\itshape NP}} \hfill{}(20 Punkte)}
+
+\subsection*{(a) Definition \hfill{} \normalfont{(4 Punkte)}}
+
+Definieren Sie die Komplexitätsklasse \textbf{\sffamily\itshape{P}}.
+
+\vspace{4pt}
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][5cm]{.95\textwidth}
+      \textbf{\itshape\sffamily P} ist die Menge aller Entscheidungsprobleme,
+      die sich von einer deterministischen Turingmaschine in polynomieller Zeit
+      entscheiden lassen. Alternativ ist es die Menge aller Probleme, für die
+      ein Zeuge von einer deterministischen Turingmaschine in polynomieller Zeit
+      verifizierbar ist.
+   \end{minipage}
+}
+
+\pagebreak
+\subsection*{(b) Basiszusammenhänge \hfill \normalfont (10 Punkte)}
+Welche Aussagen stimmen?
+
+\noindent\emph{(Achtung: Pro Frage gibt es +2/0/-2 Punkte bei einer richtigen/
+   keinen/falschen Antwort! Sie erhalten jedoch natürlich mindestens 0 Punkte
+für die gesamte Aufgabe.)}
+
+\newcommand{\NP}{\textbf{\itshape\sffamily NP}}
+\renewcommand{\P}{\textbf{\itshape\sffamily P}}
+\vspace{1em}
+% somehow the boxes get quite huge here
+{\renewcommand{\arraystretch}{1.4}
+   \begin{tabularx}{0.95\textwidth}{ccX}
+      korrekt & falsch & \\ \hline
+      \mp & \mpsol & Das Problem "`Finde das kleinste Element aus $n$ gegebenen 
+      Zahlen"' liegt in \NP.\\
+      \mpsol & \mp & Das Problem "`Gegeben ein gewichteter Graph und Zahl $W$.
+      Kann man einen aufspannenenden Baum finden, dessen 
+      Gesamtgewicht maximal $W$ ist?"' liegt in \P.\\
+      \mp & \mpsol & Das Problem "`Gegeben ein Graph $n \ge 8$ Knoten. Kann man 
+      einen Hamiltonkreis finden, der maximal $n-3$ Kanten 
+      enthält?"' ist \NP-vollständig.\\
+      \mpsol & \mp & Wenn ein stark \NP-vollständiges Problem einen
+      pseudopolynomiellen Algorithmus erlaubt, gilt \NP=\P.\\
+      \mpsol & \mp & Sei $\mathcal{A}$ das zu einem Optimierungsproblem 
+      $\mathcal{B}$ zugehörige Entscheidungsproblem. Wenn 
+      $\mathcal{A}\in$\P, gibt es einen 
+      deterministischen polynomiellen Algorithmus für $\mathcal{B}$.
+\end{tabularx}}
+
+\subsection*{(c) Zeuge \hfill \normalfont (6 Punkte)}
+
+Was versteht man, wenn man über \P{} und \NP{} spricht, unter einem \emph{Zeugen}?
+
+\vspace{6pt}
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[t][5cm]{.95\textwidth}
+      \emph{(Vollständige!) Definition:}
+
+      \vspace{\baselineskip}
+      Ein Zeuge ist eine Lösung für ein Entscheidungsproblem. Zur Lösung des
+      Problems gehört die Überprüfung dieses Zeugens.
+   \end{minipage}
+}
+
+\vspace{10pt}
+Warum kann ein Zeuge nur polynomiell groß sein?
+
+\vspace{6pt}
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][5cm]{.95\textwidth}
+      Eine deterministische Turingmaschine kann in polynomieller Zeit nur
+      polynomiell viele "`Elemente"' eines
+      Zeugen betrachten. Ist dieser superpolynomiell groß, kann er nicht in
+      polynomieller Zeit komplett betrachtet und daher auch nicht verifiziert
+      werden.
+
+   \end{minipage}
+}
+
+\pagebreak
+
+\section*{Aufgabe 10: \NP-vollständig \hfill (12 Punkte)}
+
+Sie kennen das Problem \textsc{Sat}, in dem eine Formel in konjunktiver Normalform
+gegeben ist, und jede Klausel \emph{mindestens} ein Literal enthält. Sie kennen auch
+den Spezialfall des 3-\textsc{Sat}, in dem jede Klausel \emph{maximal} drei Literale enthält.
+Wir definieren nun das folgende Problem:
+
+
+\vspace{4pt}
+\noindent\fbox{
+   \begin{minipage}{.95\textwidth}
+      \begin{itemize}[itemsep=-2pt,leftmargin=3em,listparindent=.5cm,align=left]
+         \item[\textbf{Problem:}]\textsc{Exakt-5-Sat} % funnily, label=\bfseries doe not do anything
+         \item[\textbf{Gegeben:}] Eine aussagenlogische Formel $F$ in konjunktiver
+            Normalform mit \emph{genau} fünf Literalen 
+
+            pro Klausel. 
+         \item[\textbf{Frage:}] Ist $F$ erfüllbar?
+      \end{itemize}
+   \end{minipage}
+}
+
+\vspace{\baselineskip}
+Um zu zeigen, dass \textsc{Exakt-5-Sat} \NP-vollständig ist, zeigt man im Normalfall,
+dass \ldots
+
+\newsavebox\topalignbox
+\newcolumntype{T}{%
+   >{\begin{lrbox}\topalignbox
+      \rule{0pt}{\ht\strutbox}}
+      c
+   <{\end{lrbox}%
+      \raisebox{\dimexpr-\height+\ht\strutbox\relax}%
+{\usebox\topalignbox}}}
+
+\begin{center}
+   \setlist[itemize]{itemsep=-3pt}
+   \begin{tabular}{TTT}
+      \setlength{\fboxsep}{2pt}
+      \fbox{
+         \begin{tabular}{l}
+            \mp \ldots es vollständig in \P{} liegt \\
+            \mp \ldots dass es in \P{} liegt\\
+            \mpsol \ldots dass es in \NP{} liegt\\
+            \mp \ldots dass es in \textbf{\sffamily\itshape NPI} liegt\\
+            \hline 
+            \emph{Punkt 1}
+         \end{tabular}
+      }
+      & und & 
+      \setlength{\fboxsep}{2pt}
+      \fbox{
+         \begin{tabular}{l}
+            \mp \ldots es in \textbf{\sffamily\itshape CO-NP} liegt. \\
+            \mp \ldots nicht \P{}-vollständig ist\\
+            \mpsol \ldots \NP{}-schwer \\
+            \mp \ldots nicht \NP{}-schwer \\
+            \hline 
+            \emph{Punkt 2}
+         \end{tabular}
+      }
+   \end{tabular}
+\end{center}
+
+{\setlength\fboxsep{2pt}
+   Punkt 1 ist trivial, daher beschränken wir uns auf Punkt 2. Dazu benötigen wir
+   eine Reduktion \fbox{\mp über das\quad\mpsol von dem \quad\mp zu dem} Problem
+   \fbox{\mpsol \textsc{3-Sat} \quad\mp \textsc{Sat} \quad\mp \textsc{Partition}} .
+}
+
+\vspace{3pt}
+Geben Sie die notwendige Reduktion an, begründen Sie ihre notwendigen
+Eigenschaften und beweisen Sie, dass der korrekte \emph{Punkt 2} gilt.
+
+\vspace{4pt}
+\noindent\fcolorbox{black}{lightgray!20}{
+   \begin{minipage}[c][12.9cm]{.95\textwidth}
+      Gegeben eine \textsc{3-Sat}-Instanz mit Klauselmenge $\mathcal{K}$,
+      erstellt man eine \textsc{Exakt-5-Sat}-Instanz wie folgt:
+
+      Für jede Klausel $K \in \mathcal{K}$ der Form $(\alpha_{1,k},\ldots,\alpha_{l,k})$,
+      multipliziere das Literal $\alpha_k$ so oft, bis $K$ genau 5 Literale enthält.
+      Aus beispielsweise 
+      \begin{equation*}
+         K_1 = (x_{1,1} \wedge \neg x_{2,1} \wedge x_{3,1}) 
+      \end{equation*}
+      wird so 
+      \begin{equation*}
+         K_1^\prime = (x_{1,1} \wedge \neg x_{2,1} \wedge x_{3,1} \wedge x_{3,1} \wedge x_{3,1}).
+      \end{equation*} 
+      Offensichtlich hat $K_1^\prime$ die selben
+      Wahrheitsbedingungend wie $K_1$. Trivialerweise ist also die so kreierte
+      \textsc{Exakt-5-Sat}-Instanz erfüllbar, wenn die \textsc{3-Sat}-Instanz
+      erfüllbar ist. 
+\end{minipage}}
+\thispagestyle{lastpage}
+\end{document}
