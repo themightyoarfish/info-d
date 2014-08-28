@@ -9,7 +9,7 @@
 \let\iint\relax
 \usepackage{microtype,
    booktabs,
-   cwpuzzle,
+   infodcw,
    tikz,
    multicol,
    IEEEtrantools,
@@ -234,23 +234,26 @@ Ein NDKA mit Akzeptanz durch leeren Keller kann so ausssehen:
 
 \subsection{} 
 
+\begin{center}
+   \infodcwpuzzle{0/0/a,1/0/a,2/0/b,3/0/a,4/0/b,5/0/b,6/0/a,7/0/b,8/0/a,9/0/a,10/0/b,11/0/b,0/1/a,1/1/b,2/1/a,3/1/a,4/1/b,5/1/a,7/1/c,8/1/b,9/1/a,10/1/d,11/1/c,0/2/c,2/2/a,4/2/b,5/2/b,7/2/c,10/2/c,0/3/c,1/3/a,2/3/b,3/3/d,4/3/b,5/3/a,6/3/c,7/3/d,10/3/a,2/4/c,4/4/b,5/4/c}{1/4/4/right,2/0/3/right,3/0/1/right,4/7/1/right,5/0/0/right,6/0/3/bottom,7/2/4/bottom,8/4/4/bottom,9/5/4/bottom}
+\end{center}
 % doesn't center,wtf. Use minipage with hardcoded width. Wtf.
-Interessanterweise widersetzt sich dieses Puzzle s\"amtlichen
-\LaTeX-Positionierungsversuchen. What the fuck.
+% Interessanterweise widersetzt sich dieses Puzzle s\"amtlichen
+% \LaTeX-Positionierungsversuchen. What the fuck.
 
-\begin{minipage}{.5\textwidth}
-   \def\PuzzleSolutionContent#1{\makebox(1,1){\itshape{#1}}}
-   \renewcommand{\PuzzleLineThickness}{1pt}
-   \PuzzleSolution
-   \begin{Puzzle}{5}{12}
-      |*|*|c|*|b|c|*|*|*|*|*|*|.
-      |c|a|b|d|b|a|c|d|*|*|a|*|.
-      |c|*|a|*|b|b|*|c|*|*|c|*|.
-      |a|b|a|a|b|a|*|c|b|a|d|c|.
-      |a|a|b|a|b|b|a|b|a|a|b|b|.
-   \end{Puzzle}
-\end{minipage}
-\vspace{-3cm} % Puzzle fuckup seems to consume vertical space. The fuck.
+% \begin{minipage}{.5\textwidth}
+%    \def\PuzzleSolutionContent#1{\makebox(1,1){\itshape{#1}}}
+%    \renewcommand{\PuzzleLineThickness}{1pt}
+%    \PuzzleSolution
+%    \begin{Puzzle}{5}{12}
+%       |*|*|c|*|b|c|*|*|*|*|*|*|.
+%       |c|a|b|d|b|a|c|d|*|*|a|*|.
+%       |c|*|a|*|b|b|*|c|*|*|c|*|.
+%       |a|b|a|a|b|a|*|c|b|a|d|c|.
+%       |a|a|b|a|b|b|a|b|a|a|b|b|.
+%    \end{Puzzle}
+% \end{minipage}
+% \vspace{-3cm} % Puzzle fuckup seems to consume vertical space. The fuck.
 
 \subsection{} 
 \newcommand{\thingL}{\hspace{1pt}\raisebox{-.5ex}{\rule{.5pt}{1em}\hspace{.5pt}\rule{.2pt}{1em}\raisebox{.6ex}{:}\hspace{1pt}}}
